@@ -72,7 +72,6 @@ class CategoryController extends Controller
             '</div>';
     }
 
-
     public function datatable(Request $req): JsonResponse
     {
         $data = Category::get();
@@ -97,7 +96,6 @@ class CategoryController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
-
 
     public function store(Request $req): JsonResponse
     {
