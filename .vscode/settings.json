@@ -1,0 +1,7 @@
+{
+    "i18n-ally.localesPaths": [
+        "lang",
+        "public/assets/cms/plugins/summernote/lang",
+        "public/assets/cms/plugins/tinymce/langs"
+    ]
+}
