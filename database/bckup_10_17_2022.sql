@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.blogs: ~2 rows (approximately)
+-- Dumping data for table matching_fund.blogs: ~3 rows (approximately)
 DELETE FROM `blogs`;
 /*!40000 ALTER TABLE `blogs` DISABLE KEYS */;
 INSERT INTO `blogs` (`id`, `title`, `image`, `content`, `slug`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`) VALUES
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `group_menus` (
   CONSTRAINT `FK_group_menus_title_menus` FOREIGN KEY (`title_menu_id`) REFERENCES `title_menus` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.group_menus: ~6 rows (approximately)
+-- Dumping data for table matching_fund.group_menus: ~8 rows (approximately)
 DELETE FROM `group_menus`;
 /*!40000 ALTER TABLE `group_menus` DISABLE KEYS */;
 INSERT INTO `group_menus` (`id`, `sequence`, `name`, `icon`, `slug`, `type`, `title_menu_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `menus` (
   CONSTRAINT `FK_menus_master_menus` FOREIGN KEY (`group_menu_id`) REFERENCES `group_menus` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.menus: ~14 rows (approximately)
+-- Dumping data for table matching_fund.menus: ~18 rows (approximately)
 DELETE FROM `menus`;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
 INSERT INTO `menus` (`id`, `sequence`, `name`, `slug`, `group_menu_id`, `type`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
@@ -604,7 +604,7 @@ CREATE TABLE IF NOT EXISTS `title_menus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.title_menus: ~3 rows (approximately)
+-- Dumping data for table matching_fund.title_menus: ~4 rows (approximately)
 DELETE FROM `title_menus`;
 /*!40000 ALTER TABLE `title_menus` DISABLE KEYS */;
 INSERT INTO `title_menus` (`id`, `sequence`, `name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
@@ -633,7 +633,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `FK_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.users: ~0 rows (approximately)
+-- Dumping data for table matching_fund.users: ~1 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`, `image`, `status`) VALUES

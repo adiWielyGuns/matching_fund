@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-header bg-primary d-flex justify-content-between">
                     <h4 class="header-title text-light">Index</h4>
-                    <button class="btn btn-info" id="tambah-data" onclick="refreshState('#modal-tambah-data')"><i
+                    <button class="btn btn-info" id="tambah-data" onclick="refreshState('#modal-create-data')"><i
                             class="fas fa-plus"></i>
                         Tambah Data</button>
                 </div>
@@ -194,10 +194,26 @@
                     var temp_value = data.data;
                     for (var i = 0; i < temp_key.length; i++) {
                         var key = temp_key[i];
-                        $('#' + key).val(temp_value[key]);
+                        if (!$('#' + key).hasClass('dropify')) {
+                            $('#' + key).val(temp_value[key]);
+                        }
                     }
+
+                    var url = data.data.image;
+                    var imagenUrl = url;
+                    var drEvent = $('.dropify').dropify({
+                        defaultFile: imagenUrl,
+                    });
+
+                    drEvent = drEvent.data('dropify');
+                    drEvent.resetPreview();
+                    drEvent.clearElement();
+                    drEvent.settings.defaultFile = imagenUrl;
+                    drEvent.destroy();
+                    drEvent.init();
+
                     $('.not-editable').prop('readonly', true);
-                    $('#modal-tambah-data .select2').trigger('change.select2');
+                    $('#modal-create-data .select2').trigger('change.select2');
                     $('#simpan').removeClass('hidden');
                     $('#modal-create-data').modal('toggle')
                 },

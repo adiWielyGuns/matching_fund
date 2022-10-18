@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-header bg-primary d-flex justify-content-between">
                     <h4 class="header-title text-light">Index</h4>
-                    <button class="btn btn-info" id="tambah-data" onclick="refreshState('#modal-tambah-data')"><i
+                    <button class="btn btn-info" id="tambah-data" onclick="refreshState('#modal-create-data')"><i
                             class="fas fa-plus"></i>
                         Tambah Data</button>
                 </div>
@@ -178,7 +178,7 @@
                         $('#' + key).val(temp_value[key]);
                     }
                     $('.not-editable').prop('readonly', true);
-                    $('#modal-tambah-data .select2').trigger('change.select2');
+                    $('#modal-create-data .select2').trigger('change.select2');
                     $('#simpan').removeClass('hidden');
                     $('#modal-create-data').modal('toggle')
                 },

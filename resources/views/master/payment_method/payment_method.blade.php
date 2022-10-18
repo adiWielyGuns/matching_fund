@@ -31,9 +31,12 @@
                         <thead>
                             <th>No</th>
                             <th>Aksi</th>
+                            <th>Image</th>
                             <th>Nama</th>
                             <th>Keterangan</th>
-                            <th>Kapasitas</th>
+                            <th>Jenis</th>
+                            <th>No Ref</th>
+                            <th>Nama Ref</th>
                             <th>Status</th>
                         </thead>
                     </table>
@@ -47,7 +50,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title mt-0" id="myLargeModalLabel">Create Table</h5>
+                    <h5 class="modal-title mt-0" id="myLargeModalLabel">Create {{ convertSlug(Request::segment(3)) }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <form class="modal-body" id="form-data" onkeydown="return event.key != 'Enter';">
@@ -55,18 +58,46 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Nama Table</label>
-                                <input class="form-control required" type="text" placeholder="Masukan nama table"
-                                    id="name" name="name">
-                                    <input type="hidden" id="id" name="id">
+                                <label for="image" class="col-form-label">Image</label>
+                                <input class="form-control dropify" type="file" placeholder="Masukan nama image"
+                                    id="image" name="image" data-allowed-file-extensions="jpg jpeg png">
+                                <input type="hidden" id="id" name="id">
                             </div>
+                        </div>
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Kapasitas</label>
-                                <input type="number" class="form-control required" min="1" id="kapasitas"
-                                    name="kapasitas">
+                                <label for="name" class="col-form-label">Nama {{ dot() }}</label>
+                                <input class="form-control required" type="text"
+                                    placeholder="Masukan nama metode pembayaran" id="name" name="name">
                             </div>
+                        </div>
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="name" class="col-form-label">Deskripsi</label>
+                                <label for="name" class="col-form-label">Jenis {{ dot() }}</label>
+                                <select name="jenis" id="jenis" class="form-control select2 required">
+                                    <option value="">Pilih Jenis</option>
+                                    <option value="TUNAI">TUNAI</option>
+                                    <option value="NON TUNAI">NON TUNAI</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Kode Ref</label>
+                                <input type="text" class="form-control" name="no_ref" id="no_ref"
+                                    placeholder="Masukan kode referensi metode pembayaran">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Nama Ref</label>
+                                <input type="text" class="form-control" name="nama_ref" id="nama_ref"
+                                    placeholder="Masukan nama referensi metode pembayaran">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Deskripsi {{ dot() }}</label>
                                 <textarea class="form-control required" type="text" placeholder="Masukan deskripsi table" id="description"
                                     name="description"></textarea>
                             </div>
@@ -86,6 +117,7 @@
 @section('script')
     <script>
         var table;
+
         $(document).ready(function() {
             table = $('#datatable-buttons').DataTable({
                 processing: true,
@@ -124,7 +156,7 @@
                     }
                 ],
                 ajax: {
-                    url: "{{ route('datatable-table') }}",
+                    url: "{{ route('datatable-payment-method') }}",
                     data: {
                         _token: '{{ csrf_token() }}'
                     }
@@ -138,25 +170,42 @@
                     name: 'aksi',
                     class: 'text-center',
                 }, {
+                    data: 'image',
+                    name: 'image',
+                    class: 'text-center',
+                }, {
                     data: 'name',
                     name: 'name',
                 }, {
                     data: 'description',
                     name: 'description',
                 }, {
-                    data: 'kapasitas',
-                    name: 'kapasitas',
+                    data: 'jenis',
+                    name: 'jenis',
+                }, {
+                    data: 'no_ref',
+                    name: 'no_ref',
+                }, {
+                    data: 'nama_ref',
+                    name: 'nama_ref',
                 }, {
                     data: 'status',
                     class: 'text-center',
                 }, ]
             });
 
-
+            $('.select2').select2({
+                dropdownParent: $("#modal-create-data .modal-content"),
+                theme: 'bootstrap4',
+                width: '100%'
+            });
 
             table.buttons().container()
                 .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
         })
+
+
+
 
         $('#tambah-data').click(function() {
             $('#modal-create-data').modal('toggle')
@@ -173,7 +222,7 @@
 
         function gantiStatus(param, id) {
             $.ajax({
-                url: '{{ route('ganti-status-table') }}',
+                url: '{{ route('ganti-status-payment-method') }}',
                 data: {
                     id,
                     param
@@ -192,7 +241,7 @@
 
         function edit(id) {
             $.ajax({
-                url: '{{ route('edit-table') }}',
+                url: '{{ route('edit-payment-method') }}',
                 data: {
                     id,
                 },
@@ -202,8 +251,24 @@
                     var temp_value = data.data;
                     for (var i = 0; i < temp_key.length; i++) {
                         var key = temp_key[i];
-                        $('#' + key).val(temp_value[key]);
+                        if (!$('#' + key).hasClass('dropify')) {
+                            $('#' + key).val(temp_value[key]);
+                        }
                     }
+
+                    var url = data.data.image;
+                    var imagenUrl = url;
+                    var drEvent = $('.dropify').dropify({
+                        defaultFile: imagenUrl,
+                    });
+
+                    drEvent = drEvent.data('dropify');
+                    drEvent.resetPreview();
+                    drEvent.clearElement();
+                    drEvent.settings.defaultFile = imagenUrl;
+                    drEvent.destroy();
+                    drEvent.init();
+
                     $('.not-editable').prop('readonly', true);
                     $('#modal-create-data .select2').trigger('change.select2');
                     $('#simpan').removeClass('hidden');
@@ -222,9 +287,11 @@
                 if ($(this).val() == '' || $(this).val() == null) {
                     console.log($(this));
                     $(this).addClass('is-invalid');
+                    // $(par).find('.select2-container').addClass('is-invalid');
                     validation++
                 }
             })
+
 
             if (validation != 0) {
                 alertify.logPosition("top right");
@@ -264,7 +331,7 @@
                     window.onkeydown = previousWindowKeyDown;
                     overlay(true);
                     $.ajax({
-                        url: '{{ route('store-table') }}',
+                        url: '{{ route('store-payment-method') }}',
                         data: formData,
                         type: 'post',
                         dataType: 'json',
@@ -337,7 +404,7 @@
                     window.onkeydown = previousWindowKeyDown;
                     overlay(true);
                     $.ajax({
-                        url: '{{ route('destroy-table') }}',
+                        url: '{{ route('destroy-payment-method') }}',
                         data: {
                             id: id,
                             _token: '{{ csrf_token() }}',

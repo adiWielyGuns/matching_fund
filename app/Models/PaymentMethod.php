@@ -19,6 +19,7 @@ class PaymentMethod extends Model
         'jenis',
         'no_ref',
         'nama_ref',
+        'image',
         'status',
         'created_by',
         'updated_by',
