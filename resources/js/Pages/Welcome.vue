@@ -71,7 +71,7 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                     </div>
                     <div class="col-span-12" v-if="jenis == 'order'?false:true">
                         <BreezeLabel for="tanggal" value="Tanggal Reservasi" class="text-white font-extrabold" />
-                        <Datepicker v-model="$data.tanggal" position="right" :autoPosition="false" utc="preserve"  />
+                        <Datepicker v-model="$data.tanggal" position="right" :autoPosition="false" utc="preserve" />
                         <div v-if="v$.tanggal.$error">
                             <BreezeInputError message="Tanggal Harus Diisi"></BreezeInputError>
                         </div>
@@ -266,7 +266,6 @@ export default {
         },
         async submitReservasi() {
 
-            console.log('tes')
             const isFormCorrect = await this.v$.$validate();
             // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
             if (!isFormCorrect) return;
@@ -275,20 +274,15 @@ export default {
             this.$root.$loading.loading = true;
 
             axios.post('/submit-reservasi', {
-                nama : this.nama,
-                telpon : this.telpon,
-                pax : this.pax,
-                table_id : this.table_id,
-                tanggal : this.tanggal,
+                nama: this.nama,
+                telpon: this.telpon,
+                pax: this.pax,
+                table_id: this.table_id,
+                tanggal: this.tanggal,
             }).then(function (response) {
                 // handle success
                 if (response.data.status == 1) {
-                    this.nama = response.data.nama;
-                    this.telpon = response.data.telpon;
-                    this.pax = response.data.pax;
-                    this.table_id = response.data.table_id;
-                    this.tanggal = response.data.tanggal;
-
+                    console.log(response.data);
                     this.$inertia.visit("/order", {
                         method: "get",
                         data: {

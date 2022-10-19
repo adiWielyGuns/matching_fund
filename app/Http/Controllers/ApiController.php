@@ -32,8 +32,7 @@ class ApiController extends Controller
     public function submitReservasi(Request $req)
     {
         return DB::transaction(function () use ($req) {
-            $id = '';
-            Reservation::create([
+            $data = [
                 'id' => $this->reservationRepository->getIdReservation(),
                 'kode' => $this->reservationRepository->getKodeReservation(),
                 'tanggal' => Carbon::parse($req->tanggal)->format('Y-m-d'),
@@ -46,6 +45,12 @@ class ApiController extends Controller
                 'updated_by' => me(),
                 'created_at' => now(),
                 'updated_at' => now(),
+            ];
+
+            return Response()->json([
+                'status' => 1,
+                'message' => 'Berhasil melakukan reservasi',
+                'data' => $this->reservationRepository->createReservation($data),
             ]);
         });
     }
