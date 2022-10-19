@@ -33,26 +33,19 @@ class ApiController extends Controller
     {
         return DB::transaction(function () use ($req) {
             $id = '';
-            dd(Carbon::parse($req->tanggal)->format('H:i'));
             Reservation::create([
                 'id' => $this->reservationRepository->getIdReservation(),
                 'kode' => $this->reservationRepository->getKodeReservation(),
                 'tanggal' => Carbon::parse($req->tanggal)->format('Y-m-d'),
                 'jam' => Carbon::parse($req->tanggal)->format('H:i'),
                 'pax' => $req->pax,
-                'nominal_transfer' => $id,
-                'nama' => $id,
-                'telpon' => $id,
-                'bank' => $id,
-                'no_rekening' => $id,
-                'bukti_transfer' => $id,
-                'order_id' => $id,
-                'table_id' => $id,
-                'status' => $id,
-                'created_by' => $id,
-                'updated_by' => $id,
-                'created_at' => $id,
-                'updated_at'
+                'nama' => $req->nama,
+                'telpon' => $req->telpon,
+                'status' => 'Waiting For Payment',
+                'created_by' => me(),
+                'updated_by' => me(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         });
     }
