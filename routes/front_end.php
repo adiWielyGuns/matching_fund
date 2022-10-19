@@ -1,8 +1,14 @@
 <?php
 
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\HomeFrontEndController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/order', 'order')->name('order');
+    Route::get('/receipt', 'receipt')->name('receipt');
+});
 
 Route::controller(ApiController::class)->group(function () {
     Route::post('/checkIfCodeExist', 'checkIfCodeExist')->name('checkIfCodeExist');

@@ -21,17 +21,18 @@ const showingNavigationDropdown = ref(false);
   <div>
     <div class="min-h-screen bg-gray-100">
       <!-- Page Heading -->
-      <header class="bg-white shadow">
+      <header class="bg-white shadow fixed w-full z-50 top-0">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Self Order App
           </h2>
         </div>
       </header>
-
       <!-- Page Content -->
       <main>
-        <slot />
+        <div class="mt-12">
+          <slot />
+        </div>
       </main>
       <Loading v-if="$root.$loading.loading">
         <font-awesome-icon icon="fas fa-spinner" spin class="text-white mr-2 text-5xl" />
@@ -42,17 +43,13 @@ const showingNavigationDropdown = ref(false);
 
 <script>
 export default {
-  setup(){
-    const loading = inject('$loading');
+  setup() {
+    const loading = inject("$loading");
   },
   data() {
     return {
       load: this.$loading,
-    }
-  },
-  mounted(){
-    console.log(this.$root)
-    console.log(this.$root.$loading)
+    };
   },
 };
 </script>

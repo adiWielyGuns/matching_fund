@@ -13,7 +13,7 @@ defineEmits(["update:modelValue"]);
       :async="false"
       :maximumSelectionLength="10"
       :tags="false"
-      :multiple="true"
+      :multiple="false"
       :placeholder="'Pilih Kategori'"
       @input="(e) => $emit('update:modelValue', e)"
     ></select2>
@@ -23,24 +23,7 @@ defineEmits(["update:modelValue"]);
 export default {
   data() {
     return {
-      category: [
-        {
-          id: 1,
-          text: "Mie",
-        },
-        {
-          id: 2,
-          text: "Nasi",
-        },
-        {
-          id: 3,
-          text: "Steak",
-        },
-        {
-          id: 4,
-          text: "Minuman",
-        },
-      ],
+      category: this.$page.props.categories,
     };
   },
 };

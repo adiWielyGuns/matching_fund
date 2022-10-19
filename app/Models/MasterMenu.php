@@ -16,6 +16,7 @@ class MasterMenu extends Model
         'id',
         'name',
         'image',
+        'description',
         'category_id',
         'created_by',
         'updated_by',

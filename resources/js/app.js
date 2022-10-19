@@ -9,7 +9,11 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import useVuelidate from "@vuelidate/core";
 import Toast, { useToast } from "vue-toastification";
 import Datepicker from '@vuepic/vue-datepicker';
+import Cookies from 'js-cookie'
+let accounting = document.createElement("script");
+accounting.setAttribute("src", "../assets/js/accounting/accounting.js");
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+document.head.appendChild(accounting);
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -17,6 +21,7 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         var apps = createApp({ render: () => h(app, props) });
         apps.config.globalProperties.$toaster = useToast();
+        apps.config.globalProperties.Cookies = Cookies;
         apps.config.globalProperties.$loading = reactive({
             loading: false,
         });
@@ -27,6 +32,7 @@ createInertiaApp({
             .use(useVuelidate)
             .use(Toast)
             .use(Datepicker)
+            .use(Cookies)
             .mount(el);
     },
 });

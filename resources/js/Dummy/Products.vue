@@ -20,48 +20,56 @@ const emits = defineEmits(["openModal"]);
 </script>
 
 <template>
-  <div v-for="(item, index) in items" :key="index" :class="col">
+  <div
+    v-for="(item, index) in items"
+    :key="index"
+    :class="col"
+    class="bg-white rounded-3xl"
+  >
     <a
       href="javascript:;"
-      class="flex flex-col bg-white shadow-md rounded-md cursor-pointer"
+      class="flex flex-col bg-white rounded-md cursor-pointer"
       v-if="mode == 'tile'"
       @click="$emit('openModal', item)"
     >
       <img
-        class="w-full rounded-t-md object-cover md:h-24"
+        class="w-full rounded-3xl object-cover md:h-36"
         v-bind:src="item.image"
         alt=""
       />
 
       <img
         v-if="item.sold > 80 && item.favoriteList"
-        class="rounded-t-md object-cover w-12 h-12 absolute"
+        class="rounded-t-md object-cover w-12 h-12 absolute mb-2"
         v-bind:src="'../assets/images/fav.png'"
         alt=""
       />
-      <div class="p-2 flex flex-col justify-between h-24">
+      <div class="p-2">
         <p>
-          <b>{{ item.name }}</b>
+          <b class="font-extrabold">{{ item.name }}</b>
         </p>
-        <div class="flex">
-          <b class="text-orange-500 mr-1"
-            >Rp. {{ item.disc != "0" ? item.disc : item.price }}</b
-          >
-          <b class="text-orange-500 text-xs line-through" v-if="item.disc != '0'"
-            >Rp. {{ item.price }}</b
-          >
+        <p class="h-13 text-sm ellipsis text-gray-400 mb-5">
+          {{ item.description }}
+        </p>
+        <div class="text-right">
+          <b class="text-gray-700 mr-1 text-xl"
+            >Rp. {{ accounting.formatNumber(item.price) }}
+          </b>
+          <!-- <b class="text-orange-500 text-xs line-through" v-if="item.disc != '0'"
+            >Rp. {{ item.price }}
+          </b> -->
         </div>
       </div>
     </a>
 
     <a
       href="javascript:;"
-      class="flex bg-white shadow-md rounded-md cursor-pointer"
+      class="flex bg-white rounded-3xl cursor-pointer"
       v-if="mode == 'list'"
       @click="$emit('openModal', item)"
     >
       <img
-        class="w-24 rounded-tl-md rounded-bl-md object-cover md:h-24 mr-4"
+        class="w-24 rounded-tl-3xl rounded-bl-3xl object-cover md:h-28 mr-2"
         v-bind:src="item.image"
         alt=""
       />
@@ -72,17 +80,18 @@ const emits = defineEmits(["openModal"]);
         v-bind:src="'../assets/images/fav.png'"
         alt=""
       />
-      <div class="p-2 flex flex-col justify-between h-24">
+      <div class="p-2 flex flex-col justify-between">
         <p>
           <b>{{ item.name }}</b>
         </p>
+        <p class="text-sm ellipsis text-gray-400">
+          {{ item.description }}
+        </p>
         <div class="flex">
-          <b class="text-orange-500 mr-1"
-            >Rp. {{ item.disc != "0" ? item.disc : item.price }}</b
-          >
-          <b class="text-orange-500 text-xs line-through" v-if="item.disc != '0'"
-            >Rp. {{ item.price }}</b
-          >
+          <b class="text-gray-700 mr-1">Rp. {{ accounting.formatNumber(item.price) }}</b>
+          <!-- <b class="text-orange-500 text-xs line-through" v-if="item.disc != '0'"
+            >Rp. {{ accounting.formatNumber(item.price) }}</b
+          > -->
         </div>
       </div>
     </a>
@@ -93,108 +102,8 @@ const emits = defineEmits(["openModal"]);
 export default {
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name: "Mie Iblis ",
-          category: 1,
-          image: "../assets/images/mie-1.jpg",
-          sold: 100,
-          price: "10,500",
-          disc: "8,000",
-          favoriteList: true,
-        },
-        {
-          id: 2,
-          name: "Mie Setan",
-          category: 1,
-          image: "../assets/images/mie-1.jpg",
-          sold: 90,
-          price: "10,900",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 3,
-          name: "Mie Angel",
-          category: 1,
-          image: "../assets/images/food-beverage-1.jpg",
-          sold: 80,
-          price: "9,500",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 4,
-          name: "Nasi Goreng Hitler",
-          category: 2,
-          image: "../assets/images/food-beverage-2.jpg",
-          sold: 60,
-          price: "12,000",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 5,
-          name: "Nasi Goreng Bucin",
-          category: 2,
-          image: "../assets/images/food-beverage-3.jpg",
-          sold: 50,
-          price: "14,000",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 6,
-          name: "Steak Murmer",
-          category: 3,
-          image: "../assets/images/food-beverage-4.jpg",
-          sold: 100,
-          price: "18,000",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 7,
-          name: "Steak Tenderloin",
-          category: 3,
-          image: "../assets/images/food-beverage-5.jpg",
-          sold: 40,
-          price: "32,000",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 8,
-          name: "Steak Sirloin",
-          category: 3,
-          image: "../assets/images/food-beverage-6.jpg",
-          sold: 30,
-          price: "30,000",
-          disc: "0",
-          favoriteList: true,
-        },
-        {
-          id: 9,
-          name: "Es Teh",
-          category: 4,
-          image: "../assets/images/promo-1.jpg",
-          price: "5,000",
-          sold: 100,
-          disc: "0",
-          favoriteList: false,
-        },
-        {
-          id: 9,
-          name: "Air Putih",
-          category: 4,
-          image: "../assets/images/mineral-water.jpg",
-          price: "3,000",
-          sold: 100,
-          disc: "0",
-          favoriteList: false,
-        },
-      ],
+      products: this.$page.props.menu,
+      accounting: accounting,
     };
   },
   methods: {
@@ -218,16 +127,10 @@ export default {
         var category = true;
         if (this.category.length != 0)
           category = this.category.includes(e.category.toString());
-
         var similarity = 1;
         if (this.searchValue != "") {
-          var similarity = this.compare(
-            this.searchValue.toLowerCase(),
-            e.name.toLowerCase()
-          );
+          var similarity = e.name.toLowerCase().includes(this.searchValue.toLowerCase());
         }
-
-        similarity > 0.8 ? (similarity = true) : (similarity = false);
 
         if (category && similarity) {
           temp = true;

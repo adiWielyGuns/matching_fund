@@ -41,8 +41,8 @@ class ApiController extends Controller
                 'nama' => $req->nama,
                 'telpon' => $req->telpon,
                 'status' => 'Waiting For Payment',
-                'created_by' => me(),
-                'updated_by' => me(),
+                'created_by' => $req->nama,
+                'updated_by' => $req->nama,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

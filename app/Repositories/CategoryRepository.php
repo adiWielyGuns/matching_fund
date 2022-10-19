@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -15,6 +16,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getCategoryById($orderId)
     {
         return Category::findOrFail($orderId);
+    }
+
+    public function getAllCategoryActive($select = '*')
+    {
+        return Category::select(DB::raw($select))->where('status', true)->get();
     }
 
     public function deleteCategory($orderId)

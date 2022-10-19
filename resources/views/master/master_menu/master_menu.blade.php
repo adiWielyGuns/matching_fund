@@ -98,6 +98,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="description" class="col-form-label">Description </label>
+                                <textarea class="form-control" name="description" placeholder="Masukan deskripsi menu" id="description"></textarea>
+                            </div>
+                        </div>
                         {{-- <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="name" class="col-form-label">
