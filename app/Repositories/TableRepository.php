@@ -4,12 +4,18 @@ namespace App\Repositories;
 
 use App\Interfaces\TableRepositoryInterface;
 use App\Models\Table;
+use Illuminate\Support\Facades\DB;
 
 class TableRepository implements TableRepositoryInterface
 {
     public function getAllTables()
     {
         return Table::all();
+    }
+
+    public function getAllTablesActive($select = '*')
+    {
+        return Table::select(DB::raw($select))->where('status', true)->get();
     }
 
     public function getTableById($orderId)

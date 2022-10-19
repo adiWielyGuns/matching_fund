@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\TableRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
+    private TableRepositoryInterface $tableRepository;
+
+    public function __construct(TableRepositoryInterface $tableRepository)
+    {
+        $this->tableRepository = $tableRepository;
+    }
 
     public function index()
     {
-        return Inertia::render('Welcome');
+
+        return Inertia::render('Welcome', [
+            'now' => Carbon::now()->format('l, d-m-Y'),
+            'table' => $this->tableRepository->getAllTablesActive('id, name as text'),
+        ]);
     }
 
     public function order(Request $req)

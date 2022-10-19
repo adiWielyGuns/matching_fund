@@ -51,6 +51,9 @@ Route::group(['prefix' => 'cms'], function () {
     });
 
     Route::middleware('auth')->group(function () {
+
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
         Route::controller(HomeCmsController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('home-cms');
             Route::get('/', function () {

@@ -5,6 +5,7 @@ namespace App\Interfaces;
 interface TableRepositoryInterface
 {
     public function getAllTables();
+    public function getAllTablesActive($select);
     public function getIdTable();
     public function getTableById($titleMenuId);
     public function deleteTable($titleMenuId);

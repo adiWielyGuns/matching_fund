@@ -26,7 +26,7 @@ const sizeClass = computed(() => {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.61);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,10 +34,12 @@ const sizeClass = computed(() => {
 }
 
 .modal {
-  background: #ffffff;
+  background-color: rgba(255, 255, 255, .40);
+  backdrop-filter: blur(30px);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
+  border-radius: 60px;
 }
 
 .modal-lg {
@@ -82,7 +84,7 @@ const sizeClass = computed(() => {
 
 .modal-header,
 .modal-footer {
-  padding: 15px;
+  padding: 15px 40px;
   display: flex;
 }
 
@@ -107,7 +109,7 @@ const sizeClass = computed(() => {
 .btn-close {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 1.25rem;
   border: none;
   font-size: 20px;
   padding: 10px;
@@ -124,6 +126,7 @@ const sizeClass = computed(() => {
   border: 1px solid #4aae9b;
   border-radius: 2px;
 }
+
 .modal-fade-enter,
 .modal-fade-leave-to {
   opacity: 0;
@@ -137,23 +140,12 @@ const sizeClass = computed(() => {
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div
-        class="modal rounded"
-        :class="[sizeClass]"
-        role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-      >
+      <div class="modal rounded" :class="[sizeClass]" role="dialog" aria-labelledby="modalTitle"
+        aria-describedby="modalDescription">
         <header class="modal-header" id="modalTitle">
           <slot name="header"> This is the default title! </slot>
-          <button
-            type="button"
-            class="btn-close"
-            @click="close"
-            aria-label="Close modal"
-            v-if="allowClose"
-          >
-            x
+          <button type="button" class="btn-close " @click="close" aria-label="Close modal" v-if="allowClose">
+            <span class="text-white">x</span>
           </button>
         </header>
 

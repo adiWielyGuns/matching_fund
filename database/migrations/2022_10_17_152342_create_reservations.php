@@ -19,13 +19,13 @@ return new class extends Migration
             $table->date('tanggal');
             $table->string('jam');
             $table->integer('pax');
-            $table->double('nominal_transfer', 20, 2);
+            $table->double('nominal_transfer', 20, 2)->nullable();
             $table->string('nama');
             $table->string('telpon');
-            $table->string('bank');
-            $table->string('no_rekening');
-            $table->string('bukti_transfer');
-            $table->integer('order_id');
+            $table->string('bank')->nullable();
+            $table->string('no_rekening')->nullable();
+            $table->string('bukti_transfer')->nullable();
+            $table->integer('order_id')->nullable();
             $table->enum('status', ['Waiting For Payment', 'Paid', 'Done', 'Canceled', 'Abandoned'])->default('Waiting For Payment');
             $table->string('created_by');
             $table->string('updated_by');

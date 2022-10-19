@@ -12,7 +12,7 @@
         "@vitejs/plugin-vue": "^2.3.3",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",
-        "axios": "^0.25",
+        "axios": "^0.25.0",
         "laravel-vite-plugin": "^0.2.1",
         "lodash": "^4.17.19",
         "postcss": "^8.4.6",
@@ -21,11 +21,17 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.2.0",
+        "@fortawesome/free-regular-svg-icons": "^6.2.0",
+        "@fortawesome/free-solid-svg-icons": "^6.2.0",
+        "@fortawesome/vue-fontawesome": "^3.0.1",
         "@vuelidate/core": "^2.0.0",
         "@vuelidate/validators": "^2.0.0",
+        "@vuepic/vue-datepicker": "^3.5.2",
         "jquery": "^3.6.1",
         "select2": "^4.1.0-rc.0",
         "select2-theme-bootstrap4": "^1.0.2",
+        "vue-toastification": "^2.0.0-rc.5",
         "vue3-carousel": "^0.2.4"
     }
 }

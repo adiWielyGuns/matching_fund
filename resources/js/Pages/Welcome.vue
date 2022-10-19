@@ -34,8 +34,8 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                 </div>
                 <div class="col-span-12 text-center">
                     <BreezeButton
-                        class="rounded-full text-md text-center py-4 font-bold text-white bg-purple-500 hover:bg-purple-400 w-3/12 focus:bg-purple-800 active:bg-purple-800"
-                        @click="showModal">Order Sekarang
+                        class="rounded-full text-md text-center py-4 font-bold text-white bg-purple-500 hover:bg-purple-400 md:w-3/12 w-1/2 focus:bg-purple-800 active:bg-purple-800"
+                        @click="showModal('order')">Order Sekarang
                     </BreezeButton>
                 </div>
                 <div class="col-span-12 text-center">
@@ -44,44 +44,69 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
                 </div>
                 <div class="col-span-12 text-center">
                     <BreezeButton
-                        class="rounded-full text-md px-20 py-4 font-bold text-gray-700 bg-yellow-500 hover:bg-yellow-400 w-3/12 focus:bg-yellow-700 active:bg-yellow-700"
-                        @click="showModal">Reservasi
+                        class="rounded-full text-md md:px-20 py-4 font-bold text-gray-700 bg-yellow-500 hover:bg-yellow-400 md:w-3/12 w-1/2 focus:bg-yellow-700 active:bg-yellow-700"
+                        @click="showModal('reservasi')">Reservasi
                     </BreezeButton>
                 </div>
             </div>
         </div>
         <Modal modalSize="sm" v-show="isModalVisible" @close="closeModal">
-            <template #header> Isi Data Anda </template>
+            <template #header> <span class="text-white font-extrabold">Isi Data Anda</span> </template>
             <template #body>
                 <form @submit.prevent="submit" class="grid grid-cols-12 gap-4">
                     <div class="col-span-12">
-                        <BreezeLabel for="nama" value="Nama" />
-                        <BreezeInput id="nama" type="text" class="mt-1 block w-full" v-model="$data.nama" required
-                            autocomplete="nama" placeholder="Masukan nama anda" />
+                        <BreezeLabel for="nama" value="Nama" class="text-white font-extrabold" />
+                        <BreezeInput id="nama" type="text" class="mt-1 block w-full rounded-3xl" v-model="$data.nama"
+                            required autocomplete="nama" placeholder="Masukan nama anda" />
                         <div v-if="v$.nama.$error">
                             <BreezeInputError message="Nama Harus Diisi"></BreezeInputError>
                         </div>
                     </div>
                     <div class="col-span-12">
-                        <BreezeLabel for="jumlah" value="Jumlah Orang" />
-                        <BreezeInput id="jumlah" type="number" class="mt-1 block w-full" v-model="$data.jumlah" required
-                            autocomplete="jumlah" placeholder="Masukan jumlah pengunjung" />
-                        <div v-if="v$.jumlah.$error">
-                            <BreezeInputError message="Jumlah Orang Harus Diisi"></BreezeInputError>
+                        <BreezeLabel for="table_id" value="Nomor Meja" class="text-white font-extrabold" />
+                        <Meja v-model="$data.table_id" class="rounded-3xl"> </Meja>
+                        <div v-if="v$.table_id.$error">
+                            <BreezeInputError message="Nomor Meja Harus Diisi"></BreezeInputError>
+                        </div>
+                    </div>
+                    <div class="col-span-12" v-if="jenis == 'order'?false:true">
+                        <BreezeLabel for="tanggal" value="Tanggal Reservasi" class="text-white font-extrabold" />
+                        <Datepicker v-model="$data.tanggal" position="right" :autoPosition="false" utc="preserve"  />
+                        <div v-if="v$.tanggal.$error">
+                            <BreezeInputError message="Tanggal Harus Diisi"></BreezeInputError>
                         </div>
                     </div>
                     <div class="col-span-12">
-                        <BreezeLabel for="jumlah" value="Jumlah Meja" />
-                        <Meja v-model="$data.mejaId"> </Meja>
-                        <div v-if="v$.mejaId.$error">
-                            <BreezeInputError message="Nomor Meja Harus Diisi"></BreezeInputError>
+                        <BreezeLabel for="pax" value="Jumlah Pelanggan" class="text-white font-extrabold" />
+                        <BreezeInput id="pax" type="number" class="mt-1 block w-full rounded-3xl" v-model="$data.pax"
+                            required autocomplete="pax" placeholder="Masukan jumlah pelanggan" />
+                        <div v-if="v$.pax.$error">
+                            <BreezeInputError message="Jumlah Pelanggan Harus Diisi"></BreezeInputError>
                         </div>
+                    </div>
+                    <div class="col-span-12">
+                        <BreezeLabel for="telpon" value="Telpon" class="text-white font-extrabold" />
+                        <BreezeInput id="telpon" type="text" class="mt-1 block w-full rounded-3xl"
+                            v-model="$data.telpon" required autocomplete="telpon" placeholder="Masukan telpon anda" />
+                        <div v-if="v$.telpon.$error">
+                            <BreezeInputError message="Telpon Harus Diisi"></BreezeInputError>
+                        </div>
+                    </div>
+                    <div class="col-span-12 text-center" v-if="jenis == 'order'?true:false">
+                        <span class="text-white">Atau masukkan kode reservasi. <br>
+                            jika anda melakukan reservasi sebelumnya</span>
+                    </div>
+                    <div class="col-span-12" v-if="jenis == 'order'?true:false">
+                        <BreezeInput id="kode" type="text" class="mt-1 block w-full rounded-3xl" v-model="$data.kode"
+                            required autocomplete="kode" placeholder="Masukan kode reservasi anda" />
                     </div>
                 </form>
             </template>
             <template #footer>
                 <div class="text-center">
-                    <BreezeButton @click="submit" class="text-white">Lanjutkan Ke Pemesanan</BreezeButton>
+                    <BreezeButton @click="onsubmit"
+                        class="text-gray-700 hover:bg-yellow-300 focus:bg-yellow-700 active:bg-yellow-700 bg-yellow-500 font-extrabold">
+                        {{ modalOpened }}</BreezeButton>
                 </div>
             </template>
         </Modal>
@@ -90,16 +115,19 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 <script>
 import { required } from "@vuelidate/validators";
-
-
+import Datepicker from '@vuepic/vue-datepicker';
 export default {
     data() {
         return {
             v$: useVuelidate(),
             isModalVisible: false,
             nama: "",
-            jumlah: "",
-            mejaId: null,
+            pax: "",
+            telpon: "",
+            tanggal: null,
+            table_id: null,
+            kode: null,
+            jenis: null,
             promo: [
                 {
                     id: 1,
@@ -156,52 +184,139 @@ export default {
             },
         };
     },
+    computed: {
+        modalOpened() {
+            return this.jenis == 'order' ? 'Lanjutkan pemesanan' : 'Reservasi sekarang';
+        }
+    },
     validations() {
         return {
             nama: { required },
-            jumlah: { required },
-            mejaId: { required },
+            pax: { required },
+            telpon: { required },
+            table_id: { required },
+            tanggal: { required },
         };
     },
     methods: {
-        showModal() {
+        showModal(param) {
+            this.jenis = param;
             this.isModalVisible = true;
         },
         closeModal() {
             this.isModalVisible = false;
         },
+        async onsubmit() {
+            if (this.jenis == 'order') {
+                await this.submit();
+            } else {
+                await this.submitReservasi();
+            }
+        },
         async submit() {
-            const isFormCorrect = await this.v$.$validate();
 
+            if (this.kode == null || this.kode == '') {
+                console.log(this.kode);
+                const isFormCorrect = await this.v$.$validate();
+                // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
+                if (!isFormCorrect) return;
+            } else {
+                this.v$.$reset();
+            }
+
+            var el = this;
+            this.$root.$loading.loading = true;
+
+            console.log(this.$loading)
+            axios.post('/checkIfCodeExist', {
+                kode: this.kode,
+            }).then(function (response) {
+                // handle success
+                if (response.data.status == 1) {
+                    this.nama = response.data.nama;
+                    this.telpon = response.data.telpon;
+                    this.pax = response.data.pax;
+                    this.table_id = response.data.table_id;
+
+                    this.$inertia.visit("/order", {
+                        method: "get",
+                        data: {
+                            nama: this.nama,
+                            jumlah: this.jumlah,
+                            mejaId: this.mejaId,
+                        },
+                        replace: false,
+                        preserveState: true,
+                        preserveScroll: false,
+                    });
+                } else {
+                    el.$toaster.warning(response.data.message);
+                }
+
+                el.$root.$loading.loading = false;
+
+            }).catch(function (error) {
+                // handle error
+                el.$root.$loading.loading = false;
+            }).finally(function () {
+                // always executed
+            });
+
+
+        },
+        async submitReservasi() {
+
+            console.log('tes')
+            const isFormCorrect = await this.v$.$validate();
             // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
             if (!isFormCorrect) return;
 
-            this.$inertia.visit("/order", {
-                method: "get",
-                data: {
-                    nama: this.nama,
-                    jumlah: this.jumlah,
-                    mejaId: this.mejaId,
-                },
-                replace: false,
-                preserveState: true,
-                preserveScroll: false,
-                only: [],
-                headers: {},
-                errorBag: null,
-                onCancelToken: (cancelToken) => { },
-                onCancel: () => { },
-                onBefore: (visit) => { },
-                onStart: (visit) => { },
-                onProgress: (progress) => { },
-                onSuccess: (page) => { },
-                onError: (errors) => { },
-                onFinish: () => { },
+            var el = this;
+            this.$root.$loading.loading = true;
+
+            axios.post('/submit-reservasi', {
+                nama : this.nama,
+                telpon : this.telpon,
+                pax : this.pax,
+                table_id : this.table_id,
+                tanggal : this.tanggal,
+            }).then(function (response) {
+                // handle success
+                if (response.data.status == 1) {
+                    this.nama = response.data.nama;
+                    this.telpon = response.data.telpon;
+                    this.pax = response.data.pax;
+                    this.table_id = response.data.table_id;
+                    this.tanggal = response.data.tanggal;
+
+                    this.$inertia.visit("/order", {
+                        method: "get",
+                        data: {
+                            nama: this.nama,
+                            jumlah: this.jumlah,
+                            mejaId: this.mejaId,
+                        },
+                        replace: false,
+                        preserveState: true,
+                        preserveScroll: false,
+                    });
+                } else {
+                    el.$toaster.warning(response.data.message);
+                }
+
+                el.$root.$loading.loading = false;
+
+            }).catch(function (error) {
+                // handle error
+                el.$root.$loading.loading = false;
+            }).finally(function () {
+                // always executed
             });
         },
     },
 };
 </script>
+
 <style scoped>
 .carousel__slide {
     padding: 5px;

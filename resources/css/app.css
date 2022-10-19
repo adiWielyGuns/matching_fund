@@ -1,6 +1,9 @@
 @import "select2/dist/css/select2.min.css";
 @import "select2-theme-bootstrap4/dist/select2-bootstrap.min.css";
 @import 'vue3-carousel/dist/carousel.css';
+@import "vue-toastification/dist/index.css";
+@import '@vuepic/vue-datepicker/dist/main.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,23 +33,32 @@
 }
 
 .select2-container:focus {
-    border-color: #F59E9E !important;
+    border-color: #a855f7 !important;
 }
 
 .select2-selection {
-    border-color: #1F2937 !important;
+    border-color: white !important;
+    border-radius: 100px !important;
+    transition: all 150ms ease !important;
 }
 
 
 .select2-selection[aria-expanded="true"] {
-    border-color: #F59E9E !important;
+    border-color: #a855f7 !important;
+    border-radius: 0 !important;
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+    transition: all 100ms ease !important;
 }
 
 .select2-container--bootstrap .select2-dropdown {
-    border-color: #F59E9E !important;
+    border-color: #a855f7 !important;
 
 }
 
+.dp__pointer{
+    border-radius: 50px;
+}
 /* button.carousel__prev{
     left: 30%;
 }

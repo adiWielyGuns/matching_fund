@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.blogs: ~3 rows (approximately)
+-- Dumping data for table matching_fund.blogs: ~2 rows (approximately)
 DELETE FROM `blogs`;
 /*!40000 ALTER TABLE `blogs` DISABLE KEYS */;
 INSERT INTO `blogs` (`id`, `title`, `image`, `content`, `slug`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`) VALUES
@@ -320,9 +320,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.migrations: ~27 rows (approximately)
+-- Dumping data for table matching_fund.migrations: ~29 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -352,7 +352,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(160, '2022_10_17_145643_create_orders', 10),
 	(161, '2022_10_17_150449_create_payment_methods', 10),
 	(162, '2022_10_17_152342_create_reservations', 10),
-	(163, '2022_10_17_152910_create_order_details', 10);
+	(163, '2022_10_17_152910_create_order_details', 10),
+	(165, '2022_10_18_142250_add_image_to_payment_methods', 11),
+	(166, '2022_10_19_121432_add_table_id_to_reservations', 12);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.orders
@@ -427,12 +429,19 @@ CREATE TABLE IF NOT EXISTS `payment_methods` (
   `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.payment_methods: ~0 rows (approximately)
+-- Dumping data for table matching_fund.payment_methods: ~4 rows (approximately)
 DELETE FROM `payment_methods`;
 /*!40000 ALTER TABLE `payment_methods` DISABLE KEYS */;
+INSERT INTO `payment_methods` (`id`, `name`, `description`, `jenis`, `no_ref`, `nama_ref`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`, `image`) VALUES
+	(1, 'Cash', '-', 'TUNAI', NULL, NULL, 1, 'superuser', 'superuser', '2022-10-18 14:20:48', '2022-10-18 14:45:53', 'http://127.0.0.1:8000/image/payment_method/bba2c142-da03-40db-8796-2e24ff942c84.png'),
+	(2, 'Qris', '-', 'NON TUNAI', '12345678', 'Matching Fund', 1, 'superuser', 'superuser', '2022-10-18 14:21:47', '2022-10-18 14:44:38', 'http://127.0.0.1:8000/image/payment_method/5ab2a1c3-143f-4e16-9fe7-59d2f2d95044.png'),
+	(3, 'Ovo', '-', 'NON TUNAI', '3485734857348', 'Matching Fund', 1, 'superuser', 'superuser', '2022-10-18 14:21:55', '2022-10-18 14:44:51', 'http://127.0.0.1:8000/image/payment_method/0fed9966-ec2e-491c-b5cb-6716b31747f3.png'),
+	(4, 'Gopay', '-', 'NON TUNAI', '3485734857348', 'Matching Fund', 1, 'superuser', 'superuser', '2022-10-18 14:22:01', '2022-10-18 14:45:13', 'http://127.0.0.1:8000/image/payment_method/b14cb9c7-6f3d-4496-8f5a-3b265d5df2a7.png'),
+	(5, 'Shopee Pay', '-', 'NON TUNAI', NULL, 'Matching Fund', 1, 'superuser', 'superuser', '2022-10-18 14:22:10', '2022-10-18 14:45:27', 'http://127.0.0.1:8000/image/payment_method/9fce4614-2246-4521-a025-82b448e771fa.png');
 /*!40000 ALTER TABLE `payment_methods` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.personal_access_tokens
@@ -497,18 +506,19 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `tanggal` date NOT NULL,
   `jam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pax` int(11) NOT NULL,
-  `nominal_transfer` double(20,2) NOT NULL,
+  `nominal_transfer` double(20,2) DEFAULT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telpon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bank` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_rekening` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bukti_transfer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order_id` int(11) NOT NULL,
+  `bank` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_rekening` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bukti_transfer` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
   `status` enum('Waiting For Payment','Paid','Done','Canceled','Abandoned') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Waiting For Payment',
   `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `table_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table matching_fund.reservations: ~0 rows (approximately)
@@ -586,9 +596,16 @@ CREATE TABLE IF NOT EXISTS `tables` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.tables: ~0 rows (approximately)
+-- Dumping data for table matching_fund.tables: ~6 rows (approximately)
 DELETE FROM `tables`;
 /*!40000 ALTER TABLE `tables` DISABLE KEYS */;
+INSERT INTO `tables` (`id`, `name`, `description`, `kapasitas`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, '1', 'tes', 5, 1, 'superuser', 'superuser', '2022-10-18 10:04:47', '2022-10-18 10:04:47'),
+	(2, '2', '-', 4, 1, 'superuser', 'superuser', '2022-10-19 11:29:41', '2022-10-19 11:29:41'),
+	(3, '3', '-', 4, 1, 'superuser', 'superuser', '2022-10-19 11:29:53', '2022-10-19 11:29:53'),
+	(4, '4', '-', 4, 1, 'superuser', 'superuser', '2022-10-19 11:29:57', '2022-10-19 11:29:57'),
+	(5, '5', '-', 4, 1, 'superuser', 'superuser', '2022-10-19 11:30:01', '2022-10-19 11:30:01'),
+	(6, '6', '-', 12, 1, 'superuser', 'superuser', '2022-10-19 11:30:06', '2022-10-19 11:30:06');
 /*!40000 ALTER TABLE `tables` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.title_menus
@@ -633,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `FK_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.users: ~1 rows (approximately)
+-- Dumping data for table matching_fund.users: ~0 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`, `image`, `status`) VALUES

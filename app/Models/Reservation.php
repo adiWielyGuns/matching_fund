@@ -25,6 +25,7 @@ class Reservation extends Model
         'no_rekening',
         'bukti_transfer',
         'order_id',
+        'table_id',
         'status',
         'created_by',
         'updated_by',

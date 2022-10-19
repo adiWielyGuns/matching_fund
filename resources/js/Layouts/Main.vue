@@ -1,6 +1,19 @@
 <script setup>
 import { ref } from "vue";
+import Loading from "@/Components/Loading.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {
+  faUserSecret,
+  faSearch,
+  faList,
+  faTableCells,
+  faTrash,
+  faEdit,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 
+library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faSpinner);
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -20,6 +33,26 @@ const showingNavigationDropdown = ref(false);
       <main>
         <slot />
       </main>
+      <Loading v-if="$root.$loading.loading">
+        <font-awesome-icon icon="fas fa-spinner" spin class="text-white mr-2 text-5xl" />
+      </Loading>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  setup(){
+    const loading = inject('$loading');
+  },
+  data() {
+    return {
+      load: this.$loading,
+    }
+  },
+  mounted(){
+    console.log(this.$root)
+    console.log(this.$root.$loading)
+  },
+};
+</script>

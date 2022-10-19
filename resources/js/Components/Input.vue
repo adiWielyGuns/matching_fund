@@ -39,11 +39,7 @@ onMounted(() => {
 }
 </style>
 <template>
-  <input
-    :placeholder="placeholder"
-    class="border-gray-900 focus:border-orange-500 focus:ring focus:ring-orange-200 focus:ring-opacity-50 rounded-md shadow-sm form-control"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    ref="input"
-  />
+  <input :placeholder="placeholder"
+    class="border-white focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm py-1.5"
+    :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input" />
 </template>
