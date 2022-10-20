@@ -256,9 +256,6 @@ export default {
       return this.jenis == "order" ? "Lanjutkan pemesanan" : "Reservasi sekarang";
     },
   },
-  mounted() {
-    console.log(this.Cookies.get("order"));
-  },
   validations() {
     const localRules = {
       nama: { required },

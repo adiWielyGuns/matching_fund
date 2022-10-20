@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderEvent;
+use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
+use App\Models\MasterMenu;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
@@ -15,22 +20,12 @@ use Pusher\Pusher;
 class ApiController extends Controller
 {
     private ReservationRepositoryInterface $reservationRepository;
+    private OrderRepositoryInterface $orderRepository;
 
-    public function __construct(ReservationRepositoryInterface $reservationRepository)
+    public function __construct(ReservationRepositoryInterface $reservationRepository, OrderRepositoryInterface $orderRepository)
     {
         $this->reservationRepository = $reservationRepository;
-    }
-
-
-    public function authenticate(Request $req)
-    {
-        $pusher = new Pusher(
-            '54492e6a46bf5094ea6e',
-            'c876f62937490efa9375',
-            '1494700'
-        );
-
-        return $pusher->socket_auth($req->channel_name, $req->socket_id);
+        $this->orderRepository = $orderRepository;
     }
 
     public function checkIfCodeExist(Request $req)
@@ -71,10 +66,112 @@ class ApiController extends Controller
         });
     }
 
-    public function orderNotifier()
+    public function processOrder(Request $req)
     {
-        event(new OrderEvent('hello world'));
+        return DB::transaction(function () use ($req) {
+
+            if ($req->order_id == null) {
+                $id = $this->orderRepository->getIdOrder();
+                $data = [
+                    'id' => $id,
+                    'kode' => $this->orderRepository->getKodeOrder(),
+                    'name' => $req->name,
+                    'telpon' => $req->telpon,
+                    'pax' => $req->pax,
+                    'table_id' => $req->table_id,
+                    'jenis' => 'langsung',
+                    'created_by' => $req->name,
+                    'updated_by' => $req->name,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
+                $this->orderRepository->createOrder($data);
+
+                foreach ($req->item as $key => $value) {
+                    OrderDetail::create([
+                        'order_id' => $id,
+                        'id' => $key + 1,
+                        'price' => $value['price'],
+                        'qty' => $value['jumlah'],
+                        'sub_total' => $value['price'] * $value['jumlah'],
+                        'master_menu_id' => $value['id'],
+                        'status' => 'Order',
+                        'created_by' => $req->name,
+                        'updated_by' => $req->name,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                $total = OrderDetail::where('order_id', $id)->sum('sub_total');
+
+                $this->orderRepository->updateOrder($id, ['total_price' => $total]);
+            } else {
+                $id = $req->order_id;
+
+                $data = [
+                    'name' => $req->name,
+                    'telpon' => $req->telpon,
+                    'pax' => $req->pax,
+                    'table_id' => $req->table_id,
+                    'jenis' => 'langsung',
+                    'updated_by' => $req->name,
+                    'updated_at' => now(),
+                ];
+
+                $this->orderRepository->updateOrder($id, $data);
+
+                foreach ($req->item as $key => $value) {
+                    OrderDetail::create([
+                        'order_id' => $id,
+                        'id' => OrderDetail::where('order_id', $id)->max('id') + 1,
+                        'price' => $value['price'],
+                        'qty' => $value['jumlah'],
+                        'sub_total' => $value['price'] * $value['jumlah'],
+                        'master_menu_id' => $value['id'],
+                        'status' => 'Order',
+                        'created_by' => $req->name,
+                        'updated_by' => $req->name,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                $total = OrderDetail::where('order_id', $id)->sum('sub_total');
+
+                $this->orderRepository->updateOrder($id, ['total_price' => $total]);
+            }
+
+
+            return Response()->json([
+                'status' => 1,
+                'message' => 'Berhasil melakukan pesanan',
+                'order_id' => $id,
+            ]);
+        });
+    }
+
+    public function orderNotifier(Request $req)
+    {
+
+        $pesanan['progress'] = MasterMenu::take(3)->get();
+        $order = OrderDetail::where('order_id', $req->order_id)
+            ->with(['master_menu'])
+            ->get()->toArray();
+        event(new OrderEvent($req->order_id, $order));
 
         return 'success';
+    }
+
+    public function checkTransaction(Request $req)
+    {
+        $check = Order::find($req->order_id);
+        if ($check) {
+            if (!$check->where('status', 'Not Paid')->first()) {
+                return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
+            };
+        }
+        return Response()->json(['status' => 0, 'message' => 'Not Ordering']);
     }
 }

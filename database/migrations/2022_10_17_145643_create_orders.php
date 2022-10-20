@@ -21,9 +21,9 @@ return new class extends Migration
             $table->integer('pax');
             $table->integer('table_id');
             $table->integer('reservation_id')->nullable();
-            $table->integer('payment_method_id');
-            $table->string('no_ref');
-            $table->string('nama_ref');
+            $table->integer('payment_method_id')->nullable();
+            $table->string('no_ref')->nullable();
+            $table->string('nama_ref')->nullable();
             $table->enum('jenis', ['langsung', 'reservasi']);
             $table->double('total_price', 20, 2);
             $table->string('created_by');

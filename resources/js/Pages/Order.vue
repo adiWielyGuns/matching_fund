@@ -1,4 +1,3 @@
-
 <script setup>
 import Main from "@/Layouts/Main.vue";
 import BreezeButton from "@/Components/Button.vue";
@@ -24,14 +23,25 @@ import {
   faEllipsisVertical,
   faMinus,
   faCartShopping,
-  faPlus
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUser, faEllipsisVertical, faMinus, faPlus, faCartShopping);
+library.add(
+  faUserSecret,
+  faSearch,
+  faList,
+  faTableCells,
+  faTrash,
+  faEdit,
+  faUser,
+  faEllipsisVertical,
+  faMinus,
+  faPlus,
+  faCartShopping
+);
 </script>
 
 <template>
-
   <Head title="Order" />
   <Main>
     <div class="py-12">
@@ -45,21 +55,51 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                     <div class="col-span-12 flex justify-between">
                       <div class="flex">
                         <img class="h-7 mr-2" :src="'../assets/images/user.png'" alt="" />
-                        <span class="text-gray-700 text-2xl inline-block align-middle my-auto">
-                          {{ $page.props.req.nama}}
+                        <span
+                          class="text-gray-700 text-2xl inline-block align-middle my-auto"
+                        >
+                          {{ $page.props.req.nama }}
                           {{ activateDropdown }}
                         </span>
                       </div>
-                      <a href="javascript:;" class="my-auto text-gray-700 hover:text-purple-700">
-                        <div class="dropdown" :class="{'show':activateDropdown}">
-                          <a class="nav-link" @click="activateDropdown?activateDropdown=false:activateDropdown=true"
-                            data-toggle="dropdown" href="#" aria-expanded="true">
-                            <font-awesome-icon class=" text-xl" icon="fa-solid fa-ellipsis-vertical" />
+                      <a
+                        href="javascript:;"
+                        class="my-auto text-gray-700 hover:text-purple-700"
+                      >
+                        <div class="dropdown" :class="{ show: activateDropdown }">
+                          <a
+                            class="nav-link"
+                            @click="
+                              activateDropdown
+                                ? (activateDropdown = false)
+                                : (activateDropdown = true)
+                            "
+                            data-toggle="dropdown"
+                            href="#"
+                            aria-expanded="true"
+                          >
+                            <font-awesome-icon
+                              class="text-xl"
+                              icon="fa-solid fa-ellipsis-vertical"
+                            />
                           </a>
-                          <div class="dropdown-menu dropdown-menu-left" :class="{'show':activateDropdown}"
+                          <div
+                            class="dropdown-menu dropdown-menu-left"
+                            :class="{ show: activateDropdown }"
                             x-placement="bottom-start"
-                            style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a href="javascript:;" onclick="edit('12')" class="dropdown-item">
+                            style="
+                              position: absolute;
+                              transform: translate3d(0px, 40px, 0px);
+                              top: 0px;
+                              left: 0px;
+                              will-change: transform;
+                            "
+                          >
+                            <a
+                              href="javascript:;"
+                              onclick="edit('12')"
+                              class="dropdown-item"
+                            >
                               <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Edit
                             </a>
                           </div>
@@ -67,10 +107,15 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                       </a>
                     </div>
                     <div class="col-span-12 flex">
-                      <span class="text-gray-700">Tlp : {{ $page.props.req.telpon }},
+                      <span class="text-gray-700"
+                        >Tlp : {{ $page.props.req.telpon }},
                       </span>
-                      <span class="text-gray-700">&nbsp;Meja {{ $page.props.table.name }},</span>
-                      <span class="text-gray-700">&nbsp; {{ $page.props.req.pax }} Cust.</span>
+                      <span class="text-gray-700"
+                        >&nbsp;Meja {{ $page.props.table.name }},</span
+                      >
+                      <span class="text-gray-700"
+                        >&nbsp; {{ $page.props.req.pax }} Cust.</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -80,41 +125,54 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                     <b></b>
                   </div>
                   <ul class="py-4">
-                    <li v-for="(item, index) in listPesanan" :key="index" class=" py-2">
+                    <li v-for="(item, index) in listPesanan" :key="index" class="py-2">
                       <div class="flex">
-                        <img class="rounded object-cover h-12 w-12 mr-2" v-bind:src="item.image" alt="" />
-                        <div class="grid grid-cols-12 gap-2  w-full">
+                        <img
+                          class="rounded object-cover h-12 w-12 mr-2"
+                          v-bind:src="item.image"
+                          alt=""
+                        />
+                        <div class="grid grid-cols-12 gap-2 w-full">
                           <div class="col-span-12">
                             <div class="flex justify-between">
-                              <b>{{ item.name }}</b><br />
+                              <b>{{ item.name }}</b
+                              ><br />
                               <div class="my-auto">
                                 <a href="javascript:;" @click="openItemModal(item)">
-                                  <font-awesome-icon icon="fas fa-edit" class="text-yellow-400 mr-2" />
+                                  <font-awesome-icon
+                                    icon="fas fa-edit"
+                                    class="text-yellow-400 mr-2"
+                                  />
                                 </a>
                                 <a href="javascript:;" @click="deleteItem(index)">
-                                  <font-awesome-icon icon="fas fa-trash" class="text-red-600" />
+                                  <font-awesome-icon
+                                    icon="fas fa-trash"
+                                    class="text-red-600"
+                                  />
                                 </a>
                               </div>
                             </div>
                           </div>
                           <div class="col-span-12">
-
                             <div class="flex justify-between w-full">
                               <b class="text-gray-700 mr-1">
                                 {{ item.jumlah }} x
                                 <span class="text-gray-400">
-                                  Rp. {{ accounting.formatNumber(item.price)}}
+                                  Rp. {{ accounting.formatNumber(item.price) }}
                                 </span>
                               </b>
                               <span class="text-gray-700">
-                                <b class="font-extrabold">Rp. {{accounting.formatNumber(item.price * item.jumlah)}}</b>
+                                <b class="font-extrabold"
+                                  >Rp.
+                                  {{
+                                    accounting.formatNumber(item.price * item.jumlah)
+                                  }}</b
+                                >
                               </span>
                             </div>
                           </div>
                         </div>
                       </div>
-
-
                     </li>
                     <li class="pt-6 pb-8">
                       <div class="border-dashed border-b border-black"></div>
@@ -124,9 +182,12 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                       <b class="text-xl">Rp. {{ totalPesananFormatMoney }}</b>
                     </li>
                     <li v-if="listPesanan.length != 0" class="text-center w-full my-4">
-                      <BreezeButton @click="prosesPesanan"
-                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400  focus:bg-purple-800 active:bg-purple-800 h-8 w-full">
-                        Proses Pesanan</BreezeButton>
+                      <BreezeButton
+                        @click="prosesPesanan"
+                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full"
+                      >
+                        Proses Pesanan</BreezeButton
+                      >
                     </li>
                   </ul>
                 </div>
@@ -135,15 +196,30 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                     <b>Pesanan Sudah Di Checkout</b>
                   </div>
                   <ul class="py-4">
-                    <li v-for="(item, index) in listCheckout" :key="index" class="flex py-2">
-                      <img class="rounded object-cover h-12 w-12 mr-2" v-bind:src="item.image" alt="" />
+                    <li
+                      v-for="(item, index) in listCheckout"
+                      :key="index"
+                      class="flex py-2"
+                    >
+                      <img
+                        class="rounded object-cover h-12 w-12 mr-2"
+                        v-bind:src="item.image"
+                        alt=""
+                      />
                       <span>
-                        <b>{{ item.name }}</b><br />
-                        <b class="text-gray-700 mr-1">{{ item.jumlah }} x
+                        <b>{{ item.name }}</b
+                        ><br />
+                        <b class="text-gray-700 mr-1"
+                          >{{ item.jumlah }} x
                           <span class="text-gray-400">{{
-                          item.disc != "0" ? item.disc : item.price
-                          }}</span></b>
-                        <b class="text-gray-700 text-xs line-through" v-if="item.disc != '0'">Rp. {{ item.price }}</b>
+                            item.disc != "0" ? item.disc : item.price
+                          }}</span></b
+                        >
+                        <b
+                          class="text-gray-700 text-xs line-through"
+                          v-if="item.disc != '0'"
+                          >Rp. {{ item.price }}</b
+                        >
                       </span>
                     </li>
                     <li v-if="listCheckout.length != 0" class="text-center w-full my-4">
@@ -162,33 +238,57 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                   <Category v-model="$data.categoryId" class="my-auto"></Category>
                   <div class="flex">
                     <div class="my-auto relative">
-                      <font-awesome-icon icon="fas fa-search"
-                        :class="{ 'text-gray-700': search, 'text-gray-500': !search }" class="absolute left-3 top-3" />
-                      <BreezeInput type="text" v-model="$data.searchValue" @focus.native="search = true"
-                        @blur.native="search = false" placeholder="Cari" class="mr-12 rounded-3xl pl-8 pt-2">
+                      <font-awesome-icon
+                        icon="fas fa-search"
+                        :class="{ 'text-gray-700': search, 'text-gray-500': !search }"
+                        class="absolute left-3 top-3"
+                      />
+                      <BreezeInput
+                        type="text"
+                        v-model="$data.searchValue"
+                        @focus.native="search = true"
+                        @blur.native="search = false"
+                        placeholder="Cari"
+                        class="mr-12 rounded-3xl pl-8 pt-2"
+                      >
                       </BreezeInput>
                     </div>
                     <a href="javascript:;" class="my-auto">
-                      <font-awesome-icon icon="fa-solid fa-table-cells" :class="{
-                        'text-purple-700': mode == 'tile',
-                        'text-gray-700': mode != 'tile',
-                      }" class="text-3xl mr-4" v-on:click="mode = 'tile'" />
+                      <font-awesome-icon
+                        icon="fa-solid fa-table-cells"
+                        :class="{
+                          'text-purple-700': mode == 'tile',
+                          'text-gray-700': mode != 'tile',
+                        }"
+                        class="text-3xl mr-4"
+                        v-on:click="mode = 'tile'"
+                      />
                     </a>
                     <a href="javascript:;" class="my-auto">
-                      <font-awesome-icon icon="fa-solid fa-list" :class="{
-                        'text-purple-700': mode == 'list',
-                        'text-gray-700': mode != 'list',
-                      }" class="text-3xl" v-on:click="mode = 'list'" />
+                      <font-awesome-icon
+                        icon="fa-solid fa-list"
+                        :class="{
+                          'text-purple-700': mode == 'list',
+                          'text-gray-700': mode != 'list',
+                        }"
+                        class="text-3xl"
+                        v-on:click="mode = 'list'"
+                      />
                     </a>
                   </div>
                 </div>
                 <div class="col-span-12">
                   <div class="grid grid-cols-12 gap-4 px-2 md:p-0">
-                    <Product :mode="mode" :category="categoryId" :searchValue="searchValue" @openModal="openItemModal"
+                    <Product
+                      :mode="mode"
+                      :category="categoryId"
+                      :searchValue="searchValue"
+                      @openModal="openItemModal"
                       :col="{
                         'col-span-12': mode == 'list',
                         'col-span-12 md:col-span-3 p-2': mode != 'list',
-                      }">
+                      }"
+                    >
                     </Product>
                   </div>
                 </div>
@@ -204,22 +304,36 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
         <form @submit.prevent="submit" class="grid grid-cols-12 gap-4">
           <ProductDetail :item="itemSelected">
             <div class="flex justify-center col-span-12">
-              <div class="w-10 h-10 my-auto mr-4 ">
-                <a class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
-                  @click="decrement" href="javascript:;">
+              <div class="w-10 h-10 my-auto mr-4">
+                <a
+                  class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
+                  @click="decrement"
+                  href="javascript:;"
+                >
                   <font-awesome-icon icon="fa-solid fa-minus" class="w-5 h-10" />
                 </a>
               </div>
               <div class="w-40 h-10 my-auto">
-                <BreezeInput id="jumlah" type="text" readonly class="block w-full rounded-full text-center"
-                  v-model="$data.jumlahItem" required autocomplete="jumlah" placeholder="Qty" />
+                <BreezeInput
+                  id="jumlah"
+                  type="text"
+                  readonly
+                  class="block w-full rounded-full text-center"
+                  v-model="$data.jumlahItem"
+                  required
+                  autocomplete="jumlah"
+                  placeholder="Qty"
+                />
                 <div v-if="v$.jumlahItem.$error">
                   <BreezeInputError message="Jumlah Item Harus Diisi"></BreezeInputError>
                 </div>
               </div>
-              <div class="w-10 h-10 my-auto ml-4 ">
-                <a class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
-                  @click="increment" href="javascript:;">
+              <div class="w-10 h-10 my-auto ml-4">
+                <a
+                  class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
+                  @click="increment"
+                  href="javascript:;"
+                >
                   <font-awesome-icon icon="fa-solid fa-plus" class="w-5 h-10" />
                 </a>
               </div>
@@ -229,18 +343,31 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
       </template>
       <template #footer>
         <div class="text-center">
-          <BreezeButton @click="addItem"
-            class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400  focus:bg-purple-800 active:bg-purple-800 h-8">
-            <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2" />Rp.&nbsp;{{ totalItemFormatMoney }}
+          <BreezeButton
+            @click="addItem"
+            class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8"
+          >
+            <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2" />Rp.&nbsp;{{
+              totalItemFormatMoney
+            }}
           </BreezeButton>
         </div>
       </template>
     </Modal>
 
-    <Modal modalSize="sm" v-show="isModalBayarVisible" @close="closeBayarModal" :allowClose="!hasCheckout">
+    <Modal
+      modalSize="sm"
+      v-show="isModalBayarVisible"
+      @close="closeBayarModal"
+      :allowClose="!hasCheckout"
+    >
       <template #header> Bayar Sekarang? </template>
       <template #body>
-        <form @submit.prevent="submit" class="grid grid-cols-12 gap-4" v-if="!metodePembayaran">
+        <form
+          @submit.prevent="submit"
+          class="grid grid-cols-12 gap-4"
+          v-if="!metodePembayaran"
+        >
           <div class="col-span-12 text-center text-gray-700">
             <BreezeLabel value="Total Bayar Anda" />
             <p class="text-xl">
@@ -259,7 +386,9 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                 <CashLess v-model="$data.metodePembayaran"></CashLess>
               </div>
               <div class="p-2">
-                <span class="text-xs">Pembayaran dapat melaui OVO, Gopay dan ShoppePay</span>
+                <span class="text-xs"
+                  >Pembayaran dapat melaui OVO, Gopay dan ShoppePay</span
+                >
               </div>
             </div>
           </div>
@@ -272,9 +401,15 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                 <div class="w-12 border-b border-gray-200 mx-auto"></div>
               </div>
               <div class="align-middle">
-                <button @click="metodePembayaran = cash"
-                  class="items-center px-4 py-2 text-center bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 w-20 h-20">
-                  <img class="object-cover filter invert inline" v-bind:src="'../assets/images/wallet.png'" alt="" />
+                <button
+                  @click="metodePembayaran = cash"
+                  class="items-center px-4 py-2 text-center bg-orange-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-600 active:bg-orange-700 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 w-20 h-20"
+                >
+                  <img
+                    class="object-cover filter invert inline"
+                    v-bind:src="'../assets/images/wallet.png'"
+                    alt=""
+                  />
                 </button>
               </div>
               <div class="p-2">
@@ -285,10 +420,19 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
             </div>
           </div>
         </form>
-        <form @submit.prevent="submit" class="grid grid-cols-12 gap-4" v-if="metodePembayaran">
+        <form
+          @submit.prevent="submit"
+          class="grid grid-cols-12 gap-4"
+          v-if="metodePembayaran"
+        >
           <div class="col-span-12 text-center text-gray-700">
-            <a href="javascript:;" class="float-left absolute left-4" @click="backToPaymentMethod"
-              v-if="!hasCheckout">Kembali</a>
+            <a
+              href="javascript:;"
+              class="float-left absolute left-4"
+              @click="backToPaymentMethod"
+              v-if="!hasCheckout"
+              >Kembali</a
+            >
             <div>
               <BreezeLabel value="Total Bayar Anda" />
               <p class="text-xl">
@@ -300,7 +444,11 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
             <div class="flex flex-col text-center h-72 align-middle justify-between">
               <div>
                 <div class="p-2 text-center">
-                  <img v-bind:src="metodePembayaran.image" class="w-12 h-12 inline" alt="" />
+                  <img
+                    v-bind:src="metodePembayaran.image"
+                    class="w-12 h-12 inline"
+                    alt=""
+                  />
                 </div>
                 <div class="w-12 border-b border-gray-200 mx-auto"></div>
               </div>
@@ -314,16 +462,34 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
                   <label for="" class="text-gray-800"><b>XXXXXXXXX</b></label>
                 </div>
               </div>
-              <div class="align-middle px-12 py-2" v-if="hasCheckout && metodePembayaran.type == 'cashless'">
-                <img class="object-cover w-20 h-20 inline" v-bind:src="'../assets/images/ok.png'" alt="" />
+              <div
+                class="align-middle px-12 py-2"
+                v-if="hasCheckout && metodePembayaran.type == 'cashless'"
+              >
+                <img
+                  class="object-cover w-20 h-20 inline"
+                  v-bind:src="'../assets/images/ok.png'"
+                  alt=""
+                />
                 <p class="my-4" style="color: #64b747">Pembayaran Anda Berhasil</p>
               </div>
-              <div class="align-middle px-12" v-if="hasCheckout && metodePembayaran.type == 'cash'">
-                <img class="object-cover w-24 h-24 inline" v-bind:src="'../assets/images/qr-code.png'" alt="" />
+              <div
+                class="align-middle px-12"
+                v-if="hasCheckout && metodePembayaran.type == 'cash'"
+              >
+                <img
+                  class="object-cover w-24 h-24 inline"
+                  v-bind:src="'../assets/images/qr-code.png'"
+                  alt=""
+                />
               </div>
               <div class="p-2">
-                <span class="text-xs" v-if="!hasCheckout">Pastikan data anda benar lalu klik checkout</span>
-                <span class="text-xs" v-if="hasCheckout">Bawa QR Code ini ke kasir untuk melakukan pembayaran</span>
+                <span class="text-xs" v-if="!hasCheckout"
+                  >Pastikan data anda benar lalu klik checkout</span
+                >
+                <span class="text-xs" v-if="hasCheckout"
+                  >Bawa QR Code ini ke kasir untuk melakukan pembayaran</span
+                >
               </div>
             </div>
           </div>
@@ -331,9 +497,14 @@ library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faUse
       </template>
       <template #footer>
         <div class="text-center">
-          <BreezeButton @click="checkout" v-if="metodePembayaran && !hasCheckout">CHECKOUT</BreezeButton>
-          <BreezeButton @click="printReceipt"
-            v-if="hasCheckout && metodePembayaran && metodePembayaran.type == 'cashless'">Print Receipt</BreezeButton>
+          <BreezeButton @click="checkout" v-if="metodePembayaran && !hasCheckout"
+            >CHECKOUT</BreezeButton
+          >
+          <BreezeButton
+            @click="printReceipt"
+            v-if="hasCheckout && metodePembayaran && metodePembayaran.type == 'cashless'"
+            >Print Receipt</BreezeButton
+          >
         </div>
       </template>
     </Modal>
@@ -362,8 +533,16 @@ export default {
       searchValue: "",
       mode: "tile",
       jumlahItem: 0,
+      orderId: this.Cookies.get("order_id"),
+      telpon: this.$page.props.req.telpon,
+      name: this.$page.props.req.nama,
+      pax: this.$page.props.req.pax,
+      tableId: this.$page.props.req.table_id,
       categoryId: [],
-      listPesanan: this.Cookies.get("pesanan") != undefined ? JSON.parse(this.Cookies.get("pesanan")) : [],
+      listPesanan:
+        this.Cookies.get("pesanan") != undefined
+          ? JSON.parse(this.Cookies.get("pesanan"))
+          : [],
       listCheckout: [],
       listCheckout: [],
       totalPesanan: 0,
@@ -380,7 +559,20 @@ export default {
     };
   },
   mounted() {
-    this.$el.addEventListener('click', this.onClick);
+    this.$el.addEventListener("click", this.onClick);
+    Echo.channel(`orders.${this.orderId}`).listen(`.order`, (message) => {
+      console.log(message);
+    //   this.generateOrder(message.data);
+    });
+    this.checkTransaction();
+  },
+  watch: {
+    orderId: function () {
+      Echo.channel(`orders.${this.orderId}`).listen(`.order`, (message) => {
+        // this.generateOrder(message.data);
+        console.log(message.data);
+      });
+    },
   },
   computed: {
     totalItemFormatMoney() {
@@ -408,7 +600,7 @@ export default {
       }
     },
     onClick(param) {
-      console.log(param)
+      console.log(param);
     },
     openItemModal(value, edit) {
       this.isModalItemVisible = true;
@@ -454,11 +646,107 @@ export default {
       this.listPesanan.splice(index, 1);
       this.Cookies.set("pesanan", JSON.stringify(this.listPesanan), { expires: 1 });
     },
-    prosesPesanan() {
-      this.listPesanan.forEach((element) => {
-        this.listCheckout.push(element);
+    async checkTransaction() {
+      this.$root.$loading.loading = true;
+      var el = this;
+
+      if (this.Cookies.get("order") == undefined) {
+        el.$inertia.visit("/", {
+          method: "get",
+          replace: true,
+          preserveState: false,
+          preserveScroll: false,
+        });
+      }
+
+      axios
+        .post("/check-transaction", {
+          order_id: el.orderId,
+        })
+        .then(function (response) {
+          // handle success
+          if (response.data.status == 1) {
+            el.Cookies.remove("pesanan");
+            el.Cookies.remove("order_id");
+            el.Cookies.remove("order");
+            el.$inertia.visit("/", {
+              method: "get",
+              replace: true,
+              preserveState: false,
+              preserveScroll: false,
+            });
+          }
+          el.$root.$loading.loading = false;
+        })
+        .catch(function (error) {
+          el.$root.$loading.loading = false;
+        })
+        .finally(function () {});
+    },
+    async orderNotifier() {
+      axios.post("/order-notifier", {
+        order_id: this.order_id,
       });
-      this.listPesanan = [];
+    },
+    generateOrder(param) {
+      param.forEach((element) => {
+        if (element.status == "Order") {
+          //   this.listCheckout.push();
+        }
+      });
+    },
+    async prosesPesanan() {
+      var el = this;
+      this.$swal
+        .fire({
+          title: "Memesan makanan?",
+          text: "Aksi ini tidak bisa dikembalikan!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya, pesan sekarang!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$root.$loading.loading = true;
+            axios
+              .post("/process-order", {
+                telpon: el.telpon,
+                name: el.name,
+                pax: el.pax,
+                item: el.listPesanan,
+                table_id: el.tableId,
+                order_id: el.orderId,
+              })
+              .then(function (response) {
+                // handle success
+                if (response.data.status == 1) {
+                  el.$swal.fire("Berhasil!", response.data.message, "success");
+                  el.order_id = response.data.order_id;
+                  el.Cookies.set("order_id", response.data.order_id, { expires: 1 });
+
+                  el.Cookies.remove("pesanan");
+                  el.listPesanan = [];
+                } else {
+                  el.$toaster.warning(response.data.message);
+                }
+
+                el.$root.$loading.loading = false;
+              })
+              .catch(function (error) {
+                el.$root.$loading.loading = false;
+              })
+              .finally(function () {
+                el.orderNotifier();
+              });
+          }
+        });
+
+      //   this.listPesanan.forEach((element) => {
+      //     this.listCheckout.push(element);
+      //   });
+      //   this.listPesanan = [];
     },
     modalCheckout() {
       this.isModalBayarVisible = true;
@@ -483,14 +771,14 @@ export default {
         only: [],
         headers: {},
         errorBag: null,
-        onCancelToken: (cancelToken) => { },
-        onCancel: () => { },
-        onBefore: (visit) => { },
-        onStart: (visit) => { },
-        onProgress: (progress) => { },
-        onSuccess: (page) => { },
-        onError: (errors) => { },
-        onFinish: () => { },
+        onCancelToken: (cancelToken) => {},
+        onCancel: () => {},
+        onBefore: (visit) => {},
+        onStart: (visit) => {},
+        onProgress: (progress) => {},
+        onSuccess: (page) => {},
+        onError: (errors) => {},
+        onFinish: () => {},
       });
     },
   },

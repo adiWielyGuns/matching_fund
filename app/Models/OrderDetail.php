@@ -19,6 +19,7 @@ class OrderDetail extends Model
         'qty',
         'sub_total',
         'master_menu_id',
+        'status',
         'created_by',
         'updated_by',
         'created_at',

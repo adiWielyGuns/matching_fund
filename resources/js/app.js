@@ -10,6 +10,7 @@ import useVuelidate from "@vuelidate/core";
 import Toast, { useToast } from "vue-toastification";
 import Datepicker from '@vuepic/vue-datepicker';
 import Cookies from 'js-cookie'
+import VueSweetalert2 from 'vue-sweetalert2';
 let accounting = document.createElement("script");
 accounting.setAttribute("src", "../assets/js/accounting/accounting.js");
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -33,6 +34,7 @@ createInertiaApp({
             .use(Toast)
             .use(Datepicker)
             .use(Cookies)
+            .use(VueSweetalert2)
             .mount(el);
     },
 });

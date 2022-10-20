@@ -11,6 +11,7 @@ use App\Interfaces\GalleryRepositoryInterface;
 use App\Interfaces\GroupMenuRepositoryInterface;
 use App\Interfaces\MasterMenuRepositoryInterface;
 use App\Interfaces\MenuRepositoryInterface;
+use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\PaymentMethodRepositoryInterface;
 use App\Interfaces\PrivilegeRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
@@ -28,6 +29,7 @@ use App\Repositories\GalleryRepository;
 use App\Repositories\GroupMenuRepository;
 use App\Repositories\MasterMenuRepository;
 use App\Repositories\MenuRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\PrivilegeRepository;
 use App\Repositories\ReservationRepository;
@@ -64,6 +66,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TableRepositoryInterface::class, TableRepository::class);
         $this->app->bind(PaymentMethodRepositoryInterface::class, PaymentMethodRepository::class);
         $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
+        $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
     }
 
     /**

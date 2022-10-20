@@ -31,9 +31,8 @@ const sizeClass = computed(() => {
   justify-content: center;
   align-items: center;
   overflow-y: auto;
+  z-index: 21;
 }
-
-
 </style>
 <template>
   <transition name="modal-fade">
