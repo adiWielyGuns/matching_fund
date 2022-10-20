@@ -31,12 +31,13 @@ const sizeClass = computed(() => {
   justify-content: center;
   align-items: center;
   overflow-y: auto;
+  z-index: 21;
 }
 
 .modal {
   background-color: rgba(255, 255, 255, .40);
   backdrop-filter: blur(30px);
-  overflow-x: auto;
+  /* overflow-x: auto; */
   display: flex;
   flex-direction: column;
   border-radius: 60px;

@@ -11,9 +11,10 @@ import {
   faTrash,
   faEdit,
   faSpinner,
+  faEllipsisVertical
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faSpinner);
+library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faSpinner, faEllipsisVertical);
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -21,10 +22,10 @@ const showingNavigationDropdown = ref(false);
   <div>
     <div class="min-h-screen bg-gray-100">
       <!-- Page Heading -->
-      <header class="bg-white shadow fixed w-full z-50 top-0">
+      <header class="bg-white shadow fixed w-full z-10 top-0">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Self Order App
+            <img src="'../assets/'" alt="">
           </h2>
         </div>
       </header>

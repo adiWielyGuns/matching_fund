@@ -6,29 +6,32 @@ defineProps({
 });
 </script>
 <template>
-  <div href="javascript:;" class="flex flex-col col-span-12" v-if="item">
-    <img
-      class="w-full rounded-t-md object-cover md:h-40"
-      v-bind:src="item.image"
-      alt=""
-    />
-    <div class="p-2 flex flex-col justify-between h-24">
-      <p>
-        <b>{{ item.name }}</b>
+  <div href="javascript:;" class="col-span-12" v-if="item">
+    <div class="relative">
+      <img class="w-full rounded-3xl object-cover md:h-48" v-bind:src="item.image" alt="" />
+      <div class="absolute bottom-3 right-3  px-3 py-1 rounded-full backdrop-blur-md bg-white/30">
+        <b class="text-white mr-1">Rp. {{ accounting.formatNumber( item.price ) }}</b>
+      </div>
+    </div>
+    <div class="p-2">
+      <p class="text-white mb-5 text-xl">
+        {{ item.name }}
+      </p>
+      <p class="text-white mb-5">
+        {{ item.description }}
       </p>
       <div class="grid grid-cols-12">
-        <div class="col-span-6">
-          <b class="text-orange-500 mr-1"
-            >Rp. {{ item.disc != "0" ? item.disc : item.price }}</b
-          >
-          <b class="text-orange-500 text-xs line-through" v-if="item.disc != '0'"
-            >Rp. {{ item.price }}</b
-          >
-        </div>
-        <div class="col-span-6">
-          <slot />
-        </div>
+        <slot />
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      accounting: accounting,
+    };
+  },
+};
+</script>

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderEvent;
 use App\Interfaces\ReservationRepositoryInterface;
 use App\Models\Reservation;
+use App\Models\User;
+use App\Notifications\OrderNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Pusher\Pusher;
 
 class ApiController extends Controller
 {
@@ -15,6 +19,18 @@ class ApiController extends Controller
     public function __construct(ReservationRepositoryInterface $reservationRepository)
     {
         $this->reservationRepository = $reservationRepository;
+    }
+
+
+    public function authenticate(Request $req)
+    {
+        $pusher = new Pusher(
+            '54492e6a46bf5094ea6e',
+            'c876f62937490efa9375',
+            '1494700'
+        );
+
+        return $pusher->socket_auth($req->channel_name, $req->socket_id);
     }
 
     public function checkIfCodeExist(Request $req)
@@ -53,5 +69,12 @@ class ApiController extends Controller
                 'data' => $this->reservationRepository->createReservation($data),
             ]);
         });
+    }
+
+    public function orderNotifier()
+    {
+        event(new OrderEvent('hello world'));
+
+        return 'success';
     }
 }

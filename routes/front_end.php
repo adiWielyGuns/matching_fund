@@ -13,6 +13,8 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(ApiController::class)->group(function () {
     Route::post('/checkIfCodeExist', 'checkIfCodeExist')->name('checkIfCodeExist');
     Route::post('/submit-reservasi', 'submitReservasi')->name('submitReservasi');
+    Route::get('/order-notifier', 'orderNotifier')->name('orderNotifier');
+    Route::get('/broadcast', 'authenticate')->name('authenticate');
     // Route::get('/menu', 'menu')->name('menu-front-end');
     // Route::get('/menu/{slug}', 'menuDetail');
     // Route::get('/schedule', 'schedule')->name('schedule-front-end');

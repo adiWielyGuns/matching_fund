@@ -126,7 +126,7 @@ export default {
         var temp = true;
         var category = true;
         if (this.category.length != 0)
-          category = this.category.includes(e.category.toString());
+          category = this.category.includes(e.category_id);
         var similarity = 1;
         if (this.searchValue != "") {
           var similarity = e.name.toLowerCase().includes(this.searchValue.toLowerCase());
