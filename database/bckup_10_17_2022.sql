@@ -255,6 +255,7 @@ CREATE TABLE IF NOT EXISTS `master_menus` (
   `is_favorite` tinyint(1) NOT NULL DEFAULT 0,
   `price` double(20,2) DEFAULT NULL,
   `price_after_discount` double(20,2) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_master_menus_categories` (`category_id`),
   CONSTRAINT `FK_master_menus_categories` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE
@@ -263,13 +264,13 @@ CREATE TABLE IF NOT EXISTS `master_menus` (
 -- Dumping data for table matching_fund.master_menus: ~6 rows (approximately)
 DELETE FROM `master_menus`;
 /*!40000 ALTER TABLE `master_menus` DISABLE KEYS */;
-INSERT INTO `master_menus` (`id`, `name`, `image`, `category_id`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`, `slug`, `is_favorite`, `price`, `price_after_discount`) VALUES
-	(1, 'Healthy Burger', 'http://127.0.0.1:8000/image/master_menu/ae897807-c4e8-4f4b-8827-d628e4471485.jpg', 5, 'superuser', 'superuser', 1, '2022-07-14 14:00:23', '2022-10-17 14:40:56', 'healthy-burger', 1, 35000.00, 0.00),
-	(2, 'Ayam Goreng', 'http://127.0.0.1:8000/image/master_menu/e0bf13f5-be81-487f-9dc9-8bcfb4471f11.jpg', 1, 'superuser', 'superuser', 1, '2022-07-14 14:19:40', '2022-10-17 14:38:15', 'ayam-goreng', 1, 20000.00, 0.00),
-	(3, 'Latte Art', 'http://127.0.0.1:8000/image/master_menu/ed110c8e-d686-4754-8da0-50040f9f7719.jpg', 7, 'superuser', 'superuser', 1, '2022-07-14 14:20:02', '2022-10-17 14:39:16', 'latte-art', 0, 25000.00, 0.00),
-	(4, 'Sunday', 'http://127.0.0.1:8000/image/master_menu/2091a024-2bb7-4c1d-afb8-c81c7ba8bc8c.jpg', 7, 'superuser', 'superuser', 1, '2022-07-14 14:20:17', '2022-10-17 14:41:17', 'sunday', 1, 15000.00, 0.00),
-	(5, 'Healthy Pasta', 'http://127.0.0.1:8000/image/master_menu/0453baa7-efa4-4462-ac0c-b9d6cdb421ec.jpg', 6, 'superuser', 'superuser', 1, '2022-07-14 14:22:08', '2022-10-17 14:43:04', 'healthy-pasta', 0, 17000.00, 0.00),
-	(6, 'Pasta Carbonara', 'http://127.0.0.1:8000/image/master_menu/4f82a228-3ba1-4593-8a00-b36654413d63.jpg', 6, 'superuser', 'superuser', 1, '2022-07-14 14:22:47', '2022-10-17 14:43:19', 'pasta-carbonara', 0, 20000.00, 0.00);
+INSERT INTO `master_menus` (`id`, `name`, `image`, `category_id`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`, `slug`, `is_favorite`, `price`, `price_after_discount`, `description`) VALUES
+	(1, 'Healthy Burger', 'http://127.0.0.1:8000/image/master_menu/ae897807-c4e8-4f4b-8827-d628e4471485.jpg', 5, 'superuser', 'superuser', 1, '2022-07-14 14:00:23', '2022-10-17 14:40:56', 'healthy-burger', 1, 35000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.'),
+	(2, 'Ayam Goreng', 'http://127.0.0.1:8000/image/master_menu/e0bf13f5-be81-487f-9dc9-8bcfb4471f11.jpg', 1, 'superuser', 'superuser', 1, '2022-07-14 14:19:40', '2022-10-17 14:38:15', 'ayam-goreng', 1, 20000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.'),
+	(3, 'Latte Art', 'http://127.0.0.1:8000/image/master_menu/ed110c8e-d686-4754-8da0-50040f9f7719.jpg', 7, 'superuser', 'superuser', 1, '2022-07-14 14:20:02', '2022-10-17 14:39:16', 'latte-art', 0, 25000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.'),
+	(4, 'Sunday', 'http://127.0.0.1:8000/image/master_menu/2091a024-2bb7-4c1d-afb8-c81c7ba8bc8c.jpg', 7, 'superuser', 'superuser', 1, '2022-07-14 14:20:17', '2022-10-17 14:41:17', 'sunday', 1, 15000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.'),
+	(5, 'Healthy Pasta', 'http://127.0.0.1:8000/image/master_menu/0453baa7-efa4-4462-ac0c-b9d6cdb421ec.jpg', 6, 'superuser', 'superuser', 1, '2022-07-14 14:22:08', '2022-10-17 14:43:04', 'healthy-pasta', 0, 17000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.'),
+	(6, 'Pasta Carbonara', 'http://127.0.0.1:8000/image/master_menu/4f82a228-3ba1-4593-8a00-b36654413d63.jpg', 6, 'superuser', 'superuser', 1, '2022-07-14 14:22:47', '2022-10-17 14:43:19', 'pasta-carbonara', 0, 20000.00, 0.00, 'The Classic McDonald\'s Hamburger starts with a 100% pure beef patty seasoned with just a pinch of salt and pepper. Then, the McDonald’s burger is topped with a tangy pickle, chopped onions, ketchup.');
 /*!40000 ALTER TABLE `master_menus` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.menus
@@ -290,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `menus` (
   CONSTRAINT `FK_menus_master_menus` FOREIGN KEY (`group_menu_id`) REFERENCES `group_menus` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.menus: ~18 rows (approximately)
+-- Dumping data for table matching_fund.menus: ~17 rows (approximately)
 DELETE FROM `menus`;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
 INSERT INTO `menus` (`id`, `sequence`, `name`, `slug`, `group_menu_id`, `type`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
@@ -320,9 +321,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.migrations: ~29 rows (approximately)
+-- Dumping data for table matching_fund.migrations: ~30 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -354,7 +355,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(162, '2022_10_17_152342_create_reservations', 10),
 	(163, '2022_10_17_152910_create_order_details', 10),
 	(165, '2022_10_18_142250_add_image_to_payment_methods', 11),
-	(166, '2022_10_19_121432_add_table_id_to_reservations', 12);
+	(166, '2022_10_19_121432_add_table_id_to_reservations', 12),
+	(167, '2022_10_19_222625_add_description_to_master_menus', 13),
+	(168, '2022_10_21_012925_add_status_to_order_details', 14),
+	(169, '2022_10_21_023945_add_status_to_orders', 14);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.orders
@@ -366,21 +370,24 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `pax` int(11) NOT NULL,
   `table_id` int(11) NOT NULL,
   `reservation_id` int(11) DEFAULT NULL,
-  `payment_method_id` int(11) NOT NULL,
-  `no_ref` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_ref` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jenis` enum('langsung','reservasi') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_price` double(20,2) NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
+  `no_ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_ref` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jenis` enum('langsung','reservasi') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_price` double(20,2) DEFAULT NULL,
+  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `status` enum('Not Paid','Paid') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Not Paid',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.orders: ~0 rows (approximately)
+-- Dumping data for table matching_fund.orders: ~1 rows (approximately)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` (`id`, `kode`, `name`, `telpon`, `pax`, `table_id`, `reservation_id`, `payment_method_id`, `no_ref`, `nama_ref`, `jenis`, `total_price`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
+	(1, '2022100001', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 80000.00, 'Deny', 'Deny', '2022-10-21 14:05:03', '2022-10-21 14:05:03', 'Not Paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.order_details
@@ -393,14 +400,20 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `master_menu_id` int(11) NOT NULL,
   `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`order_id`,`id`)
+  `status` enum('Menunggu Pembayaran','Sedang Disiapkan','Selesai') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`order_id`,`id`),
+  CONSTRAINT `FK_order_details_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table matching_fund.order_details: ~0 rows (approximately)
 DELETE FROM `order_details`;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+INSERT INTO `order_details` (`order_id`, `id`, `price`, `qty`, `sub_total`, `master_menu_id`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
+	(1, 1, 20000.00, 2, 40000.00, 2, 'Deny', 'Deny', '2022-10-21 14:05:03', '2022-10-21 14:05:03', 'Menunggu Pembayaran'),
+	(1, 2, 25000.00, 1, 25000.00, 3, 'Deny', 'Deny', '2022-10-21 14:05:15', '2022-10-21 14:05:03', 'Sedang Disiapkan'),
+	(1, 3, 15000.00, 1, 15000.00, 4, 'Deny', 'Deny', '2022-10-21 14:30:56', '2022-10-21 14:05:03', 'Selesai');
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.password_resets
@@ -521,9 +534,22 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `table_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.reservations: ~0 rows (approximately)
+-- Dumping data for table matching_fund.reservations: ~10 rows (approximately)
 DELETE FROM `reservations`;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
+INSERT INTO `reservations` (`id`, `kode`, `tanggal`, `jam`, `pax`, `nominal_transfer`, `nama`, `telpon`, `bank`, `no_rekening`, `bukti_transfer`, `order_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`, `table_id`) VALUES
+	(1, '2022100001', '2022-12-23', '17:38', 5, NULL, 'Keuangan', '45545454545', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:46:54', '2022-10-19 17:46:54', NULL),
+	(2, '2022100002', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:15', '2022-10-19 17:48:15', NULL),
+	(3, '2022100003', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:25', '2022-10-19 17:48:25', NULL),
+	(4, '2022100004', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:29', '2022-10-19 17:48:29', NULL),
+	(5, '2022100005', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:29', '2022-10-19 17:48:29', NULL),
+	(6, '2022100006', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:30', '2022-10-19 17:48:30', NULL),
+	(7, '2022100007', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:30', '2022-10-19 17:48:30', NULL),
+	(8, '2022100008', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:31', '2022-10-19 17:48:31', NULL),
+	(9, '2022100009', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:32', '2022-10-19 17:48:32', NULL),
+	(10, '2022100010', '2022-10-19', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:48:33', '2022-10-19 17:48:33', NULL),
+	(11, '2022100011', '2023-02-24', '17:48', 5, NULL, 'Keuangan', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:49:05', '2022-10-19 17:49:05', NULL),
+	(12, '2022100012', '2022-10-20', '17:49', 5, NULL, 'tes', '5', NULL, NULL, NULL, NULL, 'Waiting For Payment', 'superuser', 'superuser', '2022-10-19 17:49:34', '2022-10-19 17:49:34', NULL);
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.roles
@@ -621,7 +647,7 @@ CREATE TABLE IF NOT EXISTS `title_menus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.title_menus: ~4 rows (approximately)
+-- Dumping data for table matching_fund.title_menus: ~3 rows (approximately)
 DELETE FROM `title_menus`;
 /*!40000 ALTER TABLE `title_menus` DISABLE KEYS */;
 INSERT INTO `title_menus` (`id`, `sequence`, `name`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES

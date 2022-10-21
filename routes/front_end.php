@@ -16,6 +16,7 @@ Route::controller(ApiController::class)->group(function () {
     Route::post('/order-notifier', 'orderNotifier')->name('orderNotifier');
     Route::post('/process-order', 'processOrder')->name('processOrder');
     Route::post('/check-transaction', 'checkTransaction')->name('checkTransaction');
+    Route::post('/progress-menu', 'progressMenu')->name('progressMenu');
     // Route::get('/menu', 'menu')->name('menu-front-end');
     // Route::get('/menu/{slug}', 'menuDetail');
     // Route::get('/schedule', 'schedule')->name('schedule-front-end');

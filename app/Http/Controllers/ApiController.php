@@ -69,8 +69,8 @@ class ApiController extends Controller
     public function processOrder(Request $req)
     {
         return DB::transaction(function () use ($req) {
-
-            if ($req->order_id == null) {
+            $check = $this->orderRepository->getOrderById($req->order_id);
+            if (!$check) {
                 $id = $this->orderRepository->getIdOrder();
                 $data = [
                     'id' => $id,
@@ -96,7 +96,7 @@ class ApiController extends Controller
                         'qty' => $value['jumlah'],
                         'sub_total' => $value['price'] * $value['jumlah'],
                         'master_menu_id' => $value['id'],
-                        'status' => 'Order',
+                        'status' => 'Menunggu Pembayaran',
                         'created_by' => $req->name,
                         'updated_by' => $req->name,
                         'created_at' => now(),
@@ -130,7 +130,7 @@ class ApiController extends Controller
                         'qty' => $value['jumlah'],
                         'sub_total' => $value['price'] * $value['jumlah'],
                         'master_menu_id' => $value['id'],
-                        'status' => 'Order',
+                        'status' => 'Menunggu Pembayaran',
                         'created_by' => $req->name,
                         'updated_by' => $req->name,
                         'created_at' => now(),
@@ -159,7 +159,7 @@ class ApiController extends Controller
         $order = OrderDetail::where('order_id', $req->order_id)
             ->with(['master_menu'])
             ->get()->toArray();
-        event(new OrderEvent($req->order_id, $order));
+        event(new OrderEvent($req->order_id));
 
         return 'success';
     }
@@ -168,10 +168,19 @@ class ApiController extends Controller
     {
         $check = Order::find($req->order_id);
         if ($check) {
-            if (!$check->where('status', 'Not Paid')->first()) {
+            $check = OrderDetail::where('order_id', $req->order_id)
+                ->whereIn('status', ['Menunggu Pembayaran', 'Sedang Disiapkan'])
+                ->get();
+            if (count($check) == 0) {
                 return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
-            };
+            }
         }
         return Response()->json(['status' => 0, 'message' => 'Not Ordering']);
+    }
+
+    public function progressMenu(Request $req)
+    {
+        $check = OrderDetail::where('order_id', $req->order_id)->with(['master_menu'])->get();
+        return Response()->json(['status' => 1, 'message' => 'Berhasil fetching data', 'data' => $check]);
     }
 }
