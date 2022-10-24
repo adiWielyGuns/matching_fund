@@ -12,6 +12,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 </script>
 
 <template>
+
   <Head title="Dashboard" />
   <Main>
     <div class="py-8">
@@ -36,21 +37,19 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
         <div class="col-span-12 text-center">
           <BreezeButton
             class="rounded-full text-md text-center py-4 font-bold text-white bg-purple-500 hover:bg-purple-400 md:w-3/12 w-1/2 focus:bg-purple-800 active:bg-purple-800"
-            @click="showModal('order')"
-            >Order Sekarang
+            @click="showModal('order')">Order Sekarang
           </BreezeButton>
         </div>
         <div class="col-span-12 text-center">
           <p class="text-center py-6 text-sm">
             Tekan order sekarang untuk melakukan pemesanan <br />
-            atau lakukan reservasi dibawah ini
+            atau lakukan reservasi dibawah ini {{ location }}
           </p>
         </div>
         <div class="col-span-12 text-center">
           <BreezeButton
             class="rounded-full text-md md:px-20 py-4 font-bold text-gray-700 bg-yellow-500 hover:bg-yellow-400 md:w-3/12 w-1/2 focus:bg-yellow-700 active:bg-yellow-700"
-            @click="showModal('reservasi')"
-            >Reservasi
+            @click="showModal('reservasi')">Reservasi
           </BreezeButton>
         </div>
       </div>
@@ -63,107 +62,57 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
         <form @submit.prevent="submit" class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <BreezeLabel for="nama" value="Nama" class="text-white font-extrabold" />
-            <BreezeInput
-              id="nama"
-              type="text"
-              class="mt-1 block w-full rounded-3xl"
-              v-model="$data.nama"
-              required
-              autocomplete="nama"
-              placeholder="Masukan nama anda"
-            />
+            <BreezeInput id="nama" type="text" class="mt-1 block w-full rounded-3xl" v-model="$data.nama" required
+              autocomplete="nama" placeholder="Masukan nama anda" />
             <div v-if="v$.nama.$error">
               <BreezeInputError message="Nama Harus Diisi"></BreezeInputError>
             </div>
           </div>
           <div class="col-span-12">
-            <BreezeLabel
-              for="table_id"
-              value="Nomor Meja"
-              class="text-white font-extrabold"
-            />
+            <BreezeLabel for="table_id" value="Nomor Meja" class="text-white font-extrabold" />
             <Meja v-model="$data.table_id" class="rounded-3xl"> </Meja>
             <div v-if="v$.table_id.$error">
               <BreezeInputError message="Nomor Meja Harus Diisi"></BreezeInputError>
             </div>
           </div>
           <div class="col-span-12" v-if="jenis == 'order' ? false : true">
-            <BreezeLabel
-              for="tanggal"
-              value="Tanggal Reservasi"
-              class="text-white font-extrabold"
-            />
-            <Datepicker
-              v-model="$data.tanggal"
-              position="right"
-              :autoPosition="false"
-              utc="preserve"
-            />
+            <BreezeLabel for="tanggal" value="Tanggal Reservasi" class="text-white font-extrabold" />
+            <Datepicker v-model="$data.tanggal" position="right" :autoPosition="false" utc="preserve" />
             <div v-if="v$.tanggal.$error">
               <BreezeInputError message="Tanggal Harus Diisi"></BreezeInputError>
             </div>
           </div>
           <div class="col-span-12">
-            <BreezeLabel
-              for="pax"
-              value="Jumlah Pelanggan"
-              class="text-white font-extrabold"
-            />
-            <BreezeInput
-              id="pax"
-              type="number"
-              class="mt-1 block w-full rounded-3xl"
-              v-model="$data.pax"
-              required
-              autocomplete="pax"
-              placeholder="Masukan jumlah pelanggan"
-            />
+            <BreezeLabel for="pax" value="Jumlah Pelanggan" class="text-white font-extrabold" />
+            <BreezeInput id="pax" type="number" class="mt-1 block w-full rounded-3xl" v-model="$data.pax" required
+              autocomplete="pax" placeholder="Masukan jumlah pelanggan" />
             <div v-if="v$.pax.$error">
               <BreezeInputError message="Jumlah Pelanggan Harus Diisi"></BreezeInputError>
             </div>
           </div>
           <div class="col-span-12">
             <BreezeLabel for="telpon" value="Telpon" class="text-white font-extrabold" />
-            <BreezeInput
-              id="telpon"
-              type="text"
-              class="mt-1 block w-full rounded-3xl"
-              v-model="$data.telpon"
-              required
-              autocomplete="telpon"
-              placeholder="Masukan telpon anda"
-            />
+            <BreezeInput id="telpon" type="text" class="mt-1 block w-full rounded-3xl" v-model="$data.telpon" required
+              autocomplete="telpon" placeholder="Masukan telpon anda" />
             <div v-if="v$.telpon.$error">
               <BreezeInputError message="Telpon Harus Diisi"></BreezeInputError>
             </div>
           </div>
           <div class="col-span-12 text-center" v-if="jenis == 'order' ? true : false">
-            <span class="text-white"
-              >Atau masukkan kode reservasi. <br />
-              jika anda melakukan reservasi sebelumnya</span
-            >
+            <span class="text-white">Atau masukkan kode reservasi. <br />
+              jika anda melakukan reservasi sebelumnya</span>
           </div>
           <div class="col-span-12" v-if="jenis == 'order' ? true : false">
-            <BreezeInput
-              id="kode"
-              type="text"
-              class="mt-1 block w-full rounded-3xl"
-              v-model="$data.kode"
-              required
-              autocomplete="kode"
-              placeholder="Masukan kode reservasi anda"
-            />
+            <BreezeInput id="kode" type="text" class="mt-1 block w-full rounded-3xl" v-model="$data.kode" required
+              autocomplete="kode" placeholder="Masukan kode reservasi anda" />
           </div>
         </form>
       </template>
       <template #footer>
         <div class="text-center">
-          <BreezeButton
-            @click="onsubmit"
-            class="text-gray-700 hover:bg-yellow-300 focus:bg-yellow-700 active:bg-yellow-700 bg-yellow-500 font-extrabold"
-          >
-            {{ modalOpened }}</BreezeButton
-          >
+          <BreezeButton @click="onsubmit"
+            class="text-gray-700 hover:bg-yellow-300 focus:bg-yellow-700 active:bg-yellow-700 bg-yellow-500 font-extrabold">
+            {{ modalOpened }}</BreezeButton>
         </div>
       </template>
     </Modal>
@@ -185,6 +134,7 @@ export default {
       table_id: 1,
       kode: null,
       jenis: null,
+      location: null,
       promo: [
         {
           id: 1,
@@ -241,6 +191,7 @@ export default {
     };
   },
   created() {
+    this.getLocation();
     if (this.Cookies.get("order") != undefined) {
       this.$inertia.visit("/order", {
         method: "get",
@@ -288,6 +239,17 @@ export default {
         await this.submitReservasi();
       }
     },
+    getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      } else {
+        this.location = "Geolocation is not supported by this browser.";
+      }
+    },
+    showPosition(position) {
+      this.location = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+    },
     async submit() {
       if (this.kode == null || this.kode == "") {
         const isFormCorrect = await this.v$.$validate();
@@ -321,7 +283,7 @@ export default {
           .catch(function (error) {
             el.$root.$loading.loading = false;
           })
-          .finally(function () {});
+          .finally(function () { });
       }
 
       var data = {
@@ -412,7 +374,7 @@ export default {
   transform: rotateY(-20deg) scale(0.9);
 }
 
-.carousel__slide--active ~ .carousel__slide {
+.carousel__slide--active~.carousel__slide {
   transform: rotateY(20deg) scale(0.9);
 }
 
