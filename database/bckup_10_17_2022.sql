@@ -323,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.migrations: ~30 rows (approximately)
+-- Dumping data for table matching_fund.migrations: ~27 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -387,7 +387,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `kode`, `name`, `telpon`, `pax`, `table_id`, `reservation_id`, `payment_method_id`, `no_ref`, `nama_ref`, `jenis`, `total_price`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
-	(1, '2022100001', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 80000.00, 'Deny', 'Deny', '2022-10-21 14:05:03', '2022-10-21 14:05:03', 'Not Paid');
+	(1, '2022100001', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 80000.00, 'Deny', 'Deny', '2022-10-21 14:05:03', '2022-10-21 14:05:03', 'Not Paid'),
+	(2, '2022100002', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 125000.00, 'Deny', 'Deny', '2022-10-24 09:40:56', '2022-10-24 09:42:04', 'Not Paid'),
+	(3, '2022100003', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 87000.00, 'Deny', 'Deny', '2022-10-24 10:16:45', '2022-10-24 10:16:53', 'Not Paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.order_details
@@ -407,13 +409,18 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   CONSTRAINT `FK_order_details_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table matching_fund.order_details: ~0 rows (approximately)
+-- Dumping data for table matching_fund.order_details: ~5 rows (approximately)
 DELETE FROM `order_details`;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
 INSERT INTO `order_details` (`order_id`, `id`, `price`, `qty`, `sub_total`, `master_menu_id`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
 	(1, 1, 20000.00, 2, 40000.00, 2, 'Deny', 'Deny', '2022-10-21 14:05:03', '2022-10-21 14:05:03', 'Menunggu Pembayaran'),
 	(1, 2, 25000.00, 1, 25000.00, 3, 'Deny', 'Deny', '2022-10-21 14:05:15', '2022-10-21 14:05:03', 'Sedang Disiapkan'),
-	(1, 3, 15000.00, 1, 15000.00, 4, 'Deny', 'Deny', '2022-10-21 14:30:56', '2022-10-21 14:05:03', 'Selesai');
+	(1, 3, 15000.00, 1, 15000.00, 4, 'Deny', 'Deny', '2022-10-21 14:30:56', '2022-10-21 14:05:03', 'Selesai'),
+	(2, 1, 35000.00, 2, 70000.00, 1, 'Deny', 'Deny', '2022-10-24 10:00:42', '2022-10-24 09:40:56', 'Selesai'),
+	(2, 2, 20000.00, 1, 20000.00, 2, 'Deny', 'Deny', '2022-10-24 10:00:50', '2022-10-24 09:40:56', 'Selesai'),
+	(2, 3, 35000.00, 1, 35000.00, 1, 'Deny', 'Deny', '2022-10-24 10:00:53', '2022-10-24 09:42:04', 'Selesai'),
+	(3, 1, 35000.00, 2, 70000.00, 1, 'Deny', 'Deny', '2022-10-24 10:16:45', '2022-10-24 10:16:45', 'Menunggu Pembayaran'),
+	(3, 2, 17000.00, 1, 17000.00, 5, 'Deny', 'Deny', '2022-10-24 10:16:53', '2022-10-24 10:16:53', 'Menunggu Pembayaran');
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 
 -- Dumping structure for table matching_fund.password_resets
