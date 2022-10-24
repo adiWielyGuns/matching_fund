@@ -78,7 +78,7 @@ function terbilang($x, $style = 4)
     return $hasil;
 }
 
-function CarbonParse($date = null, $format)
+function CarbonParse($format)
 {
     return \carbon\carbon::parse($date)->format($format);
 }

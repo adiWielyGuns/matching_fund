@@ -314,6 +314,8 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::post('/store', 'store')->name('store-cashier');
                     Route::post('/update', 'update')->name('update-cashier');
                     Route::post('/destroy', 'destroy')->name('destroy-cashier');
+
+                    Route::get('/get-data-detail', 'getDataDetail')->name('get-data-detail');
                 });
             });
         });

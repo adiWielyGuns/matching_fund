@@ -159,6 +159,7 @@ class ApiController extends Controller
         $order = OrderDetail::where('order_id', $req->order_id)
             ->with(['master_menu'])
             ->get()->toArray();
+        
         event(new OrderEvent($req->order_id));
 
         return 'success';
