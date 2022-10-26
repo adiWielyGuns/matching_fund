@@ -316,6 +316,7 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::post('/destroy', 'destroy')->name('destroy-cashier');
 
                     Route::get('/get-data-detail', 'getDataDetail')->name('get-data-detail');
+                    Route::get('/load-data', 'loadData')->name('load-data');
                 });
             });
         });
