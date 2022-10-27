@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CmsManagementController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\UpdateStatusController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GroupMenuController;
 use App\Http\Controllers\HomeCmsController;
@@ -319,6 +320,24 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::get('/load-data', 'loadData')->name('load-data');
                 });
             });
+
+            Route::controller(UpdateStatusController::class)->group(function () {
+                Route::group(['prefix' => 'update-status-menu'], function () {
+                    Route::get('/index', 'index')->name('update-status-menu');
+                    Route::get('/datatable', 'datatable')->name('datatable-update-status-menu');
+                    Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-update-status-menu');
+                    Route::get('/edit', 'edit')->name('edit-update-status-menu');
+                    Route::get('/sequence', 'sequence')->name('sequence-update-status-menu');
+                    Route::get('/store', 'store')->name('store-update-status-menu');
+                    Route::post('/update', 'update')->name('update-update-status-menu');
+                    Route::post('/destroy', 'destroy')->name('destroy-update-status-menu');
+
+                    // Route::get('/get-data-detail', 'getDataDetail')->name('get-data-detail');
+                    Route::get('/load-data', 'loadData')->name('update-status-menu-load-data');
+                });
+            });
+
+
         });
     });
 });
