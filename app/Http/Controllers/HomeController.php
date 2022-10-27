@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\TableRepositoryInterface;
 use App\Models\MasterMenu;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -40,6 +42,18 @@ class HomeController extends Controller
             'table' => $table,
             'categories' => $categories,
             'menu' => $menu,
+        ]);
+    }
+
+    public function receipt(Request $req)
+    {
+        $req->id = Crypt::decrypt($req->id);
+        $data = Reservation::with(['meja'])->find($req->id);
+
+        return Inertia::render('Receipt', [
+            'date' => CarbonParseISO($data->tanggal . ' ' . $data->jam, 'DD MMMM Y, H:mm'),
+            'data' => $data,
+            'telpon' => cms('telphone'),
         ]);
     }
 }
