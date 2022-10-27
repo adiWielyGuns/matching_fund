@@ -11,10 +11,19 @@ import {
   faTrash,
   faEdit,
   faSpinner,
-  faEllipsisVertical
+  faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUserSecret, faSearch, faList, faTableCells, faTrash, faEdit, faSpinner, faEllipsisVertical);
+library.add(
+  faUserSecret,
+  faSearch,
+  faList,
+  faTableCells,
+  faTrash,
+  faEdit,
+  faSpinner,
+  faEllipsisVertical
+);
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -25,13 +34,13 @@ const showingNavigationDropdown = ref(false);
       <header class="bg-white shadow fixed w-full z-10 top-0">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <img src="'../assets/'" alt="">
+            <img src="/assets/images/Logo.png" class="h-6" alt="" />
           </h2>
         </div>
       </header>
       <!-- Page Content -->
       <main>
-        <div class="mt-12">
+        <div class="pt-20">
           <slot />
         </div>
       </main>

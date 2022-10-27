@@ -14,6 +14,7 @@ use App\Notifications\OrderNotification;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
 
@@ -43,14 +44,16 @@ class ApiController extends Controller
     public function submitReservasi(Request $req)
     {
         return DB::transaction(function () use ($req) {
+            $id = $this->reservationRepository->getIdReservation();
             $data = [
-                'id' => $this->reservationRepository->getIdReservation(),
+                'id' => $id,
                 'kode' => $this->reservationRepository->getKodeReservation(),
                 'tanggal' => Carbon::parse($req->tanggal)->format('Y-m-d'),
                 'jam' => Carbon::parse($req->tanggal)->format('H:i'),
                 'pax' => $req->pax,
                 'nama' => $req->nama,
                 'telpon' => $req->telpon,
+                'table_id' => $req->table_id,
                 'status' => 'Waiting For Payment',
                 'created_by' => $req->nama,
                 'updated_by' => $req->nama,
@@ -62,6 +65,7 @@ class ApiController extends Controller
                 'status' => 1,
                 'message' => 'Berhasil melakukan reservasi',
                 'data' => $this->reservationRepository->createReservation($data),
+                'id' => Crypt::encrypt($id),
             ]);
         });
     }
@@ -159,7 +163,7 @@ class ApiController extends Controller
         $order = OrderDetail::where('order_id', $req->order_id)
             ->with(['master_menu'])
             ->get()->toArray();
-        
+
         event(new OrderEvent($req->order_id));
 
         return 'success';
@@ -176,12 +180,24 @@ class ApiController extends Controller
                 return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
             }
         }
-        return Response()->json(['status' => 0, 'message' => 'Not Ordering']);
+        return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
     }
 
     public function progressMenu(Request $req)
     {
         $check = OrderDetail::where('order_id', $req->order_id)->with(['master_menu'])->get();
         return Response()->json(['status' => 1, 'message' => 'Berhasil fetching data', 'data' => $check]);
+    }
+
+    public function checkLocation(Request $req)
+    {
+        $latlong = explode(',', cms('latlong'));
+        $distance = distance($req->latitude, $req->longitude, $latlong[0], $latlong[1], 'K');
+
+        if ($distance <= 0.05) {
+            return Response()->json(['status' => 1, 'message' => 'Berhasil fetching data']);
+        } else {
+            return Response()->json(['status' => 2, 'message' => 'Jarak melebihi dari 50 m, silahkan gunakan reservasi.']);
+        }
     }
 }

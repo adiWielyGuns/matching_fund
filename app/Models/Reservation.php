@@ -37,4 +37,9 @@ class Reservation extends Model
     {
         return $this->hasOne(Reservation::class, 'reservation_id', 'id');
     }
+
+    public function meja()
+    {
+        return $this->belongsTo(Table::class, 'table_id', 'id');
+    }
 }
