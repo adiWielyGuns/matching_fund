@@ -129,6 +129,7 @@
                     break;
 
                 case 'URL':
+                case 'INPUT':
                     formData.append('value', $("#value").val());
                     break;
                 default:

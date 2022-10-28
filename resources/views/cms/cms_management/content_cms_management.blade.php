@@ -33,6 +33,8 @@
                             <input type="text" class="form-control required" name="value"
                                 placeholder="Masukan value" id="value">
                         </div>
+                    @elseif ($data->type == 'INPUT')
+                        <input class="form-control" type="text" name="value" id="value">
                     @else
                         <div id="summernote"></div>
                     @endif

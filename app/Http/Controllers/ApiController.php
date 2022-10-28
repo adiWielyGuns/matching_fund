@@ -191,7 +191,7 @@ class ApiController extends Controller
 
     public function checkLocation(Request $req)
     {
-        $latlong = explode(',', cms('latlong'));
+        $latlong = explode(',', str_replace(' ', '', cms('latlong')));
         $distance = distance($req->latitude, $req->longitude, $latlong[0], $latlong[1], 'K');
 
         if ($distance <= 0.05) {

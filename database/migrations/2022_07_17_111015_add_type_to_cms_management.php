@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('cms_managements', function (Blueprint $table) {
-            $table->enum('type', ['IMAGE', 'STRING', 'URL']);
+            $table->enum('type', ['IMAGE', 'STRING', 'URL', 'INPUT']);
             $table->string('example');
             $table->boolean('status');
         });
