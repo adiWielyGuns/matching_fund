@@ -540,6 +540,7 @@ export default {
       v$: useVuelidate(),
       accounting: accounting,
       products: this.$page.props.menu,
+      reservationId: this.$page.props.reservation_id,
       isModalItemVisible: false,
       isModalBayarVisible: false,
       itemSelected: null,
@@ -801,6 +802,7 @@ export default {
                 item: el.listPesanan,
                 table_id: el.tableId,
                 order_id: el.orderId,
+                reservation_id: el.reservationId,
               })
               .then(function (response) {
                 // handle success

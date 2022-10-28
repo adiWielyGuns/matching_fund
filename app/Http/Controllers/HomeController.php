@@ -35,13 +35,18 @@ class HomeController extends Controller
         $table = $this->tableRepository->getTableById($req->table_id);
         $categories = $this->categoryRepository->getAllCategoryActive('id, name as text');
         $menu = MasterMenu::where('status', true)->get();
-
+        if (isset($req->reservation_id)) {
+            $reservation_id = Crypt::decrypt($req->reservation_id);
+        } else {
+            $reservation_id = null;
+        }
         return Inertia::render('Order', [
             'now' => Carbon::now()->format('l, d-m-Y'),
             'req' => $req->all(),
             'table' => $table,
             'categories' => $categories,
             'menu' => $menu,
+            'reservation_id' => $reservation_id,
         ]);
     }
 

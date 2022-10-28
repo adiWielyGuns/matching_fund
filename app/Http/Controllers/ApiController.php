@@ -35,9 +35,11 @@ class ApiController extends Controller
         $check = Reservation::where('kode', $req->kode)
             ->where('status', 'Paid')
             ->first();
+
+
         if ($check) {
-            Reservation::where('kode', $req->kode)->update(['status', 'Done']);
-            return Response()->json(['status' => 1, 'message' => 'Reservasi tersedia', 'data' => $check]);
+            Reservation::where('kode', $req->kode)->update(['status' => 'Done']);
+            return Response()->json(['status' => 1, 'message' => 'Reservasi tersedia', 'data' => $check, 'reservation_id' => Crypt::encrypt($check->id)]);
         } else {
             return Response()->json(['status' => 0, 'message' => 'Kode reservasi tidak tersedia']);
         }
@@ -78,12 +80,16 @@ class ApiController extends Controller
             $check = $this->orderRepository->getOrderById($req->order_id);
             if (!$check) {
                 $id = $this->orderRepository->getIdOrder();
+                if (is_numeric($req->reservation_id)) {
+                    Reservation::where('id', $req->reservation_id)->update(['order_id' => $id]);
+                }
                 $data = [
                     'id' => $id,
                     'kode' => $this->orderRepository->getKodeOrder(),
                     'name' => $req->name,
                     'telpon' => $req->telpon,
                     'pax' => $req->pax,
+                    'table_id' => $req->table_id,
                     'table_id' => $req->table_id,
                     'jenis' => 'langsung',
                     'created_by' => $req->name,
