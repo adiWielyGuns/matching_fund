@@ -303,7 +303,7 @@ function cms($name)
     }
 }
 
-function CarbonParseISO($date = null, $format, $locale = 'id')
+function CarbonParseISO($date, $format, $locale = 'id')
 {
     return \carbon\carbon::parse($date)->locale($locale)->isoFormat($format);
 }
