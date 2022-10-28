@@ -36,6 +36,7 @@ class ApiController extends Controller
             ->where('status', 'Paid')
             ->first();
         if ($check) {
+            Reservation::where('kode', $req->kode)->update(['status', 'Done']);
             return Response()->json(['status' => 1, 'message' => 'Reservasi tersedia', 'data' => $check]);
         } else {
             return Response()->json(['status' => 0, 'message' => 'Kode reservasi tidak tersedia']);
@@ -201,5 +202,14 @@ class ApiController extends Controller
         } else {
             return Response()->json(['status' => 2, 'message' => 'Jarak melebihi dari 50 m, silahkan gunakan reservasi.']);
         }
+    }
+
+    public function cancelOrder(Request $req)
+    {
+        return DB::transaction(function () use ($req) {
+            OrderDetail::where('order_id', $req->order_id)->where('status', 'Menunggu Pembayaran')->delete();
+            event(new CashierEvent());
+            return Response()->json(['status' => 1, 'message' => 'Berhasil menghapus order']);
+        });
     }
 }
