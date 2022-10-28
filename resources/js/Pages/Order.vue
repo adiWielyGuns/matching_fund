@@ -42,7 +42,6 @@ library.add(
 </script>
 
 <template>
-
   <Head title="Order" />
   <Main>
     <div class="py-12">
@@ -51,48 +50,79 @@ library.add(
           <div class="grid grid-cols-12 gap-6">
             <div class="col-span-12 md:col-span-4 sm:rounded-lg">
               <div class="grid grid-cols-12">
-                <div class="col-span-12 bg-white mb-8 px-14 rounded-3xl pt-10 pb-6 mx-2 md:mx-0">
+                <div
+                  class="col-span-12 bg-white mb-8 px-14 rounded-3xl pt-10 pb-6 mx-2 md:mx-0"
+                >
                   <div class="grid grid-cols-12">
                     <div class="col-span-12 flex justify-between">
                       <div class="flex">
                         <img class="h-7 mr-2" :src="'../assets/images/user.png'" alt="" />
-                        <span class="text-gray-700 text-2xl inline-block align-middle my-auto">
+                        <span
+                          class="text-gray-700 text-2xl inline-block align-middle my-auto"
+                        >
                           {{ $page.props.req.nama }}
                         </span>
                       </div>
-                      <!-- <a href="javascript:;" class="my-auto text-gray-700 hover:text-purple-700">
+                      <a
+                        href="javascript:;"
+                        class="my-auto text-gray-700 hover:text-purple-700"
+                      >
                         <div class="dropdown" :class="{ show: activateDropdown }">
-                          <a class="nav-link" @click="
-                            activateDropdown
-                              ? (activateDropdown = false)
-                              : (activateDropdown = true)
-                          " data-toggle="dropdown" href="#" aria-expanded="true">
-                            <font-awesome-icon class="text-xl" icon="fa-solid fa-ellipsis-vertical" />
+                          <a
+                            class="nav-link"
+                            @click="
+                              activateDropdown
+                                ? (activateDropdown = false)
+                                : (activateDropdown = true)
+                            "
+                            data-toggle="dropdown"
+                            href="#"
+                            aria-expanded="true"
+                          >
+                            <font-awesome-icon
+                              class="text-xl"
+                              icon="fa-solid fa-ellipsis-vertical"
+                            />
                           </a>
-                          <div class="dropdown-menu dropdown-menu-left" :class="{ show: activateDropdown }"
-                            x-placement="bottom-start" :style="{
-                                'position': 'absolute',
-                                'transform': 'translate3d(0px, 40px, 0px)',
-                                'top': '0px',
-                                'left': '0px',
-                                'will-change': 'transform',
-                            }">
-                            <a href="javascript:;" onclick="edit('12')" class="dropdown-item">
+                          <div
+                            class="dropdown-menu dropdown-menu-left"
+                            :class="{ show: activateDropdown }"
+                            x-placement="bottom-start"
+                            :style="{
+                              position: 'absolute',
+                              transform: 'translate3d(0px, 40px, 0px)',
+                              top: '0px',
+                              left: '0px',
+                              'will-change': 'transform',
+                            }"
+                          >
+                            <a
+                              href="javascript:;"
+                              onclick="edit('12')"
+                              class="dropdown-item"
+                            >
                               <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Edit
                             </a>
                           </div>
                         </div>
-                      </a> -->
+                      </a>
                     </div>
                     <div class="col-span-12 flex">
-                      <span class="text-gray-700">Tlp : {{ $page.props.req.telpon }},
+                      <span class="text-gray-700"
+                        >Tlp : {{ $page.props.req.telpon }},
                       </span>
-                      <span class="text-gray-700">&nbsp;Meja {{ $page.props.table.name }},</span>
-                      <span class="text-gray-700">&nbsp; {{ $page.props.req.pax }} Cust.</span>
+                      <span class="text-gray-700"
+                        >&nbsp;Meja {{ $page.props.table.name }},</span
+                      >
+                      <span class="text-gray-700"
+                        >&nbsp; {{ $page.props.req.pax }} Cust.</span
+                      >
                     </div>
                   </div>
                 </div>
-                <div class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl  mx-2 md:mx-0">
+                <div
+                  class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl mx-2 md:mx-0"
+                >
                   <div class="flex justify-between">
                     <b>Pesanan</b>
                     <b></b>
@@ -100,17 +130,28 @@ library.add(
                   <ul class="py-4">
                     <li v-for="(item, index) in listPesanan" :key="index" class="py-2">
                       <div class="flex">
-                        <img class="rounded object-cover h-12 w-12 mr-2" v-bind:src="item.image" alt="" />
+                        <img
+                          class="rounded object-cover h-12 w-12 mr-2"
+                          v-bind:src="item.image"
+                          alt=""
+                        />
                         <div class="grid grid-cols-12 gap-2 w-full">
                           <div class="col-span-12">
                             <div class="flex justify-between">
-                              <b>{{ item.name }}</b><br />
+                              <b>{{ item.name }}</b
+                              ><br />
                               <div class="my-auto">
                                 <a href="javascript:;" @click="openItemModal(item)">
-                                  <font-awesome-icon icon="fas fa-edit" class="text-yellow-400 mr-2" />
+                                  <font-awesome-icon
+                                    icon="fas fa-edit"
+                                    class="text-yellow-400 mr-2"
+                                  />
                                 </a>
                                 <a href="javascript:;" @click="deleteItem(index)">
-                                  <font-awesome-icon icon="fas fa-trash" class="text-red-600" />
+                                  <font-awesome-icon
+                                    icon="fas fa-trash"
+                                    class="text-red-600"
+                                  />
                                 </a>
                               </div>
                             </div>
@@ -124,10 +165,12 @@ library.add(
                                 </span>
                               </b>
                               <span class="text-gray-700">
-                                <b class="font-extrabold">Rp.
+                                <b class="font-extrabold"
+                                  >Rp.
                                   {{
-                                  accounting.formatNumber(item.price * item.jumlah)
-                                  }}</b>
+                                    accounting.formatNumber(item.price * item.jumlah)
+                                  }}</b
+                                >
                               </span>
                             </div>
                           </div>
@@ -142,27 +185,43 @@ library.add(
                       <b class="text-xl">Rp. {{ totalPesananFormatMoney }}</b>
                     </li>
                     <li v-if="listPesanan.length != 0" class="text-center w-full my-4">
-                      <BreezeButton @click="prosesPesanan"
-                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full">
-                        Proses Pesanan</BreezeButton>
+                      <BreezeButton
+                        @click="prosesPesanan"
+                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full"
+                      >
+                        Proses Pesanan</BreezeButton
+                      >
                     </li>
                   </ul>
                 </div>
                 <!-- Menunggu pembayaran -->
-                <div class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl  mx-2 md:mx-0"
-                  v-if="listMenungguPembayaran.length != 0">
+                <div
+                  class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl mx-2 md:mx-0"
+                  v-if="listMenungguPembayaran.length != 0"
+                >
                   <div class="flex justify-between">
                     <b>Pesanan</b>
-                    <b class="bg-purple-700 px-4 py-1 text-white rounded-full">Menunggu Pembayaran</b>
+                    <b class="bg-purple-700 px-4 py-1 text-white rounded-full"
+                      >Menunggu Pembayaran</b
+                    >
                   </div>
                   <ul class="py-4">
-                    <li v-for="(item, index) in listMenungguPembayaran" :key="index" class="py-2">
+                    <li
+                      v-for="(item, index) in listMenungguPembayaran"
+                      :key="index"
+                      class="py-2"
+                    >
                       <div class="flex">
-                        <img class="rounded object-cover h-12 w-12 mr-2" v-bind:src="item.master_menu.image" alt="" />
+                        <img
+                          class="rounded object-cover h-12 w-12 mr-2"
+                          v-bind:src="item.master_menu.image"
+                          alt=""
+                        />
                         <div class="grid grid-cols-12 gap-2 w-full">
                           <div class="col-span-12">
                             <div class="flex justify-between">
-                              <b>{{ item.master_menu.name }}</b><br />
+                              <b>{{ item.master_menu.name }}</b
+                              ><br />
                             </div>
                           </div>
                           <div class="col-span-12">
@@ -174,10 +233,9 @@ library.add(
                                 </span>
                               </b>
                               <span class="text-gray-700">
-                                <b class="font-extrabold">Rp.
-                                  {{
-                                  accounting.formatNumber(item.sub_total)
-                                  }}</b>
+                                <b class="font-extrabold"
+                                  >Rp. {{ accounting.formatNumber(item.sub_total) }}</b
+                                >
                               </span>
                             </div>
                           </div>
@@ -189,18 +247,25 @@ library.add(
                     </li>
                     <li class="flex justify-between">
                       <b class="text-xl">Total</b>
-                      <b class="text-xl">Rp. {{ accounting.formatNumber(totalMenungguPembayaran) }}</b>
+                      <b class="text-xl"
+                        >Rp. {{ accounting.formatNumber(totalMenungguPembayaran) }}</b
+                      >
                     </li>
                     <li v-if="listPesanan.length != 0" class="text-center w-full my-4">
-                      <BreezeButton @click="prosesPesanan"
-                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full">
-                        Proses Pesanan</BreezeButton>
+                      <BreezeButton
+                        @click="prosesPesanan"
+                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full"
+                      >
+                        Proses Pesanan</BreezeButton
+                      >
                     </li>
                   </ul>
                 </div>
                 <!-- Sudah pembayaran -->
-                <div class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl  mx-2 md:mx-0"
-                  v-if="listSelesai.length != 0">
+                <div
+                  class="col-span-12 bg-white p-6 pt-12 mb-8 sm:rounded-3xl mx-2 md:mx-0"
+                  v-if="listSelesai.length != 0"
+                >
                   <div class="flex justify-between">
                     <b>Pesanan</b>
                     <b class="bg-green-500 px-4 py-1 text-white rounded-full">Terbayar</b>
@@ -208,14 +273,25 @@ library.add(
                   <ul class="py-4">
                     <li v-for="(item, index) in listSelesai" :key="index" class="py-2">
                       <div class="flex">
-                        <img class="rounded object-cover h-12 w-12 mr-2" v-bind:src="item.master_menu.image" alt="" />
+                        <img
+                          class="rounded object-cover h-12 w-12 mr-2"
+                          v-bind:src="item.master_menu.image"
+                          alt=""
+                        />
                         <div class="grid grid-cols-12 gap-2 w-full">
                           <div class="col-span-12">
                             <div class="flex justify-between">
-                              <b>{{ item.master_menu.name }}</b><br />
+                              <b>{{ item.master_menu.name }}</b
+                              ><br />
                               <img
-                                :src="item.status == 'Sedang Disiapkan'?'../assets/images/sedang_disiapkan.png':'../assets/images/selesai.png'"
-                                class="w-6 my-auto" :title="item.status">
+                                :src="
+                                  item.status == 'Sedang Disiapkan'
+                                    ? '../assets/images/sedang_disiapkan.png'
+                                    : '../assets/images/selesai.png'
+                                "
+                                class="w-6 my-auto"
+                                :title="item.status"
+                              />
                             </div>
                           </div>
                           <div class="col-span-12">
@@ -227,10 +303,9 @@ library.add(
                                 </span>
                               </b>
                               <span class="text-gray-700">
-                                <b class="font-extrabold">Rp.
-                                  {{
-                                  accounting.formatNumber(item.sub_total)
-                                  }}</b>
+                                <b class="font-extrabold"
+                                  >Rp. {{ accounting.formatNumber(item.sub_total) }}</b
+                                >
                               </span>
                             </div>
                           </div>
@@ -242,83 +317,132 @@ library.add(
                     </li>
                     <li class="flex justify-between">
                       <b class="text-xl">Total</b>
-                      <b class="text-xl">Rp. {{ accounting.formatNumber(totalSelesai) }}</b>
+                      <b class="text-xl"
+                        >Rp. {{ accounting.formatNumber(totalSelesai) }}</b
+                      >
                     </li>
                     <li v-if="listPesanan.length != 0" class="text-center w-full my-4">
-                      <BreezeButton @click="prosesPesanan"
-                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full">
-                        Proses Pesanan</BreezeButton>
+                      <BreezeButton
+                        @click="prosesPesanan"
+                        class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8 w-full"
+                      >
+                        Proses Pesanan</BreezeButton
+                      >
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div class="col-span-12 md:col-span-8 sm:rounded-lg ">
+            <div class="col-span-12 md:col-span-8 sm:rounded-lg">
               <div class="grid grid-cols-12 gap-6">
                 <div class="col-span-12 align-middle hidden md:block">
                   <b class="text-2xl font-extrabold">List Menu</b>
                 </div>
-                <div class="col-span-12  justify-between  mx-2 md:mx-0 hidden md:flex">
+                <div class="col-span-12 justify-between mx-2 md:mx-0 hidden md:flex">
                   <div class="flex">
                     <Category v-model="$data.categoryId" class="my-auto mr-2"></Category>
-                    <BreezeButton @click="$data.categoryId = null,$data.searchValue= ''"
-                      class="rounded-full text-md text-center my-auto font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8">
+                    <BreezeButton
+                      @click="($data.categoryId = null), ($data.searchValue = '')"
+                      class="rounded-full text-md text-center my-auto font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8"
+                    >
                       Reset
                     </BreezeButton>
                   </div>
                   <div class="flex">
                     <div class="my-auto relative">
-                      <font-awesome-icon icon="fas fa-search"
-                        :class="{ 'text-gray-700': search, 'text-gray-500': !search }" class="absolute left-3 top-3" />
-                      <BreezeInput type="text" v-model="$data.searchValue" @focus.native="search = true"
-                        @blur.native="search = false" placeholder="Cari" class="mr-12 rounded-3xl pl-8 pt-2">
+                      <font-awesome-icon
+                        icon="fas fa-search"
+                        :class="{ 'text-gray-700': search, 'text-gray-500': !search }"
+                        class="absolute left-3 top-3"
+                      />
+                      <BreezeInput
+                        type="text"
+                        v-model="$data.searchValue"
+                        @focus.native="search = true"
+                        @blur.native="search = false"
+                        placeholder="Cari"
+                        class="mr-12 rounded-3xl pl-8 pt-2"
+                      >
                       </BreezeInput>
                     </div>
                     <a href="javascript:;" class="my-auto">
-                      <font-awesome-icon icon="fa-solid fa-table-cells" :class="{
-                        'text-purple-700': mode == 'tile',
-                        'text-gray-700': mode != 'tile',
-                      }" class="text-3xl mr-4" v-on:click="mode = 'tile'" />
+                      <font-awesome-icon
+                        icon="fa-solid fa-table-cells"
+                        :class="{
+                          'text-purple-700': mode == 'tile',
+                          'text-gray-700': mode != 'tile',
+                        }"
+                        class="text-3xl mr-4"
+                        v-on:click="mode = 'tile'"
+                      />
                     </a>
                     <a href="javascript:;" class="my-auto">
-                      <font-awesome-icon icon="fa-solid fa-list" :class="{
-                        'text-purple-700': mode == 'list',
-                        'text-gray-700': mode != 'list',
-                      }" class="text-3xl" v-on:click="mode = 'list'" />
+                      <font-awesome-icon
+                        icon="fa-solid fa-list"
+                        :class="{
+                          'text-purple-700': mode == 'list',
+                          'text-gray-700': mode != 'list',
+                        }"
+                        class="text-3xl"
+                        v-on:click="mode = 'list'"
+                      />
                     </a>
                   </div>
                 </div>
 
-                <div class="col-span-12  justify-between  mx-2 md:mx-0 md:hidden">
+                <div class="col-span-12 justify-between mx-2 md:mx-0 md:hidden">
                   <div class="grid grid-cols-12 gap-2">
                     <div class="col-span-12 flex justify-between mb-2">
-                      <Category v-model="$data.categoryId" class="my-auto mr-2"></Category>
-                      <BreezeButton @click="$data.categoryId = null,$data.searchValue= ''"
-                        class="rounded-full text-md text-center my-auto font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8">
+                      <Category
+                        v-model="$data.categoryId"
+                        class="my-auto mr-2"
+                      ></Category>
+                      <BreezeButton
+                        @click="($data.categoryId = null), ($data.searchValue = '')"
+                        class="rounded-full text-md text-center my-auto font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8"
+                      >
                         Reset
                       </BreezeButton>
                     </div>
                     <div class="col-span-12 flex justify-between">
                       <div class="my-auto relative">
-                        <font-awesome-icon icon="fas fa-search"
+                        <font-awesome-icon
+                          icon="fas fa-search"
                           :class="{ 'text-gray-700': search, 'text-gray-500': !search }"
-                          class="absolute left-3 top-3" />
-                        <BreezeInput type="text" v-model="$data.searchValue" @focus.native="search = true"
-                          @blur.native="search = false" placeholder="Cari" class="mr-12 rounded-3xl pl-8 pt-2">
+                          class="absolute left-3 top-3"
+                        />
+                        <BreezeInput
+                          type="text"
+                          v-model="$data.searchValue"
+                          @focus.native="search = true"
+                          @blur.native="search = false"
+                          placeholder="Cari"
+                          class="mr-12 rounded-3xl pl-8 pt-2"
+                        >
                         </BreezeInput>
                       </div>
                       <div>
                         <a href="javascript:;" class="my-auto">
-                          <font-awesome-icon icon="fa-solid fa-table-cells" :class="{
-                            'text-purple-700': mode == 'tile',
-                            'text-gray-700': mode != 'tile',
-                          }" class="text-3xl mr-4" v-on:click="mode = 'tile'" />
+                          <font-awesome-icon
+                            icon="fa-solid fa-table-cells"
+                            :class="{
+                              'text-purple-700': mode == 'tile',
+                              'text-gray-700': mode != 'tile',
+                            }"
+                            class="text-3xl mr-4"
+                            v-on:click="mode = 'tile'"
+                          />
                         </a>
                         <a href="javascript:;" class="my-auto">
-                          <font-awesome-icon icon="fa-solid fa-list" :class="{
-                            'text-purple-700': mode == 'list',
-                            'text-gray-700': mode != 'list',
-                          }" class="text-3xl" v-on:click="mode = 'list'" />
+                          <font-awesome-icon
+                            icon="fa-solid fa-list"
+                            :class="{
+                              'text-purple-700': mode == 'list',
+                              'text-gray-700': mode != 'list',
+                            }"
+                            class="text-3xl"
+                            v-on:click="mode = 'list'"
+                          />
                         </a>
                       </div>
                     </div>
@@ -327,11 +451,17 @@ library.add(
 
                 <div class="col-span-12">
                   <div class="grid grid-cols-12 gap-4 px-2 md:p-0">
-                    <Product :mode="mode" :category="categoryId" :searchValue="searchValue" @openModal="openItemModal"
+                    <Product
+                      :mode="mode"
+                      :products="products"
+                      :category="categoryId"
+                      :searchValue="searchValue"
+                      @openModal="openItemModal"
                       :col="{
                         'col-span-12': mode == 'list',
                         'col-span-12 md:col-span-3 p-2': mode != 'list',
-                      }">
+                      }"
+                    >
                     </Product>
                   </div>
                 </div>
@@ -348,21 +478,35 @@ library.add(
           <ProductDetail :item="itemSelected">
             <div class="flex justify-center col-span-12">
               <div class="w-10 h-10 my-auto mr-4">
-                <a class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
-                  @click="decrement" href="javascript:;">
+                <a
+                  class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
+                  @click="decrement"
+                  href="javascript:;"
+                >
                   <font-awesome-icon icon="fa-solid fa-minus" class="w-5 h-10" />
                 </a>
               </div>
               <div class="w-40 h-10 my-auto">
-                <BreezeInput id="jumlah" type="text" readonly class="block w-full rounded-full text-center"
-                  v-model="$data.jumlahItem" required autocomplete="jumlah" placeholder="Qty" />
+                <BreezeInput
+                  id="jumlah"
+                  type="text"
+                  readonly
+                  class="block w-full rounded-full text-center"
+                  v-model="$data.jumlahItem"
+                  required
+                  autocomplete="jumlah"
+                  placeholder="Qty"
+                />
                 <div v-if="v$.jumlahItem.$error">
                   <BreezeInputError message="Jumlah Item Harus Diisi"></BreezeInputError>
                 </div>
               </div>
               <div class="w-10 h-10 my-auto ml-4">
-                <a class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
-                  @click="increment" href="javascript:;">
+                <a
+                  class="bg-white rounded-full w-10 h-10 text-center hover:bg-purple-500 cursor-pointer hover:text-white block"
+                  @click="increment"
+                  href="javascript:;"
+                >
                   <font-awesome-icon icon="fa-solid fa-plus" class="w-5 h-10" />
                 </a>
               </div>
@@ -372,10 +516,12 @@ library.add(
       </template>
       <template #footer>
         <div class="text-center">
-          <BreezeButton @click="addItem"
-            class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8">
+          <BreezeButton
+            @click="addItem"
+            class="rounded-full text-md text-center font-bold text-white bg-purple-700 hover:bg-purple-400 focus:bg-purple-800 active:bg-purple-800 h-8"
+          >
             <font-awesome-icon icon="fa-solid fa-cart-shopping" class="mr-2" />Rp.&nbsp;{{
-            totalItemFormatMoney
+              totalItemFormatMoney
             }}
           </BreezeButton>
         </div>
@@ -399,6 +545,7 @@ export default {
       },
       v$: useVuelidate(),
       accounting: accounting,
+      products: this.$page.props.menu,
       isModalItemVisible: false,
       isModalBayarVisible: false,
       itemSelected: null,
@@ -528,8 +675,7 @@ export default {
             el.generateOrder(response.data.data);
           }
         })
-        .catch(function (error) {
-        });
+        .catch(function (error) {});
     },
     async checkTransaction() {
       this.$root.$loading.loading = true;
@@ -566,7 +712,7 @@ export default {
         .catch(function (error) {
           el.$root.$loading.loading = false;
         })
-        .finally(function () { });
+        .finally(function () {});
     },
     async orderNotifier() {
       axios.post("/order-notifier", {
@@ -579,12 +725,12 @@ export default {
       this.totalMenungguPembayaran = 0;
       this.totalSelesai = 0;
       param.forEach((element) => {
-        if (element.status == 'Menunggu Pembayaran') {
+        if (element.status == "Menunggu Pembayaran") {
           this.listMenungguPembayaran.push(element);
           this.totalMenungguPembayaran += element.sub_total;
         }
 
-        if (element.status == 'Sedang Disiapkan' || element.status == 'Selesai') {
+        if (element.status == "Sedang Disiapkan" || element.status == "Selesai") {
           this.listSelesai.push(element);
           this.totalSelesai += element.sub_total;
         }
@@ -622,7 +768,11 @@ export default {
                   el.Cookies.set("order_id", response.data.order_id, { expires: 1 });
 
                   el.Cookies.remove("pesanan");
-                  el.listPesanan = [];
+                  el.products.forEach((element) => {
+                    element.jumlah = 0;
+                  });
+
+                  el.listPesanan.splice(0);
                 } else {
                   el.$toaster.warning(response.data.message);
                 }
@@ -666,14 +816,14 @@ export default {
         only: [],
         headers: {},
         errorBag: null,
-        onCancelToken: (cancelToken) => { },
-        onCancel: () => { },
-        onBefore: (visit) => { },
-        onStart: (visit) => { },
-        onProgress: (progress) => { },
-        onSuccess: (page) => { },
-        onError: (errors) => { },
-        onFinish: () => { },
+        onCancelToken: (cancelToken) => {},
+        onCancel: () => {},
+        onBefore: (visit) => {},
+        onStart: (visit) => {},
+        onProgress: (progress) => {},
+        onSuccess: (page) => {},
+        onError: (errors) => {},
+        onFinish: () => {},
       });
     },
   },

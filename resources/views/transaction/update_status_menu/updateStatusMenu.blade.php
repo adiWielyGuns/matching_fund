@@ -48,7 +48,8 @@
                                                     class="fas fa-search"></i></button>
                                         </span>
                                         <input type="text" id="example-input1-group2" name="example-input1-group2"
-                                            class="form-control" placeholder="Cari Bedasarkan Nama.." onkeyup="filterOrder()">
+                                            class="form-control" placeholder="Cari Bedasarkan Nama.."
+                                            onkeyup="filterOrder()">
                                     </div>
                                 </div>
                             </div>
@@ -61,13 +62,11 @@
                                 <div class="row">
                                     @foreach ($data as $item)
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card" 
-                                            {{-- @if ($item->belumBayarTotal > 0)
+                                            <div class="card" {{-- @if ($item->belumBayarTotal > 0)
                                                 style="border:2px solid #f96e5b"
                                             @else
                                                 style="border:2px solid #775fd5"
-                                            @endif --}}
-                                            >
+                                            @endif --}}>
                                                 <div class="card-body col-12">
                                                     <div class="row">
                                                         <div class="col-2">
@@ -81,11 +80,16 @@
                                                                 <div class="col-7">
 
                                                                     <div style="padding-left: 45px">
-                                                                        <input type="text" value="{{ $item->master_menu->name }}"  disabled style="border: none;font-size:20px;font-weight:bold;background-color:transparent">
+                                                                        <input type="text"
+                                                                            value="{{ $item->master_menu->name }}"
+                                                                            disabled
+                                                                            style="border: none;font-size:20px;font-weight:bold;background-color:transparent">
                                                                         {{-- <b
                                                                             style="font-size: 20px"></b> --}}
                                                                         <br>
-                                                                        <input type="text" disabled value="{{ $item->order->name }}" style="border: none;font-size:15px;background-color:transparent">
+                                                                        <input type="text" disabled
+                                                                            value="{{ $item->order->name }}"
+                                                                            style="border: none;font-size:15px;background-color:transparent">
 
                                                                         <b style="font-size: 18px">
                                                                             {{ date('H:i', strtotime($item->created_at)) }}</b>
@@ -94,7 +98,8 @@
                                                                 </div>
                                                                 <div class="col-5">
 
-                                                                    <h5 class="float-right" style="
+                                                                    <h5 class="float-right"
+                                                                        style="
                                                                     margin-top: 58px;">
                                                                         {{ $item->qty }}</h5>
                                                                     <h3 class="card-title mt-0 mb-0">
@@ -120,13 +125,13 @@
                                                         </div>
                                                         <div class="col-6 ">
                                                             <button type="button"
-                                                                class="btn 
+                                                                class="btn
                                                                 {{-- @if ($item->belumBayarTotal > 0) --}}
                                                                     btn-outline-danger
                                                                 {{-- @else --}}
                                                                     btn-outline-purple
                                                                 {{-- @endif --}}
-                                                                btn-round 
+                                                                btn-round
                                                                 waves-effect waves-light float-right detail-data"
                                                                 onclick="checkDetail('{{ $item->id }}','{{ $item->order->id }}')">Selesai</button>
                                                         </div>
@@ -177,7 +182,7 @@
             defaultZero: true,
         })
 
-        function checkDetail(params,params2) {
+        function checkDetail(params, params2) {
             var id = params;
             var dt = params2;
             $.ajax({
@@ -194,6 +199,12 @@
             });
         }
 
+        channel.bind('cashier', function(data) {
+            console.log('teasdad')
+            filterOrder();
+        });
+
+
         function filterOrder() {
             var param = $('#example-input1-group2').val();
             console.log(param)
@@ -208,7 +219,5 @@
                 }
             });
         }
-
-      
     </script>
 @endsection

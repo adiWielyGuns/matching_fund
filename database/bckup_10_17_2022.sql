@@ -103,7 +103,7 @@ INSERT INTO `cms_managements` (`id`, `name`, `value`, `created_at`, `updated_at`
 	(16, 'contact-img', 'http://127.0.0.1:8000/image/cms/e6577ab3-93f6-4eb9-b15c-fdee3fcb0c3a.png', '2022-07-17 12:40:18', '2022-07-17 12:41:05', 'IMAGE', '', 1),
 	(17, 'product-banner', '', '2022-07-17 13:13:54', '2022-07-17 13:13:54', 'IMAGE', '', 1),
 	(18, 'blog-detail-banner', '', '2022-07-17 13:55:16', '2022-07-17 13:55:17', 'IMAGE', '', 1),
-	(19, 'latlong', '-7.257472,113.7521', '2022-07-17 13:55:16', '2022-10-28 00:01:24', 'URL', '', 1);
+	(19, 'latlong', '-7.314517619505168,112.71761369544149', '2022-07-17 13:55:16', '2022-10-28 11:35:32', 'INPUT', '', 1);
 /*!40000 ALTER TABLE `cms_managements` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.contacts
@@ -239,7 +239,8 @@ INSERT INTO `group_menus` (`id`, `sequence`, `name`, `icon`, `slug`, `type`, `ti
 	(5, NULL, 'Cms', 'dripicons-article', 'content-management', 'Dropdown', 3, 1, 'superuser', 'superuser', '2022-07-14 15:55:26', '2022-07-14 16:10:13'),
 	(6, 5, 'Front End Management', 'dripicons-scale', 'front-end-management', 'Single', 3, 1, 'superuser', 'superuser', '2022-07-17 09:54:28', '2022-10-17 16:09:24'),
 	(7, 4, 'Reservation', 'dripicons-user-group', 'reservation', 'Single', 4, 1, 'superuser', 'superuser', '2022-10-17 16:06:09', '2022-10-17 16:30:59'),
-	(8, NULL, 'Cashier', 'dripicons-card', 'cashier', 'Single', 4, 1, 'superuser', 'superuser', '2022-10-17 16:33:18', '2022-10-17 16:33:18');
+	(8, NULL, 'Cashier', 'dripicons-card', 'cashier', 'Single', 4, 1, 'superuser', 'superuser', '2022-10-17 16:33:18', '2022-10-17 16:33:18'),
+	(9, NULL, 'Update Status Menu', 'dripicons-basket', 'update-status-menu', 'Single', 4, 1, 'superuser', 'superuser', '2022-10-28 14:35:24', '2022-10-28 14:39:42');
 /*!40000 ALTER TABLE `group_menus` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.master_menus
@@ -314,7 +315,8 @@ INSERT INTO `menus` (`id`, `sequence`, `name`, `slug`, `group_menu_id`, `type`, 
 	(15, NULL, 'Table', 'table', 4, 'Menu', 1, 'superuser', 'superuser', '2022-10-17 16:01:28', '2022-10-17 16:01:28'),
 	(16, NULL, 'Payment Method', 'payment-method', 4, 'Menu', 1, 'superuser', 'superuser', '2022-10-17 16:01:56', '2022-10-17 16:01:56'),
 	(17, NULL, 'Reservation', 'reservation', 7, 'Non Menu', 1, 'superuser', 'superuser', '2022-10-17 16:07:40', '2022-10-17 16:16:17'),
-	(18, NULL, 'Cashier', 'cashier', 8, 'Non Menu', 1, 'superuser', 'superuser', '2022-10-17 16:34:42', '2022-10-17 16:34:42');
+	(18, NULL, 'Cashier', 'cashier', 8, 'Non Menu', 1, 'superuser', 'superuser', '2022-10-17 16:34:42', '2022-10-17 16:34:42'),
+	(19, NULL, 'Update Status Menu', 'update-status-menu', 9, 'Non Menu', 1, 'superuser', 'superuser', '2022-10-28 14:35:53', '2022-10-28 14:35:53');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.migrations
@@ -390,6 +392,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Membuang data untuk tabel matching_fund.orders: ~0 rows (lebih kurang)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` (`id`, `kode`, `name`, `telpon`, `pax`, `table_id`, `reservation_id`, `payment_method_id`, `no_ref`, `nama_ref`, `jenis`, `total_price`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
+	(1, '2022100001', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 318000.00, 'Deny', 'Deny', '2022-10-28 15:28:27', '2022-10-28 15:32:33', 'Not Paid'),
+	(2, '2022100002', 'Deny', '334343', 5, 1, NULL, NULL, NULL, NULL, 'langsung', 485000.00, 'Deny', 'Deny', '2022-10-28 15:34:27', '2022-10-28 16:01:09', 'Not Paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.order_details
@@ -412,6 +417,21 @@ CREATE TABLE IF NOT EXISTS `order_details` (
 -- Membuang data untuk tabel matching_fund.order_details: ~0 rows (lebih kurang)
 DELETE FROM `order_details`;
 /*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+INSERT INTO `order_details` (`order_id`, `id`, `price`, `qty`, `sub_total`, `master_menu_id`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`) VALUES
+	(1, 1, 35000.00, 3, 105000.00, 1, 'Deny', 'Deny', '2022-10-28 15:28:27', '2022-10-28 15:29:15', 'Selesai'),
+	(1, 2, 20000.00, 2, 40000.00, 2, 'Deny', 'Deny', '2022-10-28 15:29:30', '2022-10-28 15:29:57', 'Selesai'),
+	(1, 3, 35000.00, 3, 105000.00, 1, 'Deny', 'Deny', '2022-10-28 15:30:05', '2022-10-28 15:31:42', 'Selesai'),
+	(1, 4, 17000.00, 2, 34000.00, 5, 'Deny', 'Deny', '2022-10-28 15:31:54', '2022-10-28 15:32:14', 'Selesai'),
+	(1, 5, 17000.00, 2, 34000.00, 5, 'Deny', 'Deny', '2022-10-28 15:32:33', '2022-10-28 15:32:58', 'Selesai'),
+	(2, 1, 35000.00, 2, 70000.00, 1, 'Deny', 'Deny', '2022-10-28 15:34:27', '2022-10-28 16:01:25', 'Selesai'),
+	(2, 2, 35000.00, 1, 35000.00, 1, 'Deny', 'Deny', '2022-10-28 15:38:44', '2022-10-28 16:01:27', 'Selesai'),
+	(2, 3, 20000.00, 1, 20000.00, 2, 'Deny', 'Deny', '2022-10-28 15:39:07', '2022-10-28 16:01:31', 'Selesai'),
+	(2, 4, 20000.00, 1, 20000.00, 2, 'Deny', 'Deny', '2022-10-28 15:39:34', '2022-10-28 16:01:34', 'Selesai'),
+	(2, 5, 20000.00, 1, 20000.00, 2, 'Deny', 'Deny', '2022-10-28 15:39:46', '2022-10-28 16:01:37', 'Selesai'),
+	(2, 6, 20000.00, 2, 40000.00, 2, 'Deny', 'Deny', '2022-10-28 15:40:12', '2022-10-28 16:01:52', 'Selesai'),
+	(2, 7, 35000.00, 2, 70000.00, 1, 'Deny', 'Deny', '2022-10-28 15:52:30', '2022-10-28 16:01:54', 'Selesai'),
+	(2, 8, 35000.00, 2, 70000.00, 1, 'Deny', 'Deny', '2022-10-28 16:01:02', '2022-10-28 16:01:57', 'Selesai'),
+	(2, 9, 35000.00, 4, 140000.00, 1, 'Deny', 'Deny', '2022-10-28 16:01:09', '2022-10-28 16:02:00', 'Selesai');
 /*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.password_resets
@@ -445,6 +465,18 @@ CREATE TABLE IF NOT EXISTS `payments` (
 -- Membuang data untuk tabel matching_fund.payments: ~0 rows (lebih kurang)
 DELETE FROM `payments`;
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
+INSERT INTO `payments` (`id`, `orders_id`, `payment_method_id`, `total_price`, `total_payment`, `total_change`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, 1, 1, 180000, 200000, 20000, 'superuser', 'superuser', '2022-10-28 14:33:13', '2022-10-28 14:33:13'),
+	(2, 1, 4, 40000, 40000, 0, 'superuser', 'superuser', '2022-10-28 14:43:18', '2022-10-28 14:43:18'),
+	(3, 1, 1, 70000, 80000, 10000, 'superuser', 'superuser', '2022-10-28 15:15:55', '2022-10-28 15:15:55'),
+	(4, 1, 1, 70000, 80000, 10000, 'superuser', 'superuser', '2022-10-28 15:21:25', '2022-10-28 15:21:25'),
+	(5, 2, 4, 105000, 110000, 5000, 'superuser', 'superuser', '2022-10-28 15:24:35', '2022-10-28 15:24:35'),
+	(6, 1, 1, 105000, 110000, 5000, 'superuser', 'superuser', '2022-10-28 15:28:39', '2022-10-28 15:28:39'),
+	(7, 1, 1, 40000, 50000, 10000, 'superuser', 'superuser', '2022-10-28 15:29:42', '2022-10-28 15:29:42'),
+	(8, 1, 1, 105000, 110000, 5000, 'superuser', 'superuser', '2022-10-28 15:30:22', '2022-10-28 15:30:22'),
+	(9, 1, 1, 34000, 50000, 16000, 'superuser', 'superuser', '2022-10-28 15:32:10', '2022-10-28 15:32:10'),
+	(10, 1, 1, 34000, 50000, 16000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(11, 2, 1, 485000, 500000, 15000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23');
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.payment_details
@@ -463,6 +495,46 @@ CREATE TABLE IF NOT EXISTS `payment_details` (
 -- Membuang data untuk tabel matching_fund.payment_details: ~0 rows (lebih kurang)
 DELETE FROM `payment_details`;
 /*!40000 ALTER TABLE `payment_details` DISABLE KEYS */;
+INSERT INTO `payment_details` (`id`, `product_id`, `payment_id`, `total_price`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+	(1, 1, 1, 70000, 'superuser', 'superuser', '2022-10-28 14:33:13', '2022-10-28 14:33:13'),
+	(2, 1, 1, 70000, 'superuser', 'superuser', '2022-10-28 14:33:13', '2022-10-28 14:33:13'),
+	(3, 6, 1, 40000, 'superuser', 'superuser', '2022-10-28 14:33:13', '2022-10-28 14:33:13'),
+	(4, 2, 2, 40000, 'superuser', 'superuser', '2022-10-28 14:43:18', '2022-10-28 14:43:18'),
+	(5, 1, 3, 70000, 'superuser', 'superuser', '2022-10-28 15:15:55', '2022-10-28 15:15:55'),
+	(6, 1, 4, 70000, 'superuser', 'superuser', '2022-10-28 15:21:25', '2022-10-28 15:21:25'),
+	(7, 1, 5, 70000, 'superuser', 'superuser', '2022-10-28 15:24:35', '2022-10-28 15:24:35'),
+	(8, 1, 5, 35000, 'superuser', 'superuser', '2022-10-28 15:24:35', '2022-10-28 15:24:35'),
+	(9, 1, 6, 105000, 'superuser', 'superuser', '2022-10-28 15:28:39', '2022-10-28 15:28:39'),
+	(10, 1, 7, 105000, 'superuser', 'superuser', '2022-10-28 15:29:42', '2022-10-28 15:29:42'),
+	(11, 2, 7, 40000, 'superuser', 'superuser', '2022-10-28 15:29:42', '2022-10-28 15:29:42'),
+	(12, 1, 8, 105000, 'superuser', 'superuser', '2022-10-28 15:30:22', '2022-10-28 15:30:22'),
+	(13, 2, 8, 40000, 'superuser', 'superuser', '2022-10-28 15:30:22', '2022-10-28 15:30:22'),
+	(14, 1, 8, 105000, 'superuser', 'superuser', '2022-10-28 15:30:22', '2022-10-28 15:30:22'),
+	(15, 1, 9, 105000, 'superuser', 'superuser', '2022-10-28 15:32:10', '2022-10-28 15:32:10'),
+	(16, 2, 9, 40000, 'superuser', 'superuser', '2022-10-28 15:32:10', '2022-10-28 15:32:10'),
+	(17, 1, 9, 105000, 'superuser', 'superuser', '2022-10-28 15:32:10', '2022-10-28 15:32:10'),
+	(18, 5, 9, 34000, 'superuser', 'superuser', '2022-10-28 15:32:10', '2022-10-28 15:32:10'),
+	(19, 1, 10, 105000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(20, 2, 10, 40000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(21, 1, 10, 105000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(22, 5, 10, 34000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(23, 5, 10, 34000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(24, 5, 10, 34000, 'superuser', 'superuser', '2022-10-28 15:32:55', '2022-10-28 15:32:55'),
+	(25, 1, 11, 105000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(26, 2, 11, 40000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(27, 1, 11, 105000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(28, 5, 11, 34000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(29, 5, 11, 34000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(30, 5, 11, 34000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(31, 1, 11, 70000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(32, 1, 11, 35000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(33, 2, 11, 20000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(34, 2, 11, 20000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(35, 2, 11, 20000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(36, 2, 11, 40000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(37, 1, 11, 70000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(38, 1, 11, 70000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23'),
+	(39, 1, 11, 140000, 'superuser', 'superuser', '2022-10-28 16:01:23', '2022-10-28 16:01:23');
 /*!40000 ALTER TABLE `payment_details` ENABLE KEYS */;
 
 -- membuang struktur untuk table matching_fund.payment_methods

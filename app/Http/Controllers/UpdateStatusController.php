@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CashierEvent;
+use App\Events\OrderEvent;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
@@ -11,6 +13,7 @@ use App\Models\OrderDetail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use DB;
+
 class UpdateStatusController extends Controller
 {
     public function index()
@@ -33,7 +36,7 @@ class UpdateStatusController extends Controller
     }
     public function loadData(Request $req)
     {
-        $data = OrderDetail::with('order', 'order.table','master_menu')
+        $data = OrderDetail::with('order', 'order.table', 'master_menu')
             ->wherehas('master_menu', function ($q) use ($req) {
                 $q->where('name', 'like', '%' . $req->id . '%');
             })
@@ -62,7 +65,10 @@ class UpdateStatusController extends Controller
         return DB::transaction(function () use ($req) {
 
             OrderDetail::where('id', $req->id)->where('order_id', $req->dt)
-                    ->update(['status' => 'Selesai']);
+                ->update(['status' => 'Selesai']);
+
+            event(new OrderEvent($req->dt));
+            event(new CashierEvent());
 
             return response()->json([
                 'status' => 1,

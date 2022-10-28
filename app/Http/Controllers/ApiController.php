@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CashierEvent;
 use App\Events\OrderEvent;
 use App\Interfaces\OrderRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
@@ -147,6 +148,7 @@ class ApiController extends Controller
                 $this->orderRepository->updateOrder($id, ['total_price' => $total]);
             }
 
+            event(new CashierEvent());
 
             return Response()->json([
                 'status' => 1,
@@ -177,10 +179,10 @@ class ApiController extends Controller
                 ->whereIn('status', ['Menunggu Pembayaran', 'Sedang Disiapkan'])
                 ->get();
             if (count($check) == 0) {
-                return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
+                return Response()->json(['status' => 2, 'message' => 'Tidak Reset Cookies']);
             }
+            return Response()->json(['status' => 2, 'message' => 'Tidak Reset Cookies']);
         }
-        return Response()->json(['status' => 1, 'message' => 'Reset Cookies']);
     }
 
     public function progressMenu(Request $req)
@@ -194,7 +196,7 @@ class ApiController extends Controller
         $latlong = explode(',', str_replace(' ', '', cms('latlong')));
         $distance = distance($req->latitude, $req->longitude, $latlong[0], $latlong[1], 'K');
 
-        if ($distance <= 0.05) {
+        if ($distance <= 100.05) {
             return Response()->json(['status' => 1, 'message' => 'Berhasil fetching data']);
         } else {
             return Response()->json(['status' => 2, 'message' => 'Jarak melebihi dari 50 m, silahkan gunakan reservasi.']);

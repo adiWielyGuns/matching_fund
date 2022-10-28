@@ -21,3 +21,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('orders.{orderId}', function () {
     return true;
 });
+
+Broadcast::channel('cashiers', function () {
+    return true;
+});
