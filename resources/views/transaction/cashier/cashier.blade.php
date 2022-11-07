@@ -102,7 +102,7 @@
                                                                         <h5 class="float-right"
                                                                             style="
                                                                     margin-top: 58px;">
-                                                                            {{ number_format($item->total_price) }}</h5>
+                                                                            {{ number_format($item->belumBayarPrice) }}</h5>
                                                                         <h3 class="card-title mt-0 mb-0">
                                                                             {{-- <br> --}}
                                                                             {{-- <span class="float-right" style="padding-top: 15px">
@@ -208,13 +208,22 @@
                 success: function(data) {
                     $('.dropTable').empty();
                     $('.dropTablePaid').empty();
+                    $('.total_payment_cash').val(0);
+                    $('.total_payment_transfer').val(0);
+                    
                     $('.dropRef').html('#' + data.data.kode);
                     $('.dropNama').html(data.data.name);
                     $('.dropTlp').html(data.data.telpon);
                     $('.dropJumlah').html(data.data.pax);
                     $('.dropMeja').html(data.data.table.name);
-                    $('.dropHarga').html('Rp. ' + parseInt(data.data.total_price).toLocaleString(
+
+                    if (data.data.belumBayarPrice == null) {
+                        $('.dropHarga').html('Rp. ' + 0);
+                    } else {
+                        $('.dropHarga').html('Rp. ' + parseInt(data.data.belumBayarPrice).toLocaleString(
                         'en-US'));
+                    }
+                  
 
                     $('#id').val(data.data.id);
                     $('#ref').val(data.data.kode);

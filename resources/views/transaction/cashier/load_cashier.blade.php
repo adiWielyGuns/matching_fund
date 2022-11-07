@@ -36,7 +36,7 @@
 
                                 <h5 class="float-right" style="
                                 margin-top: 58px;">
-                                    {{ number_format($item->total_price) }}</h5>
+                                    {{ number_format($item->belumBayarPrice) }}</h5>
                                 <h3 class="card-title mt-0 mb-0">
                                     {{-- <br> --}}
                                     {{-- <span class="float-right" style="padding-top: 15px">

@@ -16,7 +16,6 @@ use DB;
 
 class CashierController extends Controller
 {
-
     public function index()
     {
         $paymentMethod = PaymentMethod::where('status', true)->get();
@@ -25,9 +24,19 @@ class CashierController extends Controller
                 $q->where('status', 'Menunggu Pembayaran');
                 $q->orWhere('status', 'Sedang Disiapkan');
             })
-            ->withCount(['order_detail as belumBayarTotal' => function ($query) {
-                $query->where('status', 'Menunggu Pembayaran');
-            }])
+            ->withCount([
+                'order_detail as belumBayarTotal' => function ($query) {
+                    $query->where('status', 'Menunggu Pembayaran');
+                },
+            ])
+            ->withSum(
+                [
+                    'order_detail as belumBayarPrice' => function ($query) {
+                        $query->where('status', 'Menunggu Pembayaran');
+                    },
+                ],
+                'sub_total',
+            )
             ->get();
         return view('transaction/cashier/cashier', compact('data', 'paymentMethod'));
     }
@@ -38,22 +47,45 @@ class CashierController extends Controller
                 $q->where('status', 'Menunggu Pembayaran');
                 $q->orWhere('status', 'Sedang Disiapkan');
             })
-            ->withCount(['order_detail as belumBayarTotal' => function ($query) {
-                $query->where('status', 'Menunggu Pembayaran');
-            }])->where('name', 'like', '%' . $req->id . '%')->get();
+            ->withCount([
+                'order_detail as belumBayarTotal' => function ($query) {
+                    $query->where('status', 'Menunggu Pembayaran');
+                },
+            ])
+            ->withSum(
+                [
+                    'order_detail as belumBayarPrice' => function ($query) {
+                        $query->where('status', 'Menunggu Pembayaran');
+                    },
+                ],
+                'sub_total',
+            )
+            ->where('name', 'like', '%' . $req->id . '%')
+            ->get();
         return view('transaction/cashier/load_cashier', compact('data'));
     }
     public function getDataDetail(Request $req)
     {
         // return $req->all();
-        $data = Order::with('table', 'order_detail', 'order_detail.master_menu')->where('id', $req->id)->orderBy('created_at', 'DESC')->first();
+        $data = Order::with('table', 'order_detail', 'order_detail.master_menu')
+            ->withSum(
+                [
+                    'order_detail as belumBayarPrice' => function ($query) {
+                        $query->where('status', 'Menunggu Pembayaran');
+                    },
+                ],
+                'sub_total',
+            )
+            ->where('id', $req->id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
         return response()->json(
             [
                 'status' => 1,
                 'message' => 'Berhasil Mengambil data',
-                'data' => $data
+                'data' => $data,
             ],
-            Response::HTTP_CREATED
+            Response::HTTP_CREATED,
         );
     }
     public function store(Request $req)
@@ -72,7 +104,6 @@ class CashierController extends Controller
                 $totalPayment = $req->total_payment_transfer;
                 $totalChange = $req->total_change_transfer;
             }
-
 
             $id = Payment::max('id') + 1;
             Payment::create([
@@ -101,17 +132,17 @@ class CashierController extends Controller
                     'updated_at' => now(),
                 ]);
 
-                OrderDetail::where('order_id', $req->id)->where('status', 'Menunggu Pembayaran')->update(['status' => 'Sedang Disiapkan']);
+                OrderDetail::where('order_id', $req->id)
+                    ->where('status', 'Menunggu Pembayaran')
+                    ->update(['status' => 'Sedang Disiapkan']);
             }
             event(new OrderEvent($req->id));
             event(new CashierEvent());
 
-            return response()->json(
-                [
-                    'status' => 1,
-                    'message' => 'Berhasil merubah data',
-                ],
-            );
+            return response()->json([
+                'status' => 1,
+                'message' => 'Berhasil merubah data',
+            ]);
         });
     }
 }
