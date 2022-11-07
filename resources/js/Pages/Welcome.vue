@@ -188,48 +188,7 @@ export default {
       jenis: null,
       latitude: null,
       longitude: null,
-      promo: [
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-      ],
+      promo: this.$page.props.blogs,
       settings: {
         itemsToShow: 1,
         snapAlign: "center",

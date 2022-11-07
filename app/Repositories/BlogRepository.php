@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\BlogRepositoryInterface;
 use App\Models\Blog;
+use Illuminate\Support\Facades\DB;
 
 class BlogRepository implements BlogRepositoryInterface
 {
@@ -11,6 +12,12 @@ class BlogRepository implements BlogRepositoryInterface
     {
         return Blog::all();
     }
+
+    public function getAllBlogsActive($select = '*')
+    {
+        return Blog::select(DB::raw($select))->where('status', true)->get();
+    }
+
 
     public function getBlogById($blogId)
     {

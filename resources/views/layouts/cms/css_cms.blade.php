@@ -1,10 +1,8 @@
 <!-- DataTables -->
-<link href="{{ asset('assets/cms/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{ asset('assets/cms/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/cms/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
-<link href="{{ asset('assets/cms/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{ asset('assets/cms/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/cms/plugins/alertify/css/alertify.css') }}" rel="stylesheet" type="text/css">
 
 {{-- Summernote --}}
@@ -26,6 +24,8 @@
 
 {{-- Full Calendar --}}
 <link href="{{ asset('assets/cms/plugins/fullcalendar/css/fullcalendar.min.css') }}" rel="stylesheet" />
+{{-- Matarial Datepicer --}}
+<link href="{{ asset('assets/cms/plugins/timepicker/bootstrap-material-datetimepicker.css') }}" rel="stylesheet" />
 
 <style>
     .is-invalid {
@@ -88,7 +88,7 @@
         color: white
     }
 
-    .cms-item{
+    .cms-item {
         cursor: pointer;
     }
 

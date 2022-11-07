@@ -214,6 +214,9 @@ class ApiController extends Controller
     {
         return DB::transaction(function () use ($req) {
             OrderDetail::where('order_id', $req->order_id)->where('status', 'Menunggu Pembayaran')->delete();
+            $total = OrderDetail::where('order_id',  $req->order_id)->sum('sub_total');
+
+            $this->orderRepository->updateOrder($req->order_id, ['total_price' => $total]);
             event(new CashierEvent());
             return Response()->json(['status' => 1, 'message' => 'Berhasil menghapus order']);
         });
