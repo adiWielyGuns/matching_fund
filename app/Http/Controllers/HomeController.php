@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\BlogRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\TableRepositoryInterface;
 use App\Models\MasterMenu;
@@ -15,11 +16,13 @@ class HomeController extends Controller
 {
     private TableRepositoryInterface $tableRepository;
     private CategoryRepositoryInterface $categoryRepository;
+    private BlogRepositoryInterface $blogRepository;
 
-    public function __construct(TableRepositoryInterface $tableRepository, CategoryRepositoryInterface $categoryRepository)
+    public function __construct(TableRepositoryInterface $tableRepository, CategoryRepositoryInterface $categoryRepository, BlogRepositoryInterface $blogRepository)
     {
         $this->tableRepository = $tableRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->blogRepository = $blogRepository;
     }
 
     public function index()
@@ -27,6 +30,7 @@ class HomeController extends Controller
         return Inertia::render('Welcome', [
             'now' => Carbon::now()->format('l, d-m-Y'),
             'table' => $this->tableRepository->getAllTablesActive('id, name as text'),
+            'blogs' => $this->blogRepository->getAllBlogsActive('id, title, image as url'),
         ]);
     }
 
@@ -35,13 +39,18 @@ class HomeController extends Controller
         $table = $this->tableRepository->getTableById($req->table_id);
         $categories = $this->categoryRepository->getAllCategoryActive('id, name as text');
         $menu = MasterMenu::where('status', true)->get();
-
+        if (isset($req->reservation_id)) {
+            $reservation_id = Crypt::decrypt($req->reservation_id);
+        } else {
+            $reservation_id = null;
+        }
         return Inertia::render('Order', [
             'now' => Carbon::now()->format('l, d-m-Y'),
             'req' => $req->all(),
             'table' => $table,
             'categories' => $categories,
             'menu' => $menu,
+            'reservation_id' => $reservation_id,
         ]);
     }
 

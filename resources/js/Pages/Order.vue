@@ -56,7 +56,11 @@ library.add(
                   <div class="grid grid-cols-12">
                     <div class="col-span-12 flex justify-between">
                       <div class="flex">
-                        <img class="h-7 mr-2" :src="'../assets/images/user.png'" alt="" />
+                        <img
+                          class="h-7 mr-2 my-auto"
+                          :src="'../assets/images/user.png'"
+                          alt=""
+                        />
                         <span
                           class="text-gray-700 text-2xl inline-block align-middle my-auto"
                         >
@@ -67,14 +71,10 @@ library.add(
                         href="javascript:;"
                         class="my-auto text-gray-700 hover:text-purple-700"
                       >
-                        <div class="dropdown" :class="{ show: activateDropdown }">
+                        <div class="dropdown">
                           <a
-                            class="nav-link"
-                            @click="
-                              activateDropdown
-                                ? (activateDropdown = false)
-                                : (activateDropdown = true)
-                            "
+                            class="nav-link dropbtn"
+                            @click="openDropdown"
                             data-toggle="dropdown"
                             href="#"
                             aria-expanded="true"
@@ -84,25 +84,19 @@ library.add(
                               icon="fa-solid fa-ellipsis-vertical"
                             />
                           </a>
-                          <div
-                            class="dropdown-menu dropdown-menu-left"
-                            :class="{ show: activateDropdown }"
-                            x-placement="bottom-start"
-                            :style="{
-                              position: 'absolute',
-                              transform: 'translate3d(0px, 40px, 0px)',
-                              top: '0px',
-                              left: '0px',
-                              'will-change': 'transform',
-                            }"
-                          >
+                          <div id="myDropdown" class="dropdown-content">
                             <a
                               href="javascript:;"
-                              onclick="edit('12')"
-                              class="dropdown-item"
+                              v-if="listMenungguPembayaran.length == 0"
+                              @click="orderBaru"
+                              >Order Baru</a
                             >
-                              <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Edit
-                            </a>
+                            <a
+                              href="javascript:;"
+                              v-if="listMenungguPembayaran.length != 0"
+                              @click="cancelOrder"
+                              >Cancel Order</a
+                            >
                           </div>
                         </div>
                       </a>
@@ -546,6 +540,7 @@ export default {
       v$: useVuelidate(),
       accounting: accounting,
       products: this.$page.props.menu,
+      reservationId: this.$page.props.reservation_id,
       isModalItemVisible: false,
       isModalBayarVisible: false,
       itemSelected: null,
@@ -567,7 +562,6 @@ export default {
       listMenungguPembayaran: [],
       totalPesanan: 0,
       totalMenungguPembayaran: 0,
-      activateDropdown: false,
       metodePembayaran: null,
       sendData: null,
       hasCheckout: false,
@@ -618,6 +612,55 @@ export default {
     },
     onClick(param) {
       console.log(param);
+    },
+    orderBaru() {
+      this.Cookies.remove("pesanan");
+      this.Cookies.remove("order_id");
+      this.Cookies.remove("order");
+      this.$inertia.visit("/", {
+        method: "get",
+        replace: true,
+        preserveState: false,
+        preserveScroll: false,
+      });
+    },
+    cancelOrder() {
+      var el = this;
+      this.$swal
+        .fire({
+          title: "Menghapus order yang belum terbayar?",
+          text: "Aksi ini tidak bisa dikembalikan!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya, hapus!",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$root.$loading.loading = true;
+            axios
+              .post("/cancel-order", {
+                order_id: el.orderId,
+              })
+              .then(function (response) {
+                // handle success
+                if (response.data.status == 1) {
+                  el.callApiMenu(el.orderId);
+                } else {
+                  el.$toaster.warning(response.data.message);
+                }
+
+                el.$root.$loading.loading = false;
+              })
+              .catch(function (error) {
+                el.$root.$loading.loading = false;
+              })
+              .finally(function () {
+                el.orderNotifier();
+              });
+          }
+        });
     },
     openItemModal(value, edit) {
       this.isModalItemVisible = true;
@@ -759,6 +802,7 @@ export default {
                 item: el.listPesanan,
                 table_id: el.tableId,
                 order_id: el.orderId,
+                reservation_id: el.reservationId,
               })
               .then(function (response) {
                 // handle success
@@ -801,6 +845,9 @@ export default {
     },
     backToPaymentMethod() {
       this.metodePembayaran = null;
+    },
+    openDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
     },
     printReceipt() {
       this.$inertia.visit("/", {

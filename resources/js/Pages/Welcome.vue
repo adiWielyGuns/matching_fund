@@ -188,48 +188,7 @@ export default {
       jenis: null,
       latitude: null,
       longitude: null,
-      promo: [
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-        {
-          id: 1,
-          url: "../assets/images/promo.png",
-          title: "Promo 1",
-        },
-        {
-          id: 2,
-          url: "../assets/images/promo.png",
-          title: "Promo 2",
-        },
-      ],
+      promo: this.$page.props.blogs,
       settings: {
         itemsToShow: 1,
         snapAlign: "center",
@@ -304,15 +263,31 @@ export default {
       this.longitude = position.coords.longitude;
     },
     async submit() {
+      var el = this;
       if (this.kode == null || this.kode == "") {
         const isFormCorrect = await this.v$.$validate();
         // you can show some extra alert to the user or just leave the each field to show it's `$errors`.
         if (!isFormCorrect) return;
+
+        var data = {
+          nama: el.nama,
+          telpon: el.telpon,
+          pax: el.pax,
+          table_id: el.table_id,
+        };
+
+        el.Cookies.set("order", JSON.stringify(data), { expires: 1 });
+
+        el.$inertia.visit("/order", {
+          method: "get",
+          data: data,
+          replace: false,
+          preserveState: true,
+          preserveScroll: false,
+        });
       } else {
         this.v$.$reset();
       }
-
-      var el = this;
 
       axios
         .post("/check-location", {
@@ -333,10 +308,28 @@ export default {
                 .then(function (response) {
                   // handle success
                   if (response.data.status == 1) {
-                    el.nama = response.data.nama;
-                    el.telpon = response.data.telpon;
-                    el.pax = response.data.pax;
-                    el.table_id = response.data.table_id;
+                    el.nama = response.data.data.nama;
+                    el.telpon = response.data.data.telpon;
+                    el.pax = response.data.data.pax;
+                    el.table_id = response.data.data.table_id;
+
+                    var data = {
+                      nama: el.nama,
+                      telpon: el.telpon,
+                      pax: el.pax,
+                      table_id: el.table_id,
+                      reservation_id: response.data.reservation_id,
+                    };
+
+                    el.Cookies.set("order", JSON.stringify(data), { expires: 1 });
+
+                    el.$inertia.visit("/order", {
+                      method: "get",
+                      data: data,
+                      replace: false,
+                      preserveState: true,
+                      preserveScroll: false,
+                    });
                   } else {
                     el.$toaster.warning(response.data.message);
                   }
@@ -348,23 +341,6 @@ export default {
                 })
                 .finally(function () {});
             }
-
-            var data = {
-              nama: el.nama,
-              telpon: el.telpon,
-              pax: el.pax,
-              table_id: el.table_id,
-            };
-
-            el.Cookies.set("order", JSON.stringify(data), { expires: 1 });
-
-            el.$inertia.visit("/order", {
-              method: "get",
-              data: data,
-              replace: false,
-              preserveState: true,
-              preserveScroll: false,
-            });
           } else {
             el.$toaster.warning(response.data.message);
           }

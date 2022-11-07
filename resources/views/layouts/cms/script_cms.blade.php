@@ -45,6 +45,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
       integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{-- Accounting JS --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.1/accounting.min.js"
+      integrity="sha512-LLsvn7RXQa0J/E40ChF/6YAf2V9PJuLGG1VeuZhMlWp+2yAKj98A1Q1lsChkM9niWqY0gCkvHvpzqQOFEfpxIw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   {{-- Jquery UI --}}
   <script src="{{ asset('assets/cms/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
   {{-- SummerNote --}}
@@ -53,6 +57,8 @@
   <script src="{{ asset('assets/cms/plugins/moment/moment.js') }}"></script>
   {{-- Full Calendar --}}
   <script src='{{ asset('assets/cms/plugins/fullcalendar/js/fullcalendar.min.js') }}'></script>
+  {{-- Material Datepicker --}}
+  <script src='{{ asset('assets/cms/plugins/timepicker/bootstrap-material-datetimepicker.js') }}'></script>
 
 
   <script>

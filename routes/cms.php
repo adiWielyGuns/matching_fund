@@ -14,6 +14,7 @@ use App\Http\Controllers\UpdateStatusController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GroupMenuController;
 use App\Http\Controllers\HomeCmsController;
+use App\Http\Controllers\LaporanOrderController;
 use App\Http\Controllers\MasterMenuController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PaymentMethodController;
@@ -323,6 +324,7 @@ Route::group(['prefix' => 'cms'], function () {
 
             Route::controller(UpdateStatusController::class)->group(function () {
                 Route::group(['prefix' => 'update-status-menu'], function () {
+
                     Route::get('/index', 'index')->name('update-status-menu');
                     Route::get('/datatable', 'datatable')->name('datatable-update-status-menu');
                     Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-update-status-menu');
@@ -336,8 +338,21 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::get('/load-data', 'loadData')->name('update-status-menu-load-data');
                 });
             });
+        });
 
-
+        Route::group(['prefix' => 'laporan'], function () {
+            Route::controller(LaporanOrderController::class)->group(function () {
+                Route::group(['prefix' => 'laporan-order'], function () {
+                    Route::get('/index', 'index')->name('laporan-order');
+                    Route::get('/datatable', 'datatable')->name('datatable-laporan-order');
+                    Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-laporan-order');
+                    Route::get('/edit', 'edit')->name('edit-laporan-order');
+                    Route::get('/sequence', 'sequence')->name('sequence-laporan-order');
+                    Route::post('/store', 'store')->name('store-laporan-order');
+                    Route::post('/update', 'update')->name('update-laporan-order');
+                    Route::post('/destroy', 'destroy')->name('destroy-laporan-order');
+                });
+            });
         });
     });
 });
