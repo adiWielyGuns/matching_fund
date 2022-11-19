@@ -201,13 +201,13 @@ Route::group(['prefix' => 'cms'], function () {
             Route::controller(BlogController::class)->group(function () {
                 Route::group(['prefix' => 'banner'], function () {
                     Route::get('/index', 'index')->name('banner');
-                    Route::get('/datatable', 'datatable')->name('datatable-banner');
-                    Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-banner');
-                    Route::get('/edit', 'edit')->name('edit-banner');
-                    Route::get('/sequence', 'sequence')->name('sequence-banner');
-                    Route::post('/store', 'store')->name('store-banner');
-                    Route::post('/update', 'update')->name('update-banner');
-                    Route::post('/destroy', 'destroy')->name('destroy-banner');
+                    Route::get('/datatable', 'datatable')->name('datatable-blog');
+                    Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-blog');
+                    Route::get('/edit', 'edit')->name('edit-blog');
+                    Route::get('/sequence', 'sequence')->name('sequence-blog');
+                    Route::post('/store', 'store')->name('store-blog');
+                    Route::post('/update', 'update')->name('update-blog');
+                    Route::post('/destroy', 'destroy')->name('destroy-blog');
                 });
             });
 
