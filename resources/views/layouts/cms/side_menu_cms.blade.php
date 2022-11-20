@@ -72,6 +72,7 @@
                             }
                         }
                     @endphp
+
                     @if ($hasFeatureTitle != 0)
                         <li class="menu-title">{{ $item->name }}</li>
                         @foreach ($item->group_menu->where('status', 1)->sortBy('sequence') as $item1)
