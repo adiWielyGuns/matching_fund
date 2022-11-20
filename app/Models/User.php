@@ -115,13 +115,12 @@ class User extends Authenticatable
 
         $menu = \App\Models\Menu::where('slug', 'like', $param . '%')->first();
 
-
         $data = $hakAkses
             ->where(function ($q) use ($menu, $subMenu, $param) {
                 $q->where('menu_id', $menu->id);
             })
             ->where('role_id', Auth::user()->role_id)
-            ->where($column, 'true')
+            ->where($column, true)
             ->first();
 
         if (is_null($data)) {
@@ -130,11 +129,10 @@ class User extends Authenticatable
             $validation = true;
         }
 
-
-
         if (Auth::user()->role_id == 1) {
             $validation = true;
         }
+
         return $validation;
     }
 }
