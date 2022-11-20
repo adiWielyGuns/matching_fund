@@ -77,7 +77,7 @@ class User extends Authenticatable
                     $q->where('menu_id', $menu->id);
                 })
                 ->where('role_id', Auth::user()->role_id)
-                ->where($column, 'true')
+                ->where($column, true)
                 ->first();
         } else {
             $hak_akses = new Privilege();
@@ -85,7 +85,7 @@ class User extends Authenticatable
                 ->where(function ($q) {
                     $q->where('menu_id', 1);
                 })
-                ->where($column, 'true')
+                ->where($column, true)
                 ->where('role_id', Auth::user()->role_id)
                 ->first();
         }
