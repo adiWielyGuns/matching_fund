@@ -301,6 +301,7 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::get('/edit', 'edit')->name('edit-reservation');
                     Route::get('/sequence', 'sequence')->name('sequence-reservation');
                     Route::post('/store', 'store')->name('store-reservation');
+                    Route::post('/store-table', 'storeTable')->name('store-table-reservation');
                     Route::post('/update', 'update')->name('update-reservation');
                     Route::post('/destroy', 'destroy')->name('destroy-reservation');
                 });

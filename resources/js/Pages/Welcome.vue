@@ -76,7 +76,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
               <BreezeInputError message="Nama Harus Diisi"></BreezeInputError>
             </div>
           </div>
-          <div class="col-span-12">
+          <div class="col-span-12" v-if="jenis == 'order' ? true : false">
             <BreezeLabel
               for="table_id"
               value="Nomor Meja"
@@ -224,13 +224,14 @@ export default {
       nama: { required },
       pax: { required },
       telpon: { required },
-      table_id: { required },
     };
 
     if (this.jenis == "reservasi") {
       localRules.tanggal = { required };
+      localRules.table_id = {};
     } else {
       localRules.tanggal = {};
+      localRules.table_id = { required };
     }
 
     return localRules;

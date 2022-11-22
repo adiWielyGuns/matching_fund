@@ -210,7 +210,7 @@
                     $('.dropTablePaid').empty();
                     $('.total_payment_cash').val(0);
                     $('.total_payment_transfer').val(0);
-                    
+
                     $('.dropRef').html('#' + data.data.kode);
                     $('.dropNama').html(data.data.name);
                     $('.dropTlp').html(data.data.telpon);
@@ -221,9 +221,9 @@
                         $('.dropHarga').html('Rp. ' + 0);
                     } else {
                         $('.dropHarga').html('Rp. ' + parseInt(data.data.belumBayarPrice).toLocaleString(
-                        'en-US'));
+                            'en-US'));
                     }
-                  
+
 
                     $('#id').val(data.data.id);
                     $('#ref').val(data.data.kode);

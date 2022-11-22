@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Table;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,7 +18,8 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        return view('transaction/reservation/reservation');
+        $meja = Table::where('status', 1)->get();
+        return view('transaction/reservation/reservation', compact('meja'));
     }
 
     public function aksi($data)
@@ -32,11 +34,17 @@ class ReservationController extends Controller
             //     '<i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Edit' .
             //     '</a>';
 
-            $edit = '<a class="dropdown-item text-info" href="javascript:;" onclick="edit(\'' . $data->id . '\')">' . '<i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Upload Bukti Transfer' . '</a>';
+            if ($data->status == 'Waiting For Payment') {
+                $edit = '<a class="dropdown-item text-info" href="javascript:;" onclick="edit(\'' . $data->id . '\')">' . '<i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;Upload Bukti Transfer' . '</a>';
+            }
 
-            $cancel = '<a class="dropdown-item text-warning" href="javascript:;" onclick="changeStatus(\'' . $data->id . '\')">' . '<i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Tidak Jadi' . '</a>';
+            if ($data->status == 'Paid' or $data->status == 'Paid') {
+                $cancel = '<a class="dropdown-item text-warning" href="javascript:;" onclick="changeStatus(\'' . $data->id . '\')">' . '<i class="fa fa-trash"></i>&nbsp;&nbsp;&nbsp;Tidak Jadi' . '</a>';
 
-            $abandon = '<a class="dropdown-item text-danger" href="javascript:;" onclick="changeStatus(\'' . $data->id . '\')">' . '<i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;Tidak Datang' . '</a>';
+                $abandon = '<a class="dropdown-item text-danger" href="javascript:;" onclick="changeStatus(\'' . $data->id . '\')">' . '<i class="fa fa-times"></i>&nbsp;&nbsp;&nbsp;Tidak Datang' . '</a>';
+            } else {
+                $abandon = '<a class="dropdown-item text-primary" href="javascript:;">' . 'Reservasi Selesai' . '</a>';
+            }
         }
 
         // if (Auth::user()->akses('delete')) {
@@ -76,7 +84,15 @@ class ReservationController extends Controller
 
     public function datatable(Request $req): JsonResponse
     {
-        $data = Reservation::get();
+        $data = Reservation::where(function ($q) use ($req) {
+            if ($req->status_meja != '') {
+                if ($req->status_meja == 'true') {
+                    $q->has('meja');
+                } else {
+                    $q->whereDoesntHave('meja');
+                }
+            }
+        })->get();
         return DataTables::of($data)
             ->addColumn('aksi', function ($data) {
                 return $this->aksi($data);
@@ -85,12 +101,22 @@ class ReservationController extends Controller
                 // 'Waiting For Payment','Paid','Done','Canceled','Abandoned'
                 if ($data->status == 'Waiting For Payment') {
                     return '<span class="btn btn-warning"> Menunggu Pembayaran </span>';
-                }elseif ($data->status == 'Paid') {
+                } elseif ($data->status == 'Paid') {
                     return '<span class="btn btn-success"> Terbayar DP </span>';
+                } elseif ($data->status == 'Done') {
+                    return '<span class="btn btn-success"> Reservasi Selesai </span>';
+                } elseif ($data->status == 'Canceled') {
+                    return '<span class="btn btn-dangr"> Di Batalkan </span>';
+                } elseif ($data->status == 'Abandoned') {
+                    return '<span class="btn btn-dangr"> Tidak datang </span>';
                 }
             })
             ->addColumn('Pelanggan', function ($data) {
-                $table = '<table class="table">' . '<tr>' . '<td>' . 'Nama' . '</td>' . '<td>' . $data->nama . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Tanggal / Jam' . '</td>' . '<td>' . $data->tanggal . ' , ' . $data->jam . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Total Pelng.' . '</td>' . '<td>' . $data->pax . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Meja' . '</td>' . '<td>' . $data->meja->name . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Tlp' . '</td>' . '<td>' . $data->telpon . '</td>' . '</tr>' . '</table>';
+                if ($data->id == 5) {
+                    // dd($data->meja);
+                }
+
+                $table = '<table class="table">' . '<tr>' . '<td>' . 'Nama' . '</td>' . '<td>' . $data->nama . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Kode' . '</td>' . '<td>' . $data->kode . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Tanggal / Jam' . '</td>' . '<td>' . $data->tanggal . ' , ' . $data->jam . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Total Pelng.' . '</td>' . '<td>' . $data->pax . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Meja' . '</td>' . '<td>' . ($data->meja ? $data->meja->name : '<a href="javascript:;" class="text-primary" onclick="setTable(\'' . $data->id . '\')">Set Table</a>') . '</td>' . '</tr>' . '<tr>' . '<td>' . 'Tlp' . '</td>' . '<td>' . $data->telpon . '</td>' . '</tr>' . '</table>';
                 return $table;
             })
             ->addColumn('BuktiTf', function ($data) {
@@ -138,7 +164,7 @@ class ReservationController extends Controller
                 $img->save($foto);
                 $foto = url('/') . '/' . $foto;
             } else {
-                $foto = Reservation::where('id',$req->id)->first()->bukti_transfer;
+                $foto = Reservation::where('id', $req->id)->first()->bukti_transfer;
             }
             $categoryDetails = [
                 // 'name' => convertSlug($req->name, 'Capital'),
@@ -157,7 +183,26 @@ class ReservationController extends Controller
                 [
                     'status' => 1,
                     'message' => 'Berhasil merubah data',
-                    'data' => Reservation::where('id',$req->id)->update($categoryDetails),
+                    'data' => Reservation::where('id', $req->id)->update($categoryDetails),
+                ],
+                Response::HTTP_CREATED,
+            );
+        });
+    }
+
+    public function storeTable(Request $req)
+    {
+        return DB::transaction(function () use ($req) {
+
+            $data = [
+                'table_id' => $req->meja_id
+            ];
+
+            return response()->json(
+                [
+                    'status' => 1,
+                    'message' => 'Berhasil merubah data',
+                    'data' => Reservation::find($req->id)->update($data),
                 ],
                 Response::HTTP_CREATED,
             );
