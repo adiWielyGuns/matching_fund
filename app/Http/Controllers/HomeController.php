@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\BlogRepositoryInterface;
 use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\ReservationRepositoryInterface;
 use App\Interfaces\TableRepositoryInterface;
 use App\Models\MasterMenu;
 use App\Models\Reservation;
@@ -17,12 +18,14 @@ class HomeController extends Controller
     private TableRepositoryInterface $tableRepository;
     private CategoryRepositoryInterface $categoryRepository;
     private BlogRepositoryInterface $blogRepository;
+    private ReservationRepositoryInterface $reservationRepository;
 
-    public function __construct(TableRepositoryInterface $tableRepository, CategoryRepositoryInterface $categoryRepository, BlogRepositoryInterface $blogRepository)
+    public function __construct(TableRepositoryInterface $tableRepository, CategoryRepositoryInterface $categoryRepository, BlogRepositoryInterface $blogRepository, ReservationRepositoryInterface $reservationRepository)
     {
         $this->tableRepository = $tableRepository;
         $this->categoryRepository = $categoryRepository;
         $this->blogRepository = $blogRepository;
+        $this->reservationRepository = $reservationRepository;
     }
 
     public function index()
@@ -44,6 +47,7 @@ class HomeController extends Controller
         } else {
             $reservation_id = null;
         }
+
         return Inertia::render('Order', [
             'now' => Carbon::now()->format('l, d-m-Y'),
             'req' => $req->all(),

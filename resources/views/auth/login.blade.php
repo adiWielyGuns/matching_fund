@@ -15,8 +15,8 @@
                 <div class="card-body">
 
                     <div class="text-center m-b-15">
-                        <a href="index.html" class="logo logo-admin"><img src="{{ cms('logo') }}"
-                                height="50" alt="logo"></a>
+                        <a href="index.html" class="logo logo-admin"><img src="{{ cms('logo') }}" height="50"
+                                alt="logo"></a>
                     </div>
 
                     <div class="p-3">
@@ -32,14 +32,14 @@
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="text" required="" value="{{ old('email') }}"
+                                    <input class="form-control" type="text" required="" value="tester@gmail.com"
                                         placeholder="Email" name="email" id="email">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input class="form-control" type="password" required="" value=""
+                                    <input class="form-control" type="password" required="" value="12345678"
                                         placeholder="Password" name="password">
                                 </div>
                             </div>

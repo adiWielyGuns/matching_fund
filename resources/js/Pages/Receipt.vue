@@ -54,10 +54,6 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
                     <BreezeLabel value="Tanggal & Jam" class="text-gray-500" />
                     <p class="font-extrabold">{{ $page.props.date }}</p>
                   </div>
-                  <div class="col-span-12">
-                    <BreezeLabel value="No Meja" class="text-gray-500" />
-                    <p class="font-extrabold">{{ $page.props.data.meja.name }}</p>
-                  </div>
                 </div>
               </div>
             </div>

@@ -199,8 +199,8 @@ Route::group(['prefix' => 'cms'], function () {
 
         Route::group(['prefix' => 'content-management'], function () {
             Route::controller(BlogController::class)->group(function () {
-                Route::group(['prefix' => 'blog'], function () {
-                    Route::get('/index', 'index')->name('blog');
+                Route::group(['prefix' => 'banner'], function () {
+                    Route::get('/index', 'index')->name('banner');
                     Route::get('/datatable', 'datatable')->name('datatable-blog');
                     Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-blog');
                     Route::get('/edit', 'edit')->name('edit-blog');
@@ -301,6 +301,7 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::get('/edit', 'edit')->name('edit-reservation');
                     Route::get('/sequence', 'sequence')->name('sequence-reservation');
                     Route::post('/store', 'store')->name('store-reservation');
+                    Route::post('/store-table', 'storeTable')->name('store-table-reservation');
                     Route::post('/update', 'update')->name('update-reservation');
                     Route::post('/destroy', 'destroy')->name('destroy-reservation');
                 });
