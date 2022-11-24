@@ -313,6 +313,7 @@ Route::group(['prefix' => 'cms'], function () {
                     Route::get('/ganti-status', 'gantiStatus')->name('ganti-status-cashier');
                     Route::get('/edit', 'edit')->name('edit-cashier');
                     Route::get('/sequence', 'sequence')->name('sequence-cashier');
+                    Route::get('/nota', 'nota')->name('nota-cashier');
                     Route::post('/store', 'store')->name('store-cashier');
                     Route::post('/update', 'update')->name('update-cashier');
                     Route::post('/destroy', 'destroy')->name('destroy-cashier');

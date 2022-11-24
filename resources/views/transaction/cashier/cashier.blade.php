@@ -3,6 +3,8 @@
 
 @section('body')
     @include('../layouts/cms/css_cms')
+    <form action="{{ route('logout') }}" id="logout" method="POST">@csrf
+    </form>
     <form id="form-data" onkeydown="return event.key != 'Enter';">
         @csrf
 
@@ -37,12 +39,24 @@
                                                     <li class="breadcrumb-item active">
                                                         {{ convertSlug(Request::segment(3)) }}
                                                     </li>
+
+                                                    
+                                                    <a href="javascript:;" onclick="$('#logout').submit()" class="ml-5"
+                                                        data-toggle="tooltip" data-placement="center" title="Log out"><i
+                                                            class="dripicons-power text-danger"></i><b> Log out</b></a>
+
+                                                    {{-- <a class="ml-5">Logout</b> --}}
+
                                                 </ol>
                                             </div>
-                                            <h4 class="page-title">{{ convertSlug(Request::segment(3)) }}</h4>
+                                            <h4 class="page-title">{{ convertSlug(Request::segment(3)) }}  
+                                                
+                                                <a class="ml-5 btn btn-secondary" href="{{ route('home-cms') }}" title="Kembali"><i
+                                                            class="dripicons-arrow-left text-primary "></i> Kembali</a></h4>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
+
                                         <div class="input-group input-group-lg mt-2">
                                             <span class="input-group-prepend">
                                                 <button type="button" class="btn btn-primary"><i
@@ -52,7 +66,9 @@
                                                 class="form-control" placeholder="Cari Bedasarkan Nama.."
                                                 onkeyup="filterOrder()">
                                             <br>
-                                            <a href="{{ route('update-status-menu') }}"> Update Status Menu</a>
+                                            <a href="{{ route('update-status-menu') }}" class="btn btn-warning ml-3"> Update
+                                                Status</a>
+                                            {{-- <a href="{{ route('update-status-menu') }}" class="btn btn-warning ml-3"> Logout</a> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +118,8 @@
                                                                         <h5 class="float-right"
                                                                             style="
                                                                     margin-top: 58px;">
-                                                                            {{ number_format($item->belumBayarPrice) }}</h5>
+                                                                            {{ number_format($item->belumBayarPrice) }}
+                                                                        </h5>
                                                                         <h3 class="card-title mt-0 mb-0">
                                                                             {{-- <br> --}}
                                                                             {{-- <span class="float-right" style="padding-top: 15px">
@@ -210,7 +227,7 @@
                     $('.dropTablePaid').empty();
                     $('.total_payment_cash').val(0);
                     $('.total_payment_transfer').val(0);
-                    
+
                     $('.dropRef').html('#' + data.data.kode);
                     $('.dropNama').html(data.data.name);
                     $('.dropTlp').html(data.data.telpon);
@@ -221,9 +238,9 @@
                         $('.dropHarga').html('Rp. ' + 0);
                     } else {
                         $('.dropHarga').html('Rp. ' + parseInt(data.data.belumBayarPrice).toLocaleString(
-                        'en-US'));
+                            'en-US'));
                     }
-                  
+
 
                     $('#id').val(data.data.id);
                     $('#ref').val(data.data.kode);
@@ -249,7 +266,8 @@
                                 '<input type="hidden"  name="product_id[]" value="' + value
                                 .master_menu_id +
                                 '"><input type="hidden"  name="product_price[]" value="' + value
-                                .sub_total + '">')
+                                .sub_total + '"><input type="hidden"  name="qty[]" value="' + value
+                                .qty + '">')
                         }
                     });
                     $('.total_price_cash').val(parseInt(totalPembayaran).toLocaleString('en-US'));
@@ -346,6 +364,7 @@
                     $('#modal-method-cash').modal('hide');
                     $('#modal-method-transfer').modal('hide');
                     filterOrder();
+                    window.open('{{ route('nota-cashier') }}'+'?id='+data.id, '_blank'); 
 
                 }
             });

@@ -14,6 +14,7 @@ class PaymentDetail extends Model
 
     protected $fillable = [
         'id',
+        'qty',
         'product_id',
         'payment_id',
         'total_price',
@@ -22,4 +23,9 @@ class PaymentDetail extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function MasterMenu()
+    {
+        return $this->belongsTo('App\Models\MasterMenu', 'product_id', 'id');
+    }
 }
