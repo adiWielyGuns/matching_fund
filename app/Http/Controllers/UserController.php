@@ -197,6 +197,7 @@ class UserController extends Controller
                 } else {
                     $foto = $this->userRepository->getUserById($id)->image;
                 }
+
                 $userDetails = [
                     'image' => $foto,
                     'name' => $req->name,
@@ -204,11 +205,12 @@ class UserController extends Controller
                     'role_id' => $req->role_id,
                 ];
 
+                User::whereId($id)->update($userDetails);
+
                 return response()->json(
                     [
                         'status' => 1,
                         'message' => 'Berhasil merubah data',
-                        'data' => $this->userRepository->updateUser($id, $userDetails)
                     ],
                     Response::HTTP_CREATED
                 );
