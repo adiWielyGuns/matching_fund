@@ -178,8 +178,8 @@ class UserController extends Controller
                 $file = $req->file('image');
                 if ($file != null) {
                     $path = 'image/user';
-                    $id = Str::uuid($req->id)->toString();
-                    $name = $id . '.' . str_replace('image/', '', $file->getClientOriginalExtension());
+                    $uuid = Str::uuid($req->id)->toString();
+                    $name = $uuid . '.' . str_replace('image/', '', $file->getClientOriginalExtension());
                     $foto = $path . '/' . $name;
                     if (is_file($foto)) {
                         unlink($foto);
@@ -205,12 +205,11 @@ class UserController extends Controller
                     'role_id' => $req->role_id,
                 ];
 
-                User::whereId($id)->update($userDetails);
-
                 return response()->json(
                     [
                         'status' => 1,
                         'message' => 'Berhasil merubah data',
+                        'data' => $this->userRepository->updateUser($id, $userDetails)
                     ],
                     Response::HTTP_CREATED
                 );
