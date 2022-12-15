@@ -197,7 +197,7 @@ class UserController extends Controller
                 } else {
                     $foto = $this->userRepository->getUserById($id)->image;
                 }
-
+                dd($foto);
                 $userDetails = [
                     'image' => $foto,
                     'name' => $req->name,
