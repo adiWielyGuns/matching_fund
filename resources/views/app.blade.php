@@ -19,4 +19,8 @@
 <body class="font-sans antialiased">
     @inertia
 </body>
+<script>
+    window.logo = '{{ cms('logo') }}';
+</script>
+
 </html>

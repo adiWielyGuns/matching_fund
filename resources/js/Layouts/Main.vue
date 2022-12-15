@@ -34,7 +34,7 @@ const showingNavigationDropdown = ref(false);
       <header class="bg-white shadow fixed w-full z-10 top-0">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <img src="/assets/images/Logo.png" class="h-6" alt="" />
+            <img :src="headLogo" class="h-6" alt="" />
           </h2>
         </div>
       </header>
@@ -58,6 +58,7 @@ export default {
   },
   mounted() {
     this.$el.addEventListener("click", this.dropdownListener);
+    console.log(headLogo)
   },
   methods: {
     dropdownListener(event) {
@@ -76,6 +77,7 @@ export default {
   data() {
     return {
       load: this.$loading,
+      headLogo: logo,
     };
   },
   destroyed() {
