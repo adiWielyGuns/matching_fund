@@ -203,7 +203,6 @@ class UserController extends Controller
                     'password' => Hash::make($req->password),
                     'role_id' => $req->role_id,
                 ];
-                dd($userDetails);
 
                 return response()->json(
                     [
