@@ -46,7 +46,7 @@ id="modal-method-transfer" style="display: none;" aria-hidden="true">
                                 class="form-control total_payment_transfer mask " onkeyup="calcTransfer()">
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3" style="display: none">
                         <h6 class="input-title">Kembalian</h6>
                         <div class="input-group input-group-lg">
                             <input type="text" style="text-align: right"

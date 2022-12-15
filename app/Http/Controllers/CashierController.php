@@ -119,11 +119,14 @@ class CashierController extends Controller
                 'updated_at' => now(),
             ]);
 
+          
+
             for ($i = 0; $i < count($req->product_id); $i++) {
                 $dt = PaymentDetail::max('id') + 1;
                 PaymentDetail::create([
                     'id' => $dt,
                     'product_id' => $req->product_id[$i],
+                    'qty' => $req->qty[$i],
                     'payment_id' => $id,
                     'total_price' => str_replace(',', '', $req->product_price[$i]),
                     'created_by' => me(),
@@ -141,8 +144,14 @@ class CashierController extends Controller
 
             return response()->json([
                 'status' => 1,
+                'id' => $id,
                 'message' => 'Berhasil merubah data',
             ]);
         });
+    }
+    public function nota(Request $req)
+    {
+        $data = Payment::with('PaymentDetail','PaymentDetail.MasterMenu','Order','Order.order_detail')->where('id',$req->id)->first();
+        return view('transaction/cashier/nota', compact('data'));
     }
 }
